@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:drawing_application"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="800" MouseDown="Canvas_Mousedown">
+        Title="MainWindow" Height="800" Width="800">
 
 
     <Grid Name="main_grid" MouseMove="Canvas_Mousemove" MouseLeftButtonUp="Canvas_Mouseup">
@@ -23,13 +23,17 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="select_rectangle" Grid.Column="0" Click="select_rectangle_Click">Rectangle</Button>
-            <Button Name="select_ellipse"   Grid.Column="1" Click="select_ellipse_Click">ellipse</Button>
+            <Button Name="select_rectangle" Grid.Column="0"> Rectangle   </Button>
+            <Button Name="select_ellipse"   Grid.Column="1">   ellipse     </Button>
+            <Button Name="select_pencil"    Grid.Column="2">   pencil     </Button>
+            <Button Name="select_clear"     Grid.Column="3">   clear     </Button>
         </Grid>
 
-        <Canvas Name="draw_canvas" Grid.Row="1" Panel.ZIndex="3" PreviewMouseDown="Canvas_Mousedown" Background="White">
+        <Canvas Name="draw_canvas" Grid.Row="1" Panel.ZIndex="3" PreviewMouseDown="Canvas_Mousedown" Background="Black">
             <!--<Ellipse  Fill="LightBlue" Height="452" Width="436" Canvas.Left="182" Canvas.Top="92"/>-->
         </Canvas>
 

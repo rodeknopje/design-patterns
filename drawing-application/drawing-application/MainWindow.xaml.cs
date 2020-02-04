@@ -18,53 +18,42 @@ namespace drawing_application
 {
     public partial class MainWindow : Window
     {
-        shapes current_shape;
-
-        bool is_drawing = false;
-
-        Vector start_pos = new Vector(0, 0);
+        shapes shape_style;
 
         Shape shape;
-
 
         public MainWindow()
         {
             InitializeComponent();
-
+            // initialze the shape buttons.
+            select_rectangle.Click +=(a,b)=>shape_style = shapes.rectangle;
+            select_ellipse.Click   +=(a,b)=>shape_style = shapes.ellipse;
+            // initialize the clear buttons.
+            select_clear.Click +=(a,b)=> draw_canvas.Children.Clear();
         }
 
-        private void select_rectangle_Click(object sender, RoutedEventArgs e)
-        {
-            current_shape = shapes.rectangle;
-        }
-
-        private void select_ellipse_Click(object sender, RoutedEventArgs e)
-        {
-            current_shape = shapes.ellipse;
-        }
 
         private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
         {
-            if (is_drawing == true)
+            // check to prevent double clicks.
+            if (shape != null)
             {
                 return;
             }
-
-            Trace.WriteLine(e.GetPosition(draw_canvas).X + "-" + e.GetPosition(draw_canvas).Y);
-
-            start_pos = new Vector(e.GetPosition(draw_canvas).X, e.GetPosition(draw_canvas).Y);
-
-            is_drawing = true;
+            // create a point variable to store coordinates
+            var point = e.GetPosition(draw_canvas);
 
 
-            if (current_shape == shapes.rectangle)
+            // create a new shape based on the selected shape.
+            if (shape_style == shapes.rectangle)
             {
                 shape = new Rectangle
                 {
                     Width   = 0,
                     Height  = 0,
-                    Fill    = Brushes.White,
-                    Stroke  = Brushes.Black,
+                    Fill    = Brushes.Transparent,
+                    Stroke  = Brushes.White,
+                    StrokeThickness = 2.5
                 };
             }
             else
@@ -73,38 +62,54 @@ namespace drawing_application
                 {
                     Width   = 0,
                     Height  = 0,
-                    Fill    = Brushes.White,
-                    Stroke  = Brushes.Black,
+                    Fill    = Brushes.Transparent,
+                    Stroke  = Brushes.White,
+                    StrokeThickness = 2.5
                 };
             }
 
-
-            Canvas.SetLeft(shape, start_pos.X);
-            Canvas.SetTop(shape, start_pos.Y);
-
+            // set the position of the shape.
+            Canvas.SetLeft(shape, point.X);
+            Canvas.SetTop (shape, point.Y);
+            // add it to the canvas.
             draw_canvas.Children.Add(shape);
         }
 
         private void Canvas_Mousemove(object sender, MouseEventArgs e)
         {
-            if (is_drawing)
+            // if the program is not drawing anything.
+            if (shape == null)
             {
-                shape.Width  = e.GetPosition(shape).X;
+                return;
+            }
+            // get the coordinates of the mouse, relative to the shape.
+            var x_pos = e.GetPosition(shape).X;
+            var y_pos = e.GetPosition(shape).Y;
+
+
+            if (x_pos > 0)
+            {
+                shape.Width = e.GetPosition(shape).X;
+            }
+            if (y_pos > 0)
+            {
                 shape.Height = e.GetPosition(shape).Y;
             }
+            
         }
 
         private void Canvas_Mouseup(object sender, MouseButtonEventArgs e)
         {
-            is_drawing = false;
+            //is_drawing = false;
+            shape = null;
         }
     }
 
 
     public enum shapes
     {
+        rectangle,
         ellipse,
-        rectangle
     }
 
 }
