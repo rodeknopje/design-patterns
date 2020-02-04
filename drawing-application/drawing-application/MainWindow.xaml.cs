@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace drawing_application
@@ -20,16 +10,18 @@ namespace drawing_application
     {
         shapes shape_style;
 
+        Point shape_orgin;
+
         Shape shape;
 
         public MainWindow()
         {
             InitializeComponent();
             // initialze the shape buttons.
-            select_rectangle.Click +=(a,b)=>shape_style = shapes.rectangle;
-            select_ellipse.Click   +=(a,b)=>shape_style = shapes.ellipse;
+            select_rectangle.Click += (a,b) => shape_style = shapes.rectangle;
+            select_ellipse.Click   += (a,b) => shape_style = shapes.ellipse;
             // initialize the clear buttons.
-            select_clear.Click +=(a,b)=> draw_canvas.Children.Clear();
+            select_clear.Click += (a,b) => draw_canvas.Children.Clear();
         }
 
 
@@ -41,7 +33,7 @@ namespace drawing_application
                 return;
             }
             // create a point variable to store coordinates
-            var point = e.GetPosition(draw_canvas);
+            shape_orgin = e.GetPosition(draw_canvas);
 
 
             // create a new shape based on the selected shape.
@@ -68,12 +60,21 @@ namespace drawing_application
                 };
             }
 
+
             // set the position of the shape.
-            Canvas.SetLeft(shape, point.X);
-            Canvas.SetTop (shape, point.Y);
+            Canvas.SetLeft(shape, shape_orgin.X);
+            Canvas.SetTop (shape, shape_orgin.Y);
             // add it to the canvas.
             draw_canvas.Children.Add(shape);
+
+            
         }
+
+        private void ShapeSelect(Shape shape)
+        {
+            draw_canvas.Children.Remove(shape);
+        }
+
 
         private void Canvas_Mousemove(object sender, MouseEventArgs e)
         {
@@ -82,26 +83,40 @@ namespace drawing_application
             {
                 return;
             }
-            // get the coordinates of the mouse, relative to the shape.
-            var x_pos = e.GetPosition(shape).X;
-            var y_pos = e.GetPosition(shape).Y;
-
-
-            if (x_pos > 0)
+            // get the offset from the orgin point.
+            var x_offset = e.GetPosition(draw_canvas).X - shape_orgin.X;
+            var y_offset = e.GetPosition(draw_canvas).Y - shape_orgin.Y;
+            // if the x offset is greater than zero.
+            if (x_offset > 0)
             {
-                shape.Width = e.GetPosition(shape).X;
+                // set the width to the offset.
+                shape.Width = x_offset;
             }
-            if (y_pos > 0)
+            else
             {
-                shape.Height = e.GetPosition(shape).Y;
+                // otherwise set the left 
+                Canvas.SetLeft(shape, x_offset + shape_orgin.X);
+
+                shape.Width = (-x_offset);
             }
-            
+            if (y_offset > 0)
+            {
+                shape.Height = y_offset;
+            }
+            else
+            {
+                Canvas.SetTop(shape, y_offset + shape_orgin.Y);
+
+                shape.Height = (-y_offset);
+            }
+
         }
 
         private void Canvas_Mouseup(object sender, MouseButtonEventArgs e)
         {
-            //is_drawing = false;
+            // set the shape to null, so the mousemove event will stop, and the shape wil stay childed to the canvas.
             shape = null;
+
         }
     }
 
