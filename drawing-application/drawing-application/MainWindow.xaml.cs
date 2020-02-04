@@ -3,11 +3,17 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Linq;
+using System.Collections.Generic;
+
 
 namespace drawing_application
 {
     public partial class MainWindow : Window
     {
+
+        List<Shape> shapelist = new List<Shape>();
+
         shapes shape_style;
 
         Point shape_orgin;
@@ -34,7 +40,6 @@ namespace drawing_application
             }
             // create a point variable to store coordinates
             shape_orgin = e.GetPosition(draw_canvas);
-
 
             // create a new shape based on the selected shape.
             if (shape_style == shapes.rectangle)
@@ -67,16 +72,31 @@ namespace drawing_application
             // add it to the canvas.
             draw_canvas.Children.Add(shape);
 
-            
+            shapelist.Add(shape);
         }
 
         private void ShapeSelect(Shape shape)
         {
-            draw_canvas.Children.Remove(shape);
+            shape.Stroke = Brushes.Green;
+        }
+        private void canvas_lmbdown(object sender, MouseEventArgs e)
+        {
+            var point = e.GetPosition(draw_canvas);
+
+            foreach (var _shape in shapelist)
+            {
+                if (point.X > Canvas.GetLeft(_shape) && point.X < Canvas.GetLeft(_shape) + _shape.Width &&
+                    point.Y > Canvas.GetTop(_shape)  && point.Y < Canvas.GetTop(_shape)  + _shape.Width)
+                {
+                    _shape.Stroke = Brushes.Green;
+
+                    return;
+                }
+            }
         }
 
-
         private void Canvas_Mousemove(object sender, MouseEventArgs e)
+
         {
             // if the program is not drawing anything.
             if (shape == null)
@@ -97,7 +117,7 @@ namespace drawing_application
                 // otherwise set the left 
                 Canvas.SetLeft(shape, x_offset + shape_orgin.X);
 
-                shape.Width = (-x_offset);
+                shape.Width = -x_offset;
             }
             if (y_offset > 0)
             {
@@ -107,7 +127,7 @@ namespace drawing_application
             {
                 Canvas.SetTop(shape, y_offset + shape_orgin.Y);
 
-                shape.Height = (-y_offset);
+                shape.Height = -y_offset;
             }
 
         }
