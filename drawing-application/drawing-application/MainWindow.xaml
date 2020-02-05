@@ -27,10 +27,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="select_rectangle" Grid.Column="0"> Rectangle   </Button>
-            <Button Name="select_ellipse"   Grid.Column="1">   ellipse    </Button>
-            <Button Name="select_pencil"    Grid.Column="2">   pencil     </Button>
-            <Button Name="select_clear"     Grid.Column="3">   clear     </Button>
+            <Button Name="select_rectangle" Grid.Column="0"> Rectangle </Button>
+            <Button Name="select_ellipse"   Grid.Column="1"> ellipse   </Button>
+            <Button Name="select_pencil"    Grid.Column="2"> pencil    </Button>
+            <Button Name="select_clear"     Grid.Column="3"> clear     </Button>
         </Grid>
 
         <Grid Name="slection_row" Grid.Row="1"  Panel.ZIndex="1" >
@@ -40,8 +40,7 @@
             </Grid.ColumnDefinitions>
 
 
-            <Canvas Name="draw_canvas" Grid.Row="1" MouseMove="Canvas_Mousemove" MouseLeftButtonUp="Canvas_Mouseup" MouseLeftButtonDown="Canvas_Mousedown" MouseRightButtonDown="canvas_lmbdown"  Background="Black"></Canvas>
-
+            <Canvas Name="draw_canvas" Grid.Row="1" MouseMove="Canvas_Mousemove" MouseLeftButtonUp="Canvas_Mouseup" MouseLeftButtonDown="Canvas_Mousedown"  Background="Black"></Canvas>
         </Grid>
 
 
