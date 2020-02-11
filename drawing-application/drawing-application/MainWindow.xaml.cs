@@ -11,6 +11,7 @@ namespace drawing_application
 {
     public partial class MainWindow : Window
     {
+        int ID;
 
         List<Shape> shapelist = new List<Shape>();
 
@@ -29,7 +30,7 @@ namespace drawing_application
             InitializeComponent();
             // initialze the shape buttons.
             select_rectangle.Click += (a, b) => shape_style = shapes.rectangle;
-            select_ellipse.Click += (a, b) => shape_style = shapes.ellipse;
+            select_ellipse.Click   += (a, b) => shape_style = shapes.ellipse;
             // initialize the clear buttons.
             select_clear.Click += (a, b) => draw_canvas.Children.Clear();
         }
@@ -128,6 +129,42 @@ namespace drawing_application
             shape = null;
 
             InstantiateSelectionOutline();
+
+            AddToShapeIndex(selected);
+
+        }
+
+        private void AddToShapeIndex(Shape _shape)
+        {
+            // create a new textbox
+            TextBlock textbox = new TextBlock
+            {
+                // assign the correct text
+                Text = $"{(shape_style == shapes.rectangle ? "square" : "circle")} ({ID++})",
+
+                Margin = new Thickness(2.5),
+                FontSize = 20,
+            };
+            // create a new border
+            Border border = new Border
+            {
+                BorderThickness = new Thickness(0,0,0,1),
+
+                BorderBrush = Brushes.Black,
+                Background  = Brushes.LightGray,
+            };
+
+            // add the border and shape to the scrollview
+            shape_index.Children.Add(textbox);
+            shape_index.Children.Add(border);
+
+            // TEMP
+            textbox.MouseDown += (a, b) =>
+            {
+                draw_canvas.Children.Remove(_shape);
+                shape_index.Children.Remove(textbox);
+                shape_index.Children.Remove(border);
+            };
         }
 
         private void InstantiateSelectionOutline()

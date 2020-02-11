@@ -40,7 +40,11 @@
             </Grid.ColumnDefinitions>
 
 
-            <Canvas Name="draw_canvas" Grid.Row="1" MouseMove="Canvas_Mousemove" MouseLeftButtonUp="Canvas_Mouseup" MouseLeftButtonDown="Canvas_Mousedown"  Background="Black"></Canvas>
+            <Canvas Name="draw_canvas" Grid.Row="1" MouseMove="Canvas_Mousemove" MouseLeftButtonUp="Canvas_Mouseup" MouseLeftButtonDown="Canvas_Mousedown"  Background="Black"/>
+
+            <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Hidden">
+                <StackPanel Name="shape_index"  Background="White"/>
+            </ScrollViewer>
         </Grid>
 
 
