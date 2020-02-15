@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Linq;
 using System.Collections.Generic;
-
+using System;
 
 namespace drawing_application
 {
@@ -30,7 +30,7 @@ namespace drawing_application
             InitializeComponent();
             // initialze the shape buttons.
             select_rectangle.Click += (a, b) => shape_style = shapes.rectangle;
-            select_ellipse.Click   += (a, b) => shape_style = shapes.ellipse;
+            select_ellipse.Click += (a, b) => shape_style = shapes.ellipse;
             // initialize the clear buttons.
             select_clear.Click += (a, b) => draw_canvas.Children.Clear();
         }
@@ -47,29 +47,14 @@ namespace drawing_application
             shape_orgin = e.GetPosition(draw_canvas);
 
             // create a new shape based on the selected shape.
-            if (shape_style == shapes.rectangle)
+            shape = (Shape)Activator.CreateInstance(shape_style == shapes.rectangle ? typeof(Rectangle) : typeof(Ellipse));
             {
-                shape = new Rectangle
-                {
-                    Width = 0,
-                    Height = 0,
-                    Fill = Brushes.Transparent,
-                    Stroke = Brushes.White,
-                    StrokeThickness = 2.5,
-                };
+                shape.Width             = 0;
+                shape.Height            = 0;
+                shape.Fill              = Brushes.Transparent;
+                shape.Stroke            = Brushes.White;
+                shape.StrokeThickness   = 2.5;
             }
-            else
-            {
-                shape = new Ellipse
-                {
-                    Width = 0,
-                    Height = 0,
-                    Fill = Brushes.Transparent,
-                    Stroke = Brushes.White,
-                    StrokeThickness = 2.5
-                };
-            }
-
 
             // set the position of the shape.
             Canvas.SetLeft(shape, shape_orgin.X);
@@ -148,10 +133,10 @@ namespace drawing_application
             // create a new border
             Border border = new Border
             {
-                BorderThickness = new Thickness(0,0,0,1),
+                BorderThickness = new Thickness(0, 0, 0, 1),
 
                 BorderBrush = Brushes.Black,
-                Background  = Brushes.LightGray,
+                Background = Brushes.LightGray,
             };
 
             // add the border and shape to the scrollview
@@ -181,21 +166,21 @@ namespace drawing_application
             {
                 Fill = Brushes.Transparent,
                 Stroke = Brushes.Yellow,
-                StrokeThickness =  2f,
-                StrokeDashArray = {5,5}
-                
+                StrokeThickness = 2f,
+                StrokeDashArray = { 5, 5 }
+
             };
             // set the left and top position te be the same as the selected shape.
-            Canvas.SetLeft(selection_outline, Canvas.GetLeft(selected) -selection_outline.StrokeThickness*2 );
-            Canvas.SetTop(selection_outline,  Canvas.GetTop(selected)  -selection_outline.StrokeThickness*2);
+            Canvas.SetLeft(selection_outline, Canvas.GetLeft(selected) - selection_outline.StrokeThickness * 2);
+            Canvas.SetTop(selection_outline, Canvas.GetTop(selected) - selection_outline.StrokeThickness * 2);
             // set the width and heigth to be the same as the selected shape.
-            selection_outline.Width  = selected.Width  + selection_outline.StrokeThickness * 4;
+            selection_outline.Width = selected.Width + selection_outline.StrokeThickness * 4;
             selection_outline.Height = selected.Height + selection_outline.StrokeThickness * 4;
             // add the selection outline to the draw_canvas.
             draw_canvas.Children.Add(selection_outline);
 
-            selection_outline.MouseEnter += (a,b) => Mouse.OverrideCursor = Cursors.Hand;
-            selection_outline.MouseLeave += (a,b) => Mouse.OverrideCursor = Cursors.Arrow;
+            selection_outline.MouseEnter += (a, b) => Mouse.OverrideCursor = Cursors.Hand;
+            selection_outline.MouseLeave += (a, b) => Mouse.OverrideCursor = Cursors.Arrow;
         }
     }
 
