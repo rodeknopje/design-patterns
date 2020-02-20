@@ -51,7 +51,8 @@ namespace drawing_application
             select_clear.Click += (a, b) =>
             {
                 draw_canvas.Children.Clear();
-                shape_index.Children.Clear();
+                selection_row.Children.Clear();
+                ID = 0;
             };
         }
 
@@ -90,7 +91,7 @@ namespace drawing_application
 
         private void Canvas_Mousemove(object sender, MouseEventArgs e)
         {
-            // if the program is not drawing anything.
+            // if the program is drawing.
             if (shape_drawn != null)
             {
                 // get the offset from the orgin point.
@@ -144,7 +145,7 @@ namespace drawing_application
             if (shape_drawn != null)
             {
                 // add it to the selection row.
-                AddToShapeIndex(shape_drawn);
+                AddToSelectionRow(shape_drawn);
                 // set the shape to null, so the mousemove event will stop, and the shape wil stay childed to the canvas.
                 shape_drawn = null;
             }
@@ -157,7 +158,7 @@ namespace drawing_application
             }
         }
 
-        private void AddToShapeIndex(Shape _shape)
+        private void AddToSelectionRow(Shape _shape)
         {
             // create a new textbox
             TextBlock textbox = new TextBlock
@@ -178,13 +179,14 @@ namespace drawing_application
             };
 
             // add the border and shape to the scrollview
-            shape_index.Children.Add(textbox);
-            shape_index.Children.Add(border);
+            selection_row.Children.Add(textbox);
+            selection_row.Children.Add(border);
 
             // TEMP
             textbox.MouseDown += (a, b) =>
             {
                 SelectShape(_shape);
+                textbox.Background = Brushes.LightBlue;
             };
         }
 
