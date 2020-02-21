@@ -28,7 +28,11 @@ namespace drawing_application
         // the shape that is currently being drawn.
         Shape shape_drawn;
 
+        // the rectangle you see around shapes when they are selected.
         Rectangle selection_outline;
+        // the current state of the program.
+        states state;
+
 
         public MainWindow()
         {
@@ -39,12 +43,13 @@ namespace drawing_application
             {
                 shape_style = shapes.rectangle; 
                 draw_canvas.Children.Remove(selection_outline);
+                SwitchState(states.none);
             };
-
-            select_ellipse.Click += (a, b) => 
+            select_ellipse.Click   += (a, b) =>
             { 
                 shape_style = shapes.ellipse; 
-                draw_canvas.Children.Remove(selection_outline); 
+                draw_canvas.Children.Remove(selection_outline);
+                SwitchState(states.none);
             };
 
             // initialize the clear buttons.
@@ -53,17 +58,21 @@ namespace drawing_application
                 draw_canvas.Children.Clear();
                 selection_row.Children.Clear();
                 ID = 0;
+                SwitchState(states.none);
             };
+
+            SwitchState(states.none);
         }
 
         private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
         {
 
             // check to prevent double clicks.  and if a shape style is selected.
-            if (shape_drawn != null || shape_style == null)
+            if (state != states.none)
             {
                 return;
             }
+            SwitchState(states.draw);
             // create a point variable to store coordinates
             mouse_orgin = e.GetPosition(draw_canvas);
             // create a random for the colours.
@@ -92,7 +101,7 @@ namespace drawing_application
         private void Canvas_Mousemove(object sender, MouseEventArgs e)
         {
             // if the program is drawing.
-            if (shape_drawn != null)
+            if (state == states.draw)
             {
                 // get the offset from the orgin point.
                 var x_offset = e.GetPosition(draw_canvas).X - mouse_orgin.Value.X;
@@ -124,7 +133,7 @@ namespace drawing_application
                 }
             }
             // if an existing shape is being moved.
-            else if (shape_selected != null && shape_orgin != null)
+            else if (state == states.move)
             {
                 // get the offset from the orgin point.
                 var x_offset = e.GetPosition(draw_canvas).X - mouse_orgin.Value.X;
@@ -142,20 +151,25 @@ namespace drawing_application
         private void Canvas_Mouseup(object sender, MouseButtonEventArgs e)
         {
             // if the taks was to draw a new shape.
-            if (shape_drawn != null)
+            if (state == states.draw)
             {
                 // add it to the selection row.
                 AddToSelectionRow(shape_drawn);
                 // set the shape to null, so the mousemove event will stop, and the shape wil stay childed to the canvas.
                 shape_drawn = null;
+                
+                SwitchState(states.none);
             }
             // if the task was to move an existing shape.
-            else if (shape_selected != null)
+            else if (state == states.move)
             {
                 // reset orgins.
                 shape_orgin = null;
                 mouse_orgin = null;
+
+                SwitchState(states.select);
             }
+
         }
 
         private void AddToSelectionRow(Shape _shape)
@@ -192,6 +206,8 @@ namespace drawing_application
 
         private void SelectShape(Shape _shape)
         {
+            SwitchState(states.select);
+
             shape_style = null;
 
             shape_selected = _shape;
@@ -227,6 +243,7 @@ namespace drawing_application
             // when the selection outline is clicked.
             selection_outline.MouseDown += (a, b) =>
             {
+                SwitchState(states.move);
                 // set the mouse orgin.
                 mouse_orgin = b.GetPosition(draw_canvas);
                 // set the shape orgin.
@@ -234,6 +251,12 @@ namespace drawing_application
             };
 
 
+        }
+
+        private void SwitchState(states _state)
+        {
+            state = _state;
+            debug_text.Text = $"state = {state.ToString()}";
         }
     }
 
@@ -246,8 +269,11 @@ namespace drawing_application
 
     public enum states
     {
-        select,
+        none,
         draw,
+        select,
+        move,
+        resize,
     }
 
 }
