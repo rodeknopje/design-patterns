@@ -36,9 +36,13 @@ namespace drawing_application
         // the current state of the program.
         states state;
 
+        SaveLoadManager saveload;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            saveload = new SaveLoadManager();
 
             // initialize the method for the shape buttons
             Action<shapes> click_shape = (_shape) =>            
@@ -61,6 +65,7 @@ namespace drawing_application
                 selection_row.Children.Clear();
                 ID = 0;
                 SwitchState(states.none);
+                saveload.ClearFile();
             };
 
             SwitchState(states.none);
@@ -98,8 +103,6 @@ namespace drawing_application
             draw_canvas.Children.Add(shape_drawn);
             // add the new shape to the shapelist.
             shapelist.Add(shape_drawn);
-
-
         }
 
         private void Canvas_Mousemove(object sender, MouseEventArgs e)
@@ -216,6 +219,7 @@ namespace drawing_application
             // if the taks was to draw a new shape.
             if (state == states.draw)
             {
+                saveload.WriteShapeToFIle($"{shape_style} {Canvas.GetLeft(shape_drawn)} {Canvas.GetTop(shape_drawn)} {shape_drawn.Width} {shape_drawn.Height}");
                 // add it to the selection row.
                 AddToSelectionRow(shape_drawn);
                 // set the shape to null, so the mousemove event will stop, and the shape wil stay childed to the canvas.
@@ -226,6 +230,7 @@ namespace drawing_application
             // if the task was to move an existing shape.
             else if (state == states.move)
             {
+
                 SwitchState(states.select);
             }
             else if (state == states.resize)
