@@ -3,7 +3,7 @@ using System.IO;
 
 namespace drawing_application
 {
-    class SaveLoadManager
+    public class SaveLoadManager
     {
         string textfile;
 
