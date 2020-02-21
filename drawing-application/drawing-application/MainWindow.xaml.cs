@@ -22,6 +22,8 @@ namespace drawing_application
         Point? mouse_orgin;
         // the point where the shape started when dragging.
         Point? shape_orgin;
+        //
+        Point? shape_scale;
 
         // the currently selected shape.
         Shape shape_selected;
@@ -29,7 +31,9 @@ namespace drawing_application
         Shape shape_drawn;
 
         // the rectangle you see around shapes when they are selected.
-        Rectangle selection_outline;
+        Shape selection_outline;
+
+        Shape handle;
         // the current state of the program.
         states state;
 
@@ -43,12 +47,14 @@ namespace drawing_application
             {
                 shape_style = shapes.rectangle; 
                 draw_canvas.Children.Remove(selection_outline);
+                draw_canvas.Children.Remove(handle);
                 SwitchState(states.none);
             };
             select_ellipse.Click   += (a, b) =>
             { 
                 shape_style = shapes.ellipse; 
                 draw_canvas.Children.Remove(selection_outline);
+                draw_canvas.Children.Remove(handle);
                 SwitchState(states.none);
             };
 
@@ -141,10 +147,66 @@ namespace drawing_application
 
                 // add the mouse offset to the shape offset to move the selection outline.
                 Canvas.SetLeft(selection_outline, shape_orgin.Value.X + x_offset);
-                Canvas.SetTop(selection_outline,  shape_orgin.Value.Y + y_offset);
+                Canvas.SetTop(selection_outline, shape_orgin.Value.Y + y_offset);
                 // add the mouse offset to the shape offset to move the shape outline.
                 Canvas.SetLeft(shape_selected, shape_orgin.Value.X + x_offset + selection_outline.StrokeThickness * 2);
-                Canvas.SetTop( shape_selected, shape_orgin.Value.Y + y_offset + selection_outline.StrokeThickness * 2);
+                Canvas.SetTop(shape_selected, shape_orgin.Value.Y + y_offset + selection_outline.StrokeThickness * 2);
+
+                Canvas.SetLeft(handle, Canvas.GetLeft(selection_outline) + selection_outline.Width - handle.Width / 2);
+                Canvas.SetTop(handle, Canvas.GetTop(selection_outline) + selection_outline.Height - handle.Height / 2);
+
+
+            }
+            else if (state == states.resize)
+            {
+                // get the offset from the orgin point.
+                var x_offset = e.GetPosition(draw_canvas).X - mouse_orgin.Value.X;
+                var y_offset = e.GetPosition(draw_canvas).Y - mouse_orgin.Value.Y;
+
+                Canvas.SetLeft(handle, shape_orgin.Value.X + x_offset);
+                Canvas.SetTop(handle,  shape_orgin.Value.Y + y_offset);
+
+                var width  = shape_scale.Value.X + x_offset;
+                var heigth  = shape_scale.Value.Y + y_offset;
+
+                if (width > 0)
+                {
+                    shape_selected.Width  = width;
+                    selection_outline.Width  = width + selection_outline.StrokeThickness * 4;
+
+                }
+                else 
+                {
+                    Canvas.SetLeft(shape_selected, shape_orgin.Value.X + x_offset );
+                    shape_selected.Width = -width;
+
+                    Canvas.SetLeft(selection_outline, shape_orgin.Value.X + x_offset - selection_outline.StrokeThickness * 2);
+                    selection_outline.Width = -width + selection_outline.StrokeThickness * 4;
+                }
+                if (heigth > 0)
+                {
+                    shape_selected.Height = heigth;
+                    selection_outline.Height = heigth + selection_outline.StrokeThickness * 4;
+                }
+                else
+                {
+                    Canvas.SetTop(shape_selected, shape_orgin.Value.Y + y_offset );
+                    shape_selected.Height = -heigth;
+
+                    Canvas.SetTop(selection_outline, shape_orgin.Value.Y + y_offset - selection_outline.StrokeThickness * 2);
+                    selection_outline.Height = -heigth + selection_outline.StrokeThickness * 4;
+                }
+
+
+
+                debug_text.Text = $"({width},{heigth})";
+
+
+
+
+
+
+
             }
         }
 
@@ -157,17 +219,21 @@ namespace drawing_application
                 AddToSelectionRow(shape_drawn);
                 // set the shape to null, so the mousemove event will stop, and the shape wil stay childed to the canvas.
                 shape_drawn = null;
-                
+
                 SwitchState(states.none);
             }
             // if the task was to move an existing shape.
             else if (state == states.move)
             {
-                // reset orgins.
-                shape_orgin = null;
-                mouse_orgin = null;
-
                 SwitchState(states.select);
+            }
+            else if (state == states.resize)
+            {
+                SwitchState(states.select);
+
+                Canvas.SetLeft(handle, Canvas.GetLeft(selection_outline) + selection_outline.Width - handle.Width / 2);
+                Canvas.SetTop(handle, Canvas.GetTop(selection_outline) + selection_outline.Height - handle.Height / 2);
+
             }
 
         }
@@ -216,6 +282,7 @@ namespace drawing_application
             {
                 // remove the current selection outline.
                 draw_canvas.Children.Remove(selection_outline);
+                draw_canvas.Children.Remove(handle);
             }
 
             // assign the selection outline.
@@ -231,7 +298,7 @@ namespace drawing_application
             Canvas.SetLeft(selection_outline, Canvas.GetLeft(_shape) - selection_outline.StrokeThickness * 2);
             Canvas.SetTop(selection_outline, Canvas.GetTop(_shape) - selection_outline.StrokeThickness * 2);
             // set the width and heigth to be the same as the selected shape.
-            selection_outline.Width = _shape.Width + selection_outline.StrokeThickness * 4;
+            selection_outline.Width =  _shape.Width + selection_outline.StrokeThickness * 4;
             selection_outline.Height = _shape.Height + selection_outline.StrokeThickness * 4;
             // add the selection outline to the draw_canvas.
             draw_canvas.Children.Add(selection_outline);
@@ -250,7 +317,32 @@ namespace drawing_application
                 shape_orgin = new Point(Canvas.GetLeft(_shape), Canvas.GetTop(_shape));
             };
 
+            handle = new Ellipse
+            {
+                Width = 20,
+                Height = 20,
+                StrokeThickness = 2,
+                Stroke = Brushes.White,
+                Fill   = Brushes.Gray,
+                
+            };
 
+            Canvas.SetLeft(handle, Canvas.GetLeft(selection_outline) + selection_outline.Width - handle.Width/2);
+            Canvas.SetTop(handle,  Canvas.GetTop(selection_outline) + selection_outline.Height - handle.Height/2);
+
+            draw_canvas.Children.Add(handle);
+
+            handle.MouseDown += (a, b) =>
+            {
+                SwitchState(states.resize);
+                // set the mouse orgin.
+                mouse_orgin = b.GetPosition(draw_canvas);
+                // set the shape orgin.
+                shape_orgin = new Point(Canvas.GetLeft(handle), Canvas.GetTop(handle));
+
+                shape_scale = new Point(shape_selected.Width, shape_selected.Height);
+
+            };
         }
 
         private void SwitchState(states _state)
