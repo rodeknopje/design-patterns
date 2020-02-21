@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
 using System.IO;
-using System.Windows;
+
 namespace drawing_application
 {
     class SaveLoadManager
@@ -15,7 +12,7 @@ namespace drawing_application
             textfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "savedata.txt");
         }
 
-        public void WriteShapeToFIle(string text)
+        public void WriteShapeToFile(string text)
         {
             File.AppendAllText(textfile,$"{text}\n");
         }

@@ -83,8 +83,6 @@ namespace drawing_application
             SwitchState(states.draw);
             // create a point variable to store coordinates
             mouse_orgin = e.GetPosition(draw_canvas);
-            // create a random for the colours.
-            Random r = new Random();
             // create a new shape based on the selected shape.
             shape_drawn = (Shape)Activator.CreateInstance(shape_style == shapes.rectangle ? typeof(Rectangle) : typeof(Ellipse));
             {
@@ -216,10 +214,10 @@ namespace drawing_application
 
         private void Canvas_Mouseup(object sender, MouseButtonEventArgs e)
         {
-            // if the taks was to draw a new shape.
+            // if the task was to draw a new shape.
             if (state == states.draw)
             {
-                saveload.WriteShapeToFIle($"{shape_style} {Canvas.GetLeft(shape_drawn)} {Canvas.GetTop(shape_drawn)} {shape_drawn.Width} {shape_drawn.Height}");
+                saveload.WriteShapeToFile($"{shape_style} {Canvas.GetLeft(shape_drawn)} {Canvas.GetTop(shape_drawn)} {shape_drawn.Width} {shape_drawn.Height}");
                 // add it to the selection row.
                 AddToSelectionRow(shape_drawn);
                 // set the shape to null, so the mousemove event will stop, and the shape wil stay childed to the canvas.
@@ -347,7 +345,7 @@ namespace drawing_application
                 mouse_orgin = b.GetPosition(draw_canvas);
                 // set the shape orgin.
                 orgin_position = new Point(Canvas.GetLeft(handle), Canvas.GetTop(handle));
-
+                // set the scale orgin.
                 orgin_scale = new Point(shape_selected.Width, shape_selected.Height);
 
             };
@@ -361,7 +359,7 @@ namespace drawing_application
         private void SwitchState(states _state)
         {
             state = _state;
-            debug_text.Text = $"state = {state.ToString()}";
+            debug_text.Text = $"state:{state.ToString()}";
         }
     }
 
