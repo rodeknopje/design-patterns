@@ -8,7 +8,7 @@ namespace drawing_application.Commands
     {
         public override void Execute()
         {
-            m.state = states.none;
+            m.SwitchState(states.select);
         }
 
         public override void Undo()
