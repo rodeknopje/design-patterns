@@ -17,7 +17,7 @@ namespace drawing_application.Commands
 
         public override void Execute()
         {
-            // get the offset from the orgin point.
+            // calculate the mouse offset
             var x_offset = mouse_pos.X - m.mouse_orgin.X;
             var y_offset = mouse_pos.Y - m.mouse_orgin.Y;
 

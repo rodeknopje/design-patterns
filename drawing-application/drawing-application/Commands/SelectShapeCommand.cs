@@ -17,6 +17,30 @@ namespace drawing_application.Commands
             this.shape = shape;
         }
 
+        private void InitializeSelectionShapes()
+        {
+            // assign the selection outline.
+            m.selection_outline = new Rectangle
+            {
+                Fill = Brushes.Transparent,
+                Stroke = Brushes.White,
+                StrokeThickness = 2f,
+                StrokeDashArray = { 5, 5 }
+            };
+
+            // create the handle.
+            m.handle = new Ellipse
+            {
+                Width = 20,
+                Height = 20,
+                StrokeThickness = 2,
+                Stroke = Brushes.White,
+                Fill = Brushes.Gray,
+
+            };
+
+        }
+
         public override void Execute()
         {
             m.SwitchState(states.select);
@@ -31,20 +55,13 @@ namespace drawing_application.Commands
                 m.draw_canvas.Children.Remove(m.handle);
             }
 
-            // assign the selection outline.
-            m.selection_outline = new Rectangle
-            {
-                Fill = Brushes.Transparent,
-                Stroke = Brushes.White,
-                StrokeThickness = 2f,
-                StrokeDashArray = { 5, 5 }
-
-            };
+            // create the selection outline and the resize handle.
+            InitializeSelectionShapes();      
             // set the left and top position te be the same as the selected shape.
             Canvas.SetLeft(m.selection_outline, Canvas.GetLeft(shape) - m.selection_outline.StrokeThickness * 2);
-            Canvas.SetTop(m.selection_outline, Canvas.GetTop(shape) - m.selection_outline.StrokeThickness * 2);
+            Canvas.SetTop(m.selection_outline,  Canvas.GetTop(shape)  - m.selection_outline.StrokeThickness * 2);
             // set the width and heigth to be the same as the selected shape.
-            m.selection_outline.Width = shape.Width + m.selection_outline.StrokeThickness * 4;
+            m.selection_outline.Width  = shape.Width  + m.selection_outline.StrokeThickness * 4;
             m.selection_outline.Height = shape.Height + m.selection_outline.StrokeThickness * 4;
             // add the selection outline to the draw_canvas.
             m.draw_canvas.Children.Add(m.selection_outline);
@@ -55,22 +72,10 @@ namespace drawing_application.Commands
 
             // when the selection outline is clicked.
             m.selection_outline.MouseDown += (a, b) => new StartMoveCommand(b.GetPosition(m.draw_canvas)).Execute();
-
-
-            // create the handle.
-            m.handle = new Ellipse
-            {
-                Width = 20,
-                Height = 20,
-                StrokeThickness = 2,
-                Stroke = Brushes.White,
-                Fill = Brushes.Gray,
-
-            };
-
+        
             // move it to the bottum right.
-            Canvas.SetLeft(m.handle, Canvas.GetLeft(m.selection_outline) + m.selection_outline.Width - m.handle.Width / 2);
-            Canvas.SetTop(m.handle, Canvas.GetTop(m.selection_outline) + m.selection_outline.Height - m.handle.Height / 2);
+            Canvas.SetLeft(m.handle, Canvas.GetLeft(m.selection_outline) + m.selection_outline.Width  - m.handle.Width  / 2);
+            Canvas.SetTop(m.handle,  Canvas.GetTop(m.selection_outline)  + m.selection_outline.Height - m.handle.Height / 2);
 
             // add it to the draw canvas.
             m.draw_canvas.Children.Add(m.handle);

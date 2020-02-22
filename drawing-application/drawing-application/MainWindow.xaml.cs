@@ -63,6 +63,7 @@ namespace drawing_application
             //  if the game in not doing anything else.
             if (state == states.none)
             {
+                // start a new drawing.
                 new StartDrawCommand(e.GetPosition(draw_canvas)).Execute();
             }
 
@@ -70,6 +71,7 @@ namespace drawing_application
 
         private void Canvas_Mousemove(object sender, MouseEventArgs e)
         {
+            // when the mouse moves do something depending on the state of the program.
             switch (state)
             {
                 case states.draw:   new DrawCommand(e.GetPosition(draw_canvas)).Execute();    break;
@@ -80,7 +82,7 @@ namespace drawing_application
 
         private void Canvas_Mouseup(object sender, MouseButtonEventArgs e)
         {
-
+            // when the mouse up event is fired do something depending on the state of the program.
             switch (state)
             {
                 case states.draw:   new StopDrawCommand().Execute();    break;
@@ -115,7 +117,6 @@ namespace drawing_application
             // if the textbox is clicked then select the curren shape
             textbox.MouseDown += (a, b) => new SelectShapeCommand(_shape).Execute();
         }
-
 
 
         public void SwitchState(states _state)
