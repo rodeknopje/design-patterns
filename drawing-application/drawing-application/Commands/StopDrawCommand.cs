@@ -1,29 +1,39 @@
 ﻿using System;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace drawing_application.Commands
 {
     class StopDrawCommand : Command
     {
-        public StopDrawCommand() { }
+        Shape shape;
 
-        public StopDrawCommand(shapes style, int[] pos_data)
+        public StopDrawCommand() 
         {
-            m.shape_drawn = m.CreateShape(style);
+            // remove the drawn_shape from the canvas.
+            m.draw_canvas.Children.Remove(m.shape_drawn);
+            // assign the shape of this command with the drawn shape.
+            shape = m.shape_drawn;
+        }
 
-            Canvas.SetLeft(m.shape_drawn, pos_data[0]);
-            Canvas.SetTop (m.shape_drawn, pos_data[1]);
+        // alternate constructor for loading shapes from the savefile.
+        public StopDrawCommand(shapes style, int[] pos_data)
+        {                      
+            shape = m.CreateShape(style);
 
-            m.shape_drawn.Width  = pos_data[2];
-            m.shape_drawn.Height = pos_data[3];
+            Canvas.SetLeft(shape, pos_data[0]);
+            Canvas.SetTop (shape, pos_data[1]);
 
-            m.draw_canvas.Children.Add(m.shape_drawn);
+            shape.Width  = pos_data[2];
+            shape.Height = pos_data[3];
         }
 
         public override void Execute()
         {
+            // add the shape of this command to the canvas.
+            m.draw_canvas.Children.Add(shape);
             // add it to the selection row.
-            m.AddToSelectionRow(m.shape_drawn);
+            m.AddToSelectionRow(shape);
             // set the shape to null, so the mousemove event will stop, and the shape wil stay childed to the canvas.
             m.shape_drawn = null;
 

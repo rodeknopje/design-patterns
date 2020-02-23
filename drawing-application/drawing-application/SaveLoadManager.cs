@@ -25,8 +25,9 @@ namespace drawing_application
 
             foreach (string line in File.ReadAllLines(textfile))
             {
+                // split the string with each space
                 var data = line.Split(" ");
-
+                // check if the first word is a rectangle or a ellipse, then convert the rest of the data to ints.
                 new StopDrawCommand((shapes)(data[0][0]=='R'?0:1), data.Skip(1).Select(x=>Convert.ToInt32(x)).ToArray()).Execute();
             }
         }
