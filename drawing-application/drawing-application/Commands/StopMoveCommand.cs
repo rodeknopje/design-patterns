@@ -7,10 +7,14 @@ namespace drawing_application.Commands
 {
     class StopMoveCommand : Command
     {
+
+
         // the shape binded to this command.
         Shape shape;
         // the orginal pos of this shape.
         Point orgin_pos;
+
+        Point new_pos;
 
         public StopMoveCommand()
         {
@@ -18,11 +22,17 @@ namespace drawing_application.Commands
             shape = m.shape_selected;
             // assign the orgin pos.
             orgin_pos = m.orgin_position;
+            // assign the new pos.
+            new_pos = new Point(Canvas.GetLeft(shape),Canvas.GetTop(shape));
         }
 
         public override void Execute()
         {
-            m.SwitchState(states.select);
+            // set the shape to his orginal position.
+            Canvas.SetLeft(shape, new_pos.X);
+            Canvas.SetTop (shape, new_pos.Y);
+
+            new SelectShapeCommand(shape).Execute();
         }
 
         public override void Undo()

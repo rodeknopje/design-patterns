@@ -68,8 +68,8 @@ namespace drawing_application
 
             KeyDown += (a, b) => 
             {
-                if (b.Key == Key.Z) cmd_manager.Undo();
-                if (b.Key == Key.R) cmd_manager.Redo();
+                if (b.Key == Key.Z) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Undo();
+                if (b.Key == Key.R) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Redo();
             };
         }
 
@@ -125,10 +125,11 @@ namespace drawing_application
         }
 
 
-        public void SwitchState(states _state)
+        public void SwitchState(states state)
         {
-            state = _state;
-            debug_text.Text = $"state:{state.ToString()}";
+            this.state = state;
+
+            debug_text.Text = $"state:{this.state.ToString()}";
         }
 
         public Shape CreateShape(shapes style)
