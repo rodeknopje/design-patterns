@@ -7,6 +7,7 @@ namespace drawing_application.Commands
     class StopDrawCommand : Command
     {
         Shape shape;
+        Button button;
 
         public StopDrawCommand() 
         {
@@ -33,14 +34,16 @@ namespace drawing_application.Commands
             // add the shape of this command to the canvas.
             m.draw_canvas.Children.Add(shape);
             // add it to the selection row.
-            m.AddToSelectionRow(shape);
+            button = m.AddToSelectionRow(shape);
 
             m.SwitchState(states.none);
         }
 
         public override void Undo()
         {
-
+            m.draw_canvas.Children.Remove(shape);
+            m.selection_row.Children.Remove(button);
+            
         }
     }
 }

@@ -42,6 +42,8 @@ namespace drawing_application
 
         public SaveLoadManager saveload = new SaveLoadManager();
 
+        public CmdManager cmd_manager = new CmdManager();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -61,6 +63,14 @@ namespace drawing_application
             saveload.LoadProgramState();
             // call the save programs state when the application stops.
             Closed += (a, b) => saveload.SaveProgramState();
+
+            KeyDown += (a, b) => 
+            {
+                if (b.Key == Key.Z)
+                    cmd_manager.Undo();
+                if (b.Key == Key.R)
+                    cmd_manager.Redo();
+            };
         }
 
         private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
@@ -90,44 +100,37 @@ namespace drawing_application
             // when the mouse up event is fired do something depending on the state of the program.
             switch (state)
             {
-                case states.draw:   new StopDrawCommand().Execute();    break;
+                case states.draw:   cmd_manager.InvokeCMD(new StopDrawCommand());    break;
                 case states.move:   new StopMoveCommand().Execute();    break;
                 case states.resize: new StopResizeCommand().Execute();  break;
             }
         }
 
-        public void AddToSelectionRow(Shape _shape)
+        public Button AddToSelectionRow(Shape _shape)
         {
             // create a new textbox
-            TextBlock textbox = new TextBlock
+            Button button = new Button
             {
                 // assign the correct text
-                Text = $"{(_shape.GetType().Name)} ({ID++})",
-                Margin = new Thickness(2.5),
+                Content = $"{(_shape.GetType().Name)} ({ID++})",
+                Margin = new Thickness(1),
                 FontSize = 20,
             };
-            // create a new border
-            Border border = new Border
-            {
-                BorderThickness = new Thickness(0, 0, 0, 1),
-
-                BorderBrush = Brushes.Black,
-                Background  = Brushes.LightGray,
-            };
-
             // add the border and shape to the scrollview
-            selection_row.Children.Add(textbox);
-            selection_row.Children.Add(border);
+            selection_row.Children.Add(button);
+
 
             // if the textbox is clicked then select the curren shape
-            textbox.MouseDown += (a, b) => new SelectShapeCommand(_shape).Execute();
+            button.Click += (a, b) => new SelectShapeCommand(_shape).Execute();
+
+            return button;
         }
 
 
         public void SwitchState(states _state)
         {
             state = _state;
-            debug_text.Text = $"state:{state.ToString()}";
+            //debug_text.Text = $"state:{state.ToString()}";
         }
 
         public Shape CreateShape(shapes style)

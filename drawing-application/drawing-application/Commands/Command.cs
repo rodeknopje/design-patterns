@@ -1,6 +1,6 @@
 ﻿namespace drawing_application.Commands
 {
-    abstract class Command
+    public abstract class Command
     {
         protected MainWindow m;
 
