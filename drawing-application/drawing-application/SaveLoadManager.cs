@@ -40,7 +40,7 @@ namespace drawing_application
 
             foreach (Shape shape in MainWindow.ins.draw_canvas.Children)
             {
-                File.AppendAllText(textfile, $"{shape.GetType().Name} {Canvas.GetLeft(shape)} {Canvas.GetTop(shape)} {shape.Width} {shape.Height}\n");
+                File.AppendAllText(textfile, $"{shape.GetType().Name} {(int)Canvas.GetLeft(shape)} {(int)Canvas.GetTop(shape)} {(int)shape.Width} {(int)shape.Height}\n");
             }
         }
 

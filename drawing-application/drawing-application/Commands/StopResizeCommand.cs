@@ -30,7 +30,7 @@ namespace drawing_application.Commands
 
         public override void Execute()
         {
-            m.SwitchState(states.select);
+            //m.SwitchState(states.select);
 
             shape.Width  = new_scale.X;
             shape.Height = new_scale.Y;

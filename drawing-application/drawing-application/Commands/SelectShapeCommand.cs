@@ -36,7 +36,6 @@ namespace drawing_application.Commands
                 Fill = Brushes.Gray,
 
             };
-
         }
 
         public override void Execute()
@@ -49,8 +48,7 @@ namespace drawing_application.Commands
             if (m.selection_outline != null)
             {
                 // remove the current selection outline.
-                m.draw_canvas.Children.Remove(m.selection_outline);
-                m.draw_canvas.Children.Remove(m.handle);
+                m.DeleteSelectionItems();
             }
 
             // create the selection outline and the resize handle.

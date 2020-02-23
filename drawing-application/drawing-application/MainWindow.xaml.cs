@@ -17,7 +17,7 @@ namespace drawing_application
         public int ID;
         // list with all the shapes in it.
         public List<Shape> shapelist = new List<Shape>();
-        // the selected shape style can be recktangle, circle or null.
+        // the selected shape style can be recktangle or circle
         public shapes shape_style = shapes.rectangle;
 
         // the point where the mouse started when dragging.
@@ -89,9 +89,9 @@ namespace drawing_application
             // when the mouse moves do something depending on the state of the program.
             switch (state)
             {
-                case states.draw:   new DrawCommand(e.GetPosition(draw_canvas)).Execute();    break;
-                case states.move:   new MoveCommand(e.GetPosition(draw_canvas)).Execute();    break;
-                case states.resize: new ResizeCommand(e.GetPosition(draw_canvas)).Execute();  break;
+                case states.draw:   new DrawCommand  (e.GetPosition(draw_canvas)).Execute(); break;
+                case states.move:   new MoveCommand  (e.GetPosition(draw_canvas)).Execute(); break;
+                case states.resize: new ResizeCommand(e.GetPosition(draw_canvas)).Execute(); break;
             }
         }
 
@@ -100,8 +100,8 @@ namespace drawing_application
             // when the mouse up event is fired do something depending on the state of the program.
             switch (state)
             {
-                case states.draw:   cmd_manager.InvokeCMD(new StopDrawCommand());   break;
-                case states.move:   cmd_manager.InvokeCMD(new StopMoveCommand());   break;
+                case states.draw:   cmd_manager.InvokeCMD(new StopDrawCommand  ()); break;
+                case states.move:   cmd_manager.InvokeCMD(new StopMoveCommand  ()); break;
                 case states.resize: cmd_manager.InvokeCMD(new StopResizeCommand()); break;
             }
         }
@@ -123,7 +123,6 @@ namespace drawing_application
 
             return button;
         }
-
 
         public void SwitchState(states state)
         {
