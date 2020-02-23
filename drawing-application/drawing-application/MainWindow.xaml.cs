@@ -102,7 +102,7 @@ namespace drawing_application
             TextBlock textbox = new TextBlock
             {
                 // assign the correct text
-                Text = $"{(shape_style == shapes.rectangle ? "square" : "circle")} ({ID++})",
+                Text = $"{(_shape.GetType().Name)} ({ID++})",
                 Margin = new Thickness(2.5),
                 FontSize = 20,
             };

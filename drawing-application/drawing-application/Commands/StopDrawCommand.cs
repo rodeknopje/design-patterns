@@ -10,10 +10,10 @@ namespace drawing_application.Commands
 
         public StopDrawCommand() 
         {
-            // remove the drawn_shape from the canvas.
-            m.draw_canvas.Children.Remove(m.shape_drawn);
             // assign the shape of this command with the drawn shape.
             shape = m.shape_drawn;
+            // remove the drawn_shape from the canvas.
+            m.draw_canvas.Children.Remove(shape);
         }
 
         // alternate constructor for loading shapes from the savefile.
@@ -34,8 +34,6 @@ namespace drawing_application.Commands
             m.draw_canvas.Children.Add(shape);
             // add it to the selection row.
             m.AddToSelectionRow(shape);
-            // set the shape to null, so the mousemove event will stop, and the shape wil stay childed to the canvas.
-            m.shape_drawn = null;
 
             m.SwitchState(states.none);
         }
