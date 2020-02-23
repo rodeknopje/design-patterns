@@ -4,10 +4,7 @@
     {
         protected MainWindow m;
 
-        public Command()
-        {
-            m = MainWindow.ins;
-        }
+        public Command() => m = MainWindow.ins;
 
         public abstract void Execute();
 
