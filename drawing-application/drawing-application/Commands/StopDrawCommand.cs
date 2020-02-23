@@ -41,9 +41,11 @@ namespace drawing_application.Commands
 
         public override void Undo()
         {
+            m.DeleteSelectionItems();
+
             m.draw_canvas.Children.Remove(shape);
-            m.selection_row.Children.Remove(button);
-            
+
+            m.selection_row.Children.Remove(button);        
         }
     }
 }

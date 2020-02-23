@@ -19,8 +19,8 @@ namespace drawing_application.Commands
             var x_offset = mouse_pos.X - m.mouse_orgin.X;
             var y_offset = mouse_pos.Y - m.mouse_orgin.Y;
             // add the offset to the handle's position.
-            Canvas.SetLeft(m.handle, m.orgin_position.X + x_offset);
-            Canvas.SetTop(m.handle, m.orgin_position.Y + y_offset);
+            Canvas.SetLeft(m.handle, m.orgin_pos_handle.X + x_offset);
+            Canvas.SetTop(m.handle, m.orgin_pos_handle.Y + y_offset);
             // calculate the new width and heigth by adding the offset to the orginal scale.
             var width = m.orgin_scale.X + x_offset;
             var heigth = m.orgin_scale.Y + y_offset;
@@ -38,12 +38,12 @@ namespace drawing_application.Commands
             else
             {
                 // assign the left from the selected shape with the orignal possition minus the offset.
-                Canvas.SetLeft(m.shape_selected, m.orgin_position.X + x_offset);
+                Canvas.SetLeft(m.shape_selected, m.orgin_pos_handle.X + x_offset);
                 // assign the width from the selected shape with the inversed width, so it becomes the line on the right side.
                 m.shape_selected.Width = -width;
 
                 // assign the left from the selection outline with the orignal possition minus the offset.
-                Canvas.SetLeft(m.selection_outline, m.orgin_position.X + x_offset - m.selection_outline.StrokeThickness * 2);
+                Canvas.SetLeft(m.selection_outline, m.orgin_pos_handle.X + x_offset - m.selection_outline.StrokeThickness * 2);
                 // assign the width from the selection outline with the inversed width, so it becomes the line on the right side.
                 m.selection_outline.Width = -width + m.selection_outline.StrokeThickness * 4;
             }
@@ -57,12 +57,12 @@ namespace drawing_application.Commands
             else
             {
                 // assign the top from the selected shape with the orignal possition minus the offset
-                Canvas.SetTop(m.shape_selected, m.orgin_position.Y + y_offset);
+                Canvas.SetTop(m.shape_selected, m.orgin_pos_handle.Y + y_offset);
                 // assign the top from the selected shape with the inversed width, so it becomes the line on the right side.
                 m.shape_selected.Height = -heigth;
 
                 // assign the top from the selection outline with the orignal possition minus the offset.
-                Canvas.SetTop(m.selection_outline, m.orgin_position.Y + y_offset - m.selection_outline.StrokeThickness * 2);
+                Canvas.SetTop(m.selection_outline, m.orgin_pos_handle.Y + y_offset - m.selection_outline.StrokeThickness * 2);
                 // assign the top from the selection outline with the inversed width, so it becomes the line on the right side.
                 m.selection_outline.Height = -heigth + m.selection_outline.StrokeThickness * 4;
             }

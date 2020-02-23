@@ -27,6 +27,8 @@ namespace drawing_application
         // the scale of the shape before resizing.
         public Point orgin_scale;
 
+        public Point orgin_pos_handle;
+
         // the currently selected shape.
         public Shape shape_selected;
         // the shape that is currently being drawn.
@@ -66,10 +68,8 @@ namespace drawing_application
 
             KeyDown += (a, b) => 
             {
-                if (b.Key == Key.Z)
-                    cmd_manager.Undo();
-                if (b.Key == Key.R)
-                    cmd_manager.Redo();
+                if (b.Key == Key.Z) cmd_manager.Undo();
+                if (b.Key == Key.R) cmd_manager.Redo();
             };
         }
 
@@ -100,9 +100,9 @@ namespace drawing_application
             // when the mouse up event is fired do something depending on the state of the program.
             switch (state)
             {
-                case states.draw:   cmd_manager.InvokeCMD(new StopDrawCommand());    break;
-                case states.move:   new StopMoveCommand().Execute();    break;
-                case states.resize: new StopResizeCommand().Execute();  break;
+                case states.draw:   cmd_manager.InvokeCMD(new StopDrawCommand());   break;
+                case states.move:   cmd_manager.InvokeCMD(new StopMoveCommand());   break;
+                case states.resize: cmd_manager.InvokeCMD(new StopResizeCommand()); break;
             }
         }
 
@@ -112,14 +112,12 @@ namespace drawing_application
             Button button = new Button
             {
                 // assign the correct text
-                Content = $"{(_shape.GetType().Name)} ({ID++})",
+                Content = $"{_shape.GetType().Name} ({ID++})",
                 Margin = new Thickness(1),
                 FontSize = 20,
             };
             // add the border and shape to the scrollview
             selection_row.Children.Add(button);
-
-
             // if the textbox is clicked then select the curren shape
             button.Click += (a, b) => new SelectShapeCommand(_shape).Execute();
 
@@ -130,7 +128,7 @@ namespace drawing_application
         public void SwitchState(states _state)
         {
             state = _state;
-            //debug_text.Text = $"state:{state.ToString()}";
+            debug_text.Text = $"state:{state.ToString()}";
         }
 
         public Shape CreateShape(shapes style)
