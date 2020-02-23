@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -73,7 +71,7 @@ namespace drawing_application.Commands
             // when the selection outline is clicked.
             m.selection_outline.MouseDown += (a, b) => new StartMoveCommand(b.GetPosition(m.draw_canvas)).Execute();
         
-            // move it to the bottum right.
+            // move the resize handle it to the bottum right.
             Canvas.SetLeft(m.handle, Canvas.GetLeft(m.selection_outline) + m.selection_outline.Width  - m.handle.Width  / 2);
             Canvas.SetTop(m.handle,  Canvas.GetTop(m.selection_outline)  + m.selection_outline.Height - m.handle.Height / 2);
 

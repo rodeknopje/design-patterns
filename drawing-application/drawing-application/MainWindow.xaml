@@ -26,9 +26,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="select_rectangle" Grid.Column="0"> Rectangle </Button>
-            <Button Name="select_ellipse"   Grid.Column="1"> ellipse   </Button>
-            <Button Name="select_clear"     Grid.Column="2"> clear     </Button>
+            <Button Name="button_rectangle" Grid.Column="0"> Rectangle </Button>
+            <Button Name="button_ellipse"   Grid.Column="1"> ellipse   </Button>
+            <Button Name="button_clear"     Grid.Column="2"> clear     </Button>
         </Grid>
 
         <Grid Name="grid" Grid.Row="1" >

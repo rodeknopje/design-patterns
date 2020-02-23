@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace drawing_application.Commands
+﻿namespace drawing_application.Commands
 {
     class ClearCommand : Command
     {

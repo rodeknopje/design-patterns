@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
 
 namespace drawing_application.Commands
 {
@@ -20,7 +17,7 @@ namespace drawing_application.Commands
 
         public override void Undo()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

@@ -44,16 +44,16 @@ namespace drawing_application
 
         public MainWindow()
         {
-            ins = this;
+            ins ??= this;
 
             InitializeComponent();
 
             // initialze the methods to the shape buttons.
-            select_rectangle.Click += (a, b) => new ChangeShapeStyleCommand(shapes.rectangle).Execute();         
-            select_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(shapes.ellipse).Execute();
+            button_rectangle.Click += (a, b) => new ChangeShapeStyleCommand(shapes.rectangle).Execute();         
+            button_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(shapes.ellipse).Execute();
 
             // initialize the clear buttons.
-            select_clear.Click += (a, b) => new ClearCommand().Execute();
+            button_clear.Click += (a, b) => new ClearCommand().Execute();
 
             SwitchState(states.none);
         }
