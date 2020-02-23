@@ -48,6 +48,7 @@ namespace drawing_application
 
             InitializeComponent();
 
+           
             // initialze the methods to the shape buttons.
             button_rectangle.Click += (a, b) => new ChangeShapeStyleCommand(shapes.rectangle).Execute();         
             button_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(shapes.ellipse).Execute();
@@ -56,6 +57,10 @@ namespace drawing_application
             button_clear.Click += (a, b) => new ClearCommand().Execute();
 
             SwitchState(states.none);
+
+            saveload.LoadProgramState();
+
+            Closed += (a, b) => saveload.SaveProgramState();
         }
 
         private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
