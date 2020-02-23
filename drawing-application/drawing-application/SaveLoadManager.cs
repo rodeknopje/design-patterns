@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using drawing_application.Commands;
@@ -17,20 +18,28 @@ namespace drawing_application
 
         public void LoadProgramState()
         {
+            if (File.Exists(textfile) == false)
+            {
+                return;
+            }
+
             foreach (string line in File.ReadAllLines(textfile))
             {
-                // create shape here.
-                
-            }        
+                var data = line.Split(" ");
+
+                new StopDrawCommand((shapes)(data[0][0]=='R'?0:1), data.Skip(1).Select(x=>Convert.ToInt32(x)).ToArray()).Execute();
+            }
         }
 
         public void SaveProgramState()
         {
-            File.WriteAllText(textfile,"");
+            File.WriteAllText(textfile, "");
+
+            MainWindow.ins.DeleteSelectionItems();
 
             foreach (Shape shape in MainWindow.ins.draw_canvas.Children)
-            { 
-                File.AppendAllText(textfile,$"{shape.GetType().Name} {Canvas.GetLeft(shape)} {Canvas.GetTop(shape)} {shape.Width} {shape.Height}\n");               
+            {
+                File.AppendAllText(textfile, $"{shape.GetType().Name} {Canvas.GetLeft(shape)} {Canvas.GetTop(shape)} {shape.Width} {shape.Height}\n");
             }
         }
 

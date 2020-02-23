@@ -44,22 +44,22 @@ namespace drawing_application
 
         public MainWindow()
         {
-            ins ??= this;
-
             InitializeComponent();
 
-           
+            // initialize the singleton.
+            ins ??= this;
+      
             // initialze the methods to the shape buttons.
             button_rectangle.Click += (a, b) => new ChangeShapeStyleCommand(shapes.rectangle).Execute();         
             button_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(shapes.ellipse).Execute();
-
+            
             // initialize the clear buttons.
             button_clear.Click += (a, b) => new ClearCommand().Execute();
-
+            // set the current state to none.
             SwitchState(states.none);
-
+            // load the saved shapes.
             saveload.LoadProgramState();
-
+            // call the save programs state when the application stops.
             Closed += (a, b) => saveload.SaveProgramState();
         }
 
@@ -128,6 +128,26 @@ namespace drawing_application
         {
             state = _state;
             debug_text.Text = $"state:{state.ToString()}";
+        }
+
+        public Shape CreateShape(shapes style)
+        {
+            // create a new shape based on the selected shape.
+            var shape = (Shape)System.Activator.CreateInstance(style==shapes.rectangle?typeof(Rectangle):typeof(Ellipse));
+            {
+                shape.Width     = 0;
+                shape.Height    = 0;
+                shape.Fill      = Brushes.Transparent;
+                shape.Stroke    = new SolidColorBrush(Color.FromRgb(255, 110, 199));
+                shape.StrokeThickness = 2.5;
+            }
+            return shape;
+        }
+
+        public void DeleteSelectionItems()
+        {
+            draw_canvas.Children.Remove(selection_outline);
+            draw_canvas.Children.Remove(handle);
         }
     }
 
