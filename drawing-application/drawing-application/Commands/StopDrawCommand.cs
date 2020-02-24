@@ -45,7 +45,10 @@ namespace drawing_application.Commands
 
             m.draw_canvas.Children.Remove(shape);
 
-            m.selection_row.Children.Remove(button);        
+            m.selection_row.Children.Remove(button);
+
+            m.SwitchState(states.none);
+
         }
     }
 }
