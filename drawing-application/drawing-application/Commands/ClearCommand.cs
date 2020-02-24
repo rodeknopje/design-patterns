@@ -1,7 +1,27 @@
-﻿namespace drawing_application.Commands
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
+using System.Windows.Shapes;
+
+namespace drawing_application.Commands
 {
     class ClearCommand : Command
     {
+        List<Shape>  shape_list;
+        List<Button> button_list;
+
+        public ClearCommand()
+        {
+            m.DeleteSelectionItems();
+
+            shape_list  = new List<Shape>();
+            button_list = new List<Button>();
+
+            for (int i = 0; i < m.draw_canvas.Children.Count; i++)
+            {
+                shape_list.Add((Shape)m.draw_canvas.Children[i]);
+                button_list.Add((Button)m.selection_row.Children[i]);
+            }
+        }
         public override void Execute()
         {   
             // remove all shapes.
@@ -18,7 +38,11 @@
 
         public override void Undo()
         {
-            
+            for (int i = 0; i < shape_list.Count; i++)
+            {
+                m.draw_canvas.Children.Add(shape_list[i]);
+                m.selection_row.Children.Add(button_list[i]);
+            }
         }
     }
 }

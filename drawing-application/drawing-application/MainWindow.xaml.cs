@@ -58,7 +58,7 @@ namespace drawing_application
             button_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(shapes.ellipse).Execute();
             
             // initialize the clear buttons.
-            button_clear.Click += (a, b) => new ClearCommand().Execute();
+            button_clear.Click += (a, b) => cmd_manager.InvokeCMD(new ClearCommand());
             // set the current state to none.
             SwitchState(states.none);
             // load the saved shapes.
@@ -117,7 +117,7 @@ namespace drawing_application
                 FontSize = 20,
             };
             // add the border and shape to the scrollview
-            selection_row.Children.Add(button);
+            //selection_row.Children.Add(button);
             // if the textbox is clicked then select the curren shape
             button.Click += (a, b) => new SelectShapeCommand(_shape).Execute();
 
