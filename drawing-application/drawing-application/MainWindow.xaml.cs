@@ -134,7 +134,7 @@ namespace drawing_application
         public Shape CreateShape(shapes style)
         {
             // create a new shape based on the selected shape.
-            var shape = (Shape)System.Activator.CreateInstance(style==shapes.rectangle?typeof(Rectangle):typeof(Ellipse));
+            var shape = (Shape)System.Activator.CreateInstance(style==shapes.rectangle?typeof(CustomShapes.Rectangle):typeof(CustomShapes.Ellipse));
             {
                 shape.Width     = 0;
                 shape.Height    = 0;

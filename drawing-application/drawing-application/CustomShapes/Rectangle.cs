@@ -3,26 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace drawing_application.CustomShapes
 {
-    class Star : ShapeGroup
+    class Rectangle : ShapeGroup
     {
+
         protected override List<(float x, float y)> InitializeCoords()
-        { 
-            return  new List<(float x, float y)>
+        {
+            return new List<(float x, float y)>
             {
-                (.5f,0),
-                (.625f,.4f),
-                (1,.4f),
-                (.69f,.625f),
-                (.8f,1),
-                (.5f,.775f),
-                (.2f,1),
-                (.31f,.625f),
-                (0,.4f),
-                (.375f,.4f),
+                (0,0),
+                (1,0),
+                (1,1),
+                (0,1),
             };
         }
 
@@ -40,7 +34,6 @@ namespace drawing_application.CustomShapes
                 };
             }
             return geom;
-
         }
     }
 }

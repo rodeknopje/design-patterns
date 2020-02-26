@@ -3,26 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace drawing_application.CustomShapes
 {
-    class Star : ShapeGroup
+    class Ellipse : ShapeGroup
     {
         protected override List<(float x, float y)> InitializeCoords()
-        { 
-            return  new List<(float x, float y)>
+        {
+            return new List<(float x, float y)>
             {
                 (.5f,0),
-                (.625f,.4f),
-                (1,.4f),
-                (.69f,.625f),
-                (.8f,1),
-                (.5f,.775f),
-                (.2f,1),
-                (.31f,.625f),
-                (0,.4f),
-                (.375f,.4f),
+                (1,.5f),
+                (0.5f,1),
+                (0,.5f),
             };
         }
 
@@ -36,11 +29,12 @@ namespace drawing_application.CustomShapes
 
                 for (int i = 1; i < coords.Count; i++)
                 {
-                    gc.LineTo(new Point(Width * coords[i].x, Height * coords[i].y), true, false);
-                };
+
+                    gc.ArcTo(new Point(Width * coords[i].x, Height * coords[i].y), new Size(10, 10), 45, false, SweepDirection.Counterclockwise, true, true) ;
+
+                }
             }
             return geom;
-
         }
     }
 }
