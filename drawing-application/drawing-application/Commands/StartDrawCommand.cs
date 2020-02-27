@@ -20,7 +20,7 @@ namespace drawing_application.Commands
             // create a point variable to store coordinates
             m.mouse_orgin = orgin;
             // create a new shape based on the selected shape.
-            m.shape_drawn = m.CreateShape(m.shape_style);
+            m.shape_drawn = m.CreateShape(m.style_index);
 
             // set the position of the shape.
             Canvas.SetLeft(m.shape_drawn, orgin.X);

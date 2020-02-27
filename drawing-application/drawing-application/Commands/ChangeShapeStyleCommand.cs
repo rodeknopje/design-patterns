@@ -2,16 +2,16 @@
 {
     class ChangeShapeStyleCommand : Command
     {
-        shapes shape;
+        int index;
 
-        public ChangeShapeStyleCommand(shapes shape)
+        public ChangeShapeStyleCommand(int index)
         {
-            this.shape = shape;
+            this.index = index;
         }
 
         public override void Execute()
         {
-            m.shape_style = shape;
+            m.style_index = index;
             m.draw_canvas.Children.Remove(m.selection_outline);
             m.draw_canvas.Children.Remove(m.handle);
             m.SwitchState(states.none);

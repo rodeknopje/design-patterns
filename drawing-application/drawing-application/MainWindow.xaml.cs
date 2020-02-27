@@ -21,7 +21,6 @@ namespace drawing_application
         // list with all the shapes in it.
         public List<Shape> shapelist = new List<Shape>();
         // the selected shape style can be recktangle or circle
-        public shapes shape_style = shapes.rectangle;
 
         // the point where the mouse started when dragging.
         public Point mouse_orgin;
@@ -49,16 +48,23 @@ namespace drawing_application
 
         public CmdManager cmd_manager = new CmdManager();
 
+        public int style_index;
+
+        public System.Type[] styles;
+        
+
         public MainWindow()
         {
             InitializeComponent();
 
             // initialize the singleton.
             ins ??= this;
-      
+            // get all types that derrive from customshape.
+            styles = Assembly.GetAssembly(typeof(ShapeGroup)).GetTypes().Where(T=>T.IsSubclassOf(typeof(ShapeGroup))).ToArray();          
+
             // initialze the methods to the shape buttons.
-            button_rectangle.Click += (a, b) => new ChangeShapeStyleCommand(shapes.rectangle).Execute();         
-            button_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(shapes.ellipse).Execute();
+            button_rectangle.Click += (a, b) => new ChangeShapeStyleCommand(0).Execute();         
+            button_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(1).Execute();
             
             // initialize the clear buttons.
             button_clear.Click += (a, b) => cmd_manager.InvokeCMD(new ClearCommand());
@@ -75,7 +81,6 @@ namespace drawing_application
                 if (b.Key == Key.R) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Redo();
             };
 
-            GetShapeType(shapes.rectangle);
         }
 
         private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
@@ -123,8 +128,6 @@ namespace drawing_application
                 Margin = new Thickness(1),
                 FontSize = 20,
             };
-            // add the border and shape to the scrollview
-            //selection_row.Children.Add(button);
             // if the textbox is clicked then select the curren shape
             button.Click += (a, b) => new SelectShapeCommand(_shape).Execute();
 
@@ -138,10 +141,10 @@ namespace drawing_application
             debug_text.Text = $"state:{this.state.ToString()}";
         }
 
-        public Shape CreateShape(shapes style)
+        public Shape CreateShape(int index)
         {
             // create a new shape based on the selected shape.
-            var shape = (Shape)System.Activator.CreateInstance(style==shapes.rectangle?typeof(CustomShapes.Rectangle):typeof(CustomShapes.Ellipse));
+            var shape = (Shape)System.Activator.CreateInstance(styles[index]);
             {
                 shape.Width     = 0;
                 shape.Height    = 0;
@@ -157,23 +160,6 @@ namespace drawing_application
             draw_canvas.Children.Remove(selection_outline);
             draw_canvas.Children.Remove(handle);
         }
-
-        public Shape GetShapeType(shapes _type)
-        {
-            foreach (var x in Assembly.GetAssembly(typeof(ShapeGroup)).GetTypes().Where(t=>t.IsSubclassOf(typeof(ShapeGroup))))
-            {
-                
-            }
-            return null;
-        }
-    }
-
-
-    public enum shapes
-    {
-        rectangle,
-        ellipse,
-        star,
     }
 
     public enum states

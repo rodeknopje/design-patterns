@@ -20,9 +20,9 @@ namespace drawing_application.Commands
         }
 
         // alternate constructor for loading shapes from the savefile.
-        public StopDrawCommand(shapes style, int[] pos_data)
+        public StopDrawCommand(int index, int[] pos_data)
         {                      
-            shape = m.CreateShape(style);
+            shape = m.CreateShape(index);
 
             Canvas.SetLeft(shape, pos_data[0]);
             Canvas.SetTop (shape, pos_data[1]);
