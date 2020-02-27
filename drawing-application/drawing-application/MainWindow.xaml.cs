@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using drawing_application.CustomShapes;
 
+
 namespace drawing_application
 {
     public partial class MainWindow : Window
@@ -74,6 +75,8 @@ namespace drawing_application
             saveload.LoadProgramState();
             // call the save programs state when the application stops.
             Closed += (a, b) => saveload.SaveProgramState();
+            // add
+            InitializeShapeSelect();
 
             KeyDown += (a, b) => 
             {
@@ -160,6 +163,23 @@ namespace drawing_application
             draw_canvas.Children.Remove(selection_outline);
             draw_canvas.Children.Remove(handle);
         }
+
+        private void InitializeShapeSelect()
+        {
+            for (int i = 0; i < styles.Length; i++)
+            {
+                int index = i;
+                var button = new Button
+                {
+                    Content = styles[i].Name,
+                };
+                button.Click += (a, b) => new ChangeShapeStyleCommand(index).Execute();
+                style_select.Children.Add(button);
+            }
+        }
+       
+
+
     }
 
     public enum states

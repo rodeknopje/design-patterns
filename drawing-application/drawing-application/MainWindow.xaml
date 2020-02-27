@@ -46,7 +46,24 @@
                 <StackPanel Name="selection_row"  Background="White"/>
             </ScrollViewer>
         </Grid>
+       
+        <Grid x:Name="style_grid" Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+
+            <ScrollViewer  Grid.Column="0" Background="White" VerticalScrollBarVisibility="Hidden" >
+                <StackPanel x:Name="style_select"/>
+
+
+            </ScrollViewer>
+            
+        </Grid>
 
 
 
