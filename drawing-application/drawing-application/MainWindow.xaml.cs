@@ -61,10 +61,10 @@ namespace drawing_application
             // initialize the singleton.
             ins ??= this;
             // get all types that derrive from customshape.
-            styles = Assembly.GetAssembly(typeof(ShapeGroup)).GetTypes().Where(T=>T.IsSubclassOf(typeof(ShapeGroup))).ToArray();          
+            styles = Assembly.GetAssembly(typeof(ShapeGroup)).GetTypes().Where(T=>T.IsSubclassOf(typeof(ShapeGroup))).ToArray();
 
             // initialze the methods to the shape buttons.
-            button_rectangle.Click += (a, b) => new ChangeShapeStyleCommand(0).Execute();         
+            button_rectangle.Click += (a, b) => scrollview_select.Visibility = scrollview_select.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;         
             button_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(1).Execute();
             
             // initialize the clear buttons.
@@ -173,7 +173,15 @@ namespace drawing_application
                 {
                     Content = styles[i].Name,
                 };
-                button.Click += (a, b) => new ChangeShapeStyleCommand(index).Execute();
+                button.Click += (a, b) =>
+                {
+                    button_rectangle.Content = styles[index].Name;
+                    scrollview_select.Visibility = Visibility.Collapsed;
+                    new ChangeShapeStyleCommand(index).Execute();
+                };
+
+
+
                 style_select.Children.Add(button);
             }
         }
