@@ -8,33 +8,17 @@ namespace drawing_application.CustomShapes
 {
     class Ellipse : ShapeGroup
     {
-        protected override List<(float x, float y)> InitializeCoords()
+        protected override void DrawShape(out List<Point> coords)
         {
-            return new List<(float x, float y)>
+            coords = new List<Point>();
+
+            for (int i = 0; i < 65; i++)
             {
-                (.5f,0),
-                (1,.5f),
-                (0.5f,1),
-                (0,.5f),
-            };
-        }
+                var x =  (Width  * .5) + -Math.Cos(i*.1) * (Width  * .5) - StrokeThickness / 2;
+                var y =  (Height * .5) +  Math.Sin(i*.1) * (Height * .5) - StrokeThickness / 2;
 
-        protected override Geometry InitializeGeometry()
-        {
-            StreamGeometry geom = new StreamGeometry();
-
-            using (var gc = geom.Open())
-            {
-                gc.BeginFigure(new Point(Width * coords[0].x, Height * coords[0].y), true, true);
-
-                for (int i = 1; i < coords.Count; i++)
-                {
-
-                    gc.ArcTo(new Point(Width * coords[i].x, Height * coords[i].y), new Size(10, 10), 45, false, SweepDirection.Counterclockwise, true, true) ;
-
-                }
+                coords.Add(new Point(x, y));
             }
-            return geom;
         }
     }
 }
