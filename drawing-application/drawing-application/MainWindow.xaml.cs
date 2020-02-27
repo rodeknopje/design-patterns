@@ -5,6 +5,9 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using drawing_application.Commands;
+using System.Linq;
+using System.Reflection;
+using drawing_application.CustomShapes;
 
 namespace drawing_application
 {
@@ -71,6 +74,8 @@ namespace drawing_application
                 if (b.Key == Key.Z) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Undo();
                 if (b.Key == Key.R) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Redo();
             };
+
+            GetShapeType(shapes.rectangle);
         }
 
         private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
@@ -83,6 +88,8 @@ namespace drawing_application
             }
 
         }
+
+       
 
         private void Canvas_Mousemove(object sender, MouseEventArgs e)
         {
@@ -150,6 +157,15 @@ namespace drawing_application
             draw_canvas.Children.Remove(selection_outline);
             draw_canvas.Children.Remove(handle);
         }
+
+        public Shape GetShapeType(shapes _type)
+        {
+            foreach (var x in Assembly.GetAssembly(typeof(ShapeGroup)).GetTypes().Where(t=>t.IsSubclassOf(typeof(ShapeGroup))))
+            {
+                
+            }
+            return null;
+        }
     }
 
 
@@ -157,6 +173,7 @@ namespace drawing_application
     {
         rectangle,
         ellipse,
+        star,
     }
 
     public enum states

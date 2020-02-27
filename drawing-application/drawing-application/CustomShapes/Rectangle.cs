@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace drawing_application.CustomShapes
 {
-    class Rectangle : ShapeGroup
+    public class Rectangle : ShapeGroup
     {
         protected override void DrawShape(out List<Point> coords)
         {

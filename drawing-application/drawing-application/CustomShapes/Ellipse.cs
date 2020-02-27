@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace drawing_application.CustomShapes
 {
-    class Ellipse : ShapeGroup
+    public class Ellipse : ShapeGroup
     {
         protected override void DrawShape(out List<Point> coords)
         {

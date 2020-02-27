@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace drawing_application.CustomShapes
 {
-    class Star : ShapeGroup
+    public class Star : ShapeGroup
     {
         protected override void DrawShape(out List<Point> coords)
         { 
