@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="button_rectangle" Grid.Column="0"> Rectangle </Button>
+            <Button Name="button_rectangle" Grid.Column="0"> Ellipse </Button>
             <Button Name="button_ellipse"   Grid.Column="1"> ellipse   </Button>
             <Button Name="button_clear"     Grid.Column="2"> clear     </Button>
         </Grid>
@@ -57,7 +57,7 @@
                 <RowDefinition Height="300"/>
             </Grid.RowDefinitions>
 
-            <ScrollViewer  Grid.Column="0" Background="White" VerticalScrollBarVisibility="Hidden" >
+            <ScrollViewer x:Name="scrollview_select"  Grid.Column="0" Background="Transparent" VerticalScrollBarVisibility="Hidden" Visibility="Collapsed" >
                 <StackPanel x:Name="style_select"/>
 
 
