@@ -16,8 +16,8 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // calculate the mouse offset
-            var x_offset = mouse_pos.X - m.mouse_orgin.X;
-            var y_offset = mouse_pos.Y - m.mouse_orgin.Y;
+            var x_offset = mouse_pos.X - m.orgin_mouse.X;
+            var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
 
             // add the mouse offset to the shape offset to move the selection outline.
             Canvas.SetLeft(m.selection_outline, m.orgin_position.X + x_offset);

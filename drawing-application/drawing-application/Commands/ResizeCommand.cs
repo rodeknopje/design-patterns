@@ -16,8 +16,8 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // get the offset from the orginal mouse position.
-            var x_offset = mouse_pos.X - m.mouse_orgin.X;
-            var y_offset = mouse_pos.Y - m.mouse_orgin.Y;
+            var x_offset = mouse_pos.X - m.orgin_mouse.X;
+            var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
             // add the offset to the handle's position.
             Canvas.SetLeft(m.handle, m.orgin_pos_handle.X + x_offset);
             Canvas.SetTop(m.handle, m.orgin_pos_handle.Y + y_offset);

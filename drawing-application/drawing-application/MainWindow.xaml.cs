@@ -24,7 +24,7 @@ namespace drawing_application
         // the selected shape style can be recktangle or circle
 
         // the point where the mouse started when dragging.
-        public Point mouse_orgin;
+        public Point orgin_mouse;
         // the point where the shape started when dragging.
         public Point orgin_position;
         // the scale of the shape before resizing.

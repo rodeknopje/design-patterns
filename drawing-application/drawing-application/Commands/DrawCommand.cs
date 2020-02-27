@@ -18,8 +18,8 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // get the offset from the orgin point.
-            var x_offset = mouse_pos.X - m.mouse_orgin.X;
-            var y_offset = mouse_pos.Y - m.mouse_orgin.Y;
+            var x_offset = mouse_pos.X - m.orgin_mouse.X;
+            var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
             // if the x offset is greater than zero.
             if (x_offset > 0)
             {
@@ -29,7 +29,7 @@ namespace drawing_application.Commands
             else
             {
                 // otherwise set the left 
-                Canvas.SetLeft(m.shape_drawn, x_offset + m.mouse_orgin.X);
+                Canvas.SetLeft(m.shape_drawn, x_offset + m.orgin_mouse.X);
                 // inverse the offset to make it positive.
                 m.shape_drawn.Width = -x_offset;
             }
@@ -41,7 +41,7 @@ namespace drawing_application.Commands
             else
             {
                 // otherwise set the left 
-                Canvas.SetTop(m.shape_drawn, y_offset + m.mouse_orgin.Y);
+                Canvas.SetTop(m.shape_drawn, y_offset + m.orgin_mouse.Y);
                 // inverse the offset to make it positive.
                 m.shape_drawn.Height = -y_offset;
             }

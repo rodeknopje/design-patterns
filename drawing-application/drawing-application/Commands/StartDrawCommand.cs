@@ -18,7 +18,7 @@ namespace drawing_application.Commands
         {
             m.SwitchState(states.draw);
             // create a point variable to store coordinates
-            m.mouse_orgin = orgin;
+            m.orgin_mouse = orgin;
             // create a new shape based on the selected shape.
             m.shape_drawn = m.CreateShape(m.style_index);
 

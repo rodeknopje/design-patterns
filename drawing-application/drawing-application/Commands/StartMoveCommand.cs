@@ -17,7 +17,7 @@ namespace drawing_application.Commands
         {
             m.SwitchState(states.move);
             // set the mouse orgin.
-            m.mouse_orgin = mouse_pos;
+            m.orgin_mouse = mouse_pos;
             // set the shape orgin.
             m.orgin_position = new Point(Canvas.GetLeft(m.shape_selected), Canvas.GetTop(m.shape_selected));
         }
