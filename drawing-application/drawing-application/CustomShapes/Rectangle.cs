@@ -9,6 +9,8 @@ namespace drawing_application.CustomShapes
     {
         protected override void DrawShape(out List<Point> coords)
         {
+            StrokeThickness = 5;
+
             coords = new List<Point>
             {
                 new Point(0,0),

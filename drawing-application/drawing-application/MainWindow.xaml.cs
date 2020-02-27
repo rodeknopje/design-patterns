@@ -64,7 +64,7 @@ namespace drawing_application
             styles = Assembly.GetAssembly(typeof(ShapeGroup)).GetTypes().Where(T=>T.IsSubclassOf(typeof(ShapeGroup))).ToArray();
 
             // initialze the methods to the shape buttons.
-            button_rectangle.Click += (a, b) => scrollview_select.Visibility = scrollview_select.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;         
+            button_rectangle.Click += (a, b) => style_select.Visibility = style_select.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;         
             button_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(1).Execute();
             
             // initialize the clear buttons.
@@ -173,14 +173,13 @@ namespace drawing_application
                 {
                     Content = styles[i].Name,
                 };
+
                 button.Click += (a, b) =>
                 {
                     button_rectangle.Content = styles[index].Name;
-                    scrollview_select.Visibility = Visibility.Collapsed;
+                    style_select.Visibility = Visibility.Collapsed;
                     new ChangeShapeStyleCommand(index).Execute();
                 };
-
-
 
                 style_select.Children.Add(button);
             }

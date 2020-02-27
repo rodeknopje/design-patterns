@@ -16,6 +16,8 @@ namespace drawing_application.Commands
 
         public override void Execute()
         {
+            m.style_select.Visibility = Visibility.Collapsed;
+
             m.SwitchState(states.draw);
             // create a point variable to store coordinates
             m.orgin_mouse = orgin;

@@ -47,22 +47,16 @@
             </ScrollViewer>
         </Grid>
        
-        <Grid x:Name="style_grid" Grid.Row="1" >
+        <Grid x:Name="style_grid" Grid.Row="1"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="300"/>
-            </Grid.RowDefinitions>
-
-            <ScrollViewer x:Name="scrollview_select"  Grid.Column="0" Background="Transparent" VerticalScrollBarVisibility="Hidden" Visibility="Collapsed" >
-                <StackPanel x:Name="style_select"/>
 
 
-            </ScrollViewer>
-            
+            <StackPanel x:Name="style_select" Visibility="Collapsed"/>
+    
         </Grid>
 
 

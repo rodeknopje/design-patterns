@@ -12,10 +12,13 @@ namespace drawing_application.CustomShapes
         {
             coords = new List<Point>();
 
+            var x_radius = (Width  * .5);
+            var y_radius = (Height * .5);
+
             for (int i = 0; i < 65; i++)
             {
-                var x =  (Width  * .5) + -Math.Cos(i*.1) * (Width  * .5) - StrokeThickness / 2;
-                var y =  (Height * .5) +  Math.Sin(i*.1) * (Height * .5) - StrokeThickness / 2;
+                var x =  x_radius + -Math.Cos(i*.1) * x_radius - StrokeThickness / 2;
+                var y =  y_radius +  Math.Sin(i*.1) * y_radius - StrokeThickness / 2;
 
                 coords.Add(new Point(x, y));
             }

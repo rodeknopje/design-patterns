@@ -19,6 +19,7 @@ namespace drawing_application.Commands
             for (int i = 0; i < m.draw_canvas.Children.Count; i++)
             {
                 shape_list.Add((Shape)m.draw_canvas.Children[i]);
+
                 button_list.Add((Button)m.selection_row.Children[i]);
             }
         }
