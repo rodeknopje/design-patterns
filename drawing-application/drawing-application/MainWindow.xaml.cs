@@ -46,12 +46,13 @@ namespace drawing_application
         public states state;
 
         public SaveLoadManager saveload = new SaveLoadManager();
-
+       
         public CmdManager cmd_manager = new CmdManager();
 
-        public int style_index;
-
+        // all types that derrive from ShapeGroup.
         public System.Type[] styles;
+        // the current index of the styles array.
+        public int style_index;
         
 
         public MainWindow()
@@ -63,11 +64,9 @@ namespace drawing_application
             // get all types that derrive from customshape.
             styles = Assembly.GetAssembly(typeof(ShapeGroup)).GetTypes().Where(T=>T.IsSubclassOf(typeof(ShapeGroup))).ToArray();
 
-            // initialze the methods to the shape buttons.
-            button_rectangle.Click += (a, b) => style_select.Visibility = style_select.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;         
-            button_ellipse.Click   += (a, b) => new ChangeShapeStyleCommand(1).Execute();
-            
-            // initialize the clear buttons.
+            // make te style button a toggle for the shape buttons.
+            button_style.Click += (a, b) => style_select.Visibility = style_select.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;                     
+            // initialize the clear button.
             button_clear.Click += (a, b) => cmd_manager.InvokeCMD(new ClearCommand());
             // set the current state to none.
             SwitchState(states.none);
@@ -75,9 +74,13 @@ namespace drawing_application
             saveload.LoadProgramState();
             // call the save programs state when the application stops.
             Closed += (a, b) => saveload.SaveProgramState();
-            // add
-            InitializeShapeSelect();
+            // Initialize the buttons
+            InitializeStyleButtons();
 
+            // bind the undo and redo actions to their conrresponsing buttons
+            button_undo.Click += (a, b) => cmd_manager.Undo();
+            button_redo.Click += (a, b) => cmd_manager.Redo();
+            // als bind it to the cntrl+z and contrl+r keys
             KeyDown += (a, b) => 
             {
                 if (b.Key == Key.Z) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Undo();
@@ -121,7 +124,7 @@ namespace drawing_application
             }
         }
 
-        public Button AddToSelectionRow(Shape _shape)
+        public Button CreateSelectButton(Shape _shape)
         {
             // create a new textbox
             Button button = new Button
@@ -164,23 +167,34 @@ namespace drawing_application
             draw_canvas.Children.Remove(handle);
         }
 
-        private void InitializeShapeSelect()
+        private void InitializeStyleButtons()
         {
+            // for all different styles.
             for (int i = 0; i < styles.Length; i++)
             {
+                // define the index to which the button should switch.
                 int index = i;
+                // initialize the buttons.
                 var button = new Button
                 {
-                    Content = styles[i].Name,
+                    
+                    Content = styles[index].Name,
+                    Height = 30,
+                    BorderThickness = new Thickness(1,0,1,1)
+                    
                 };
 
+                // when the button is clicked
                 button.Click += (a, b) =>
                 {
-                    button_rectangle.Content = styles[index].Name;
+                    // make the style button display the current style.
+                    button_style.Content = styles[index].Name;
+                    // collapse the syle select element.
                     style_select.Visibility = Visibility.Collapsed;
+                    // switch the style.
                     new ChangeShapeStyleCommand(index).Execute();
-                };
-
+                };               
+                // add this button to the style select stackpanel.
                 style_select.Children.Add(button);
             }
         }

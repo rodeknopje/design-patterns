@@ -16,7 +16,7 @@ namespace drawing_application.Commands
             // remove the drawn_shape from the canvas.
             m.draw_canvas.Children.Remove(shape);
 
-            button = m.AddToSelectionRow(shape);
+            button = m.CreateSelectButton(shape);
         }
 
         // alternate constructor for loading shapes from the savefile.
@@ -30,7 +30,7 @@ namespace drawing_application.Commands
             shape.Width  = pos_data[2];
             shape.Height = pos_data[3];
             
-            button = m.AddToSelectionRow(shape);
+            button = m.CreateSelectButton(shape);
         }
 
         public override void Execute()
