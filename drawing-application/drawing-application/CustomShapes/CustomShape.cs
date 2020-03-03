@@ -6,10 +6,9 @@ using System.Windows.Shapes;
 
 namespace drawing_application.CustomShapes
 {
-    public abstract class ShapeGroup : Shape
+    public abstract class CustomShape : Shape
     {
-        // all the childeren of this shape.
-        private List<ShapeGroup> childeren = new List<ShapeGroup>();
+
 
         protected Geometry DefineGeometry()
         {
@@ -27,11 +26,6 @@ namespace drawing_application.CustomShapes
                 }
             }
             return geom;
-        }
-
-        public void AddToGroup(ShapeGroup shape)
-        {
-            childeren.Add(shape);         
         }
 
         protected abstract void DrawShape(out List<Point> coords);

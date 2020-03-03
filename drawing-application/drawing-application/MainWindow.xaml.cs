@@ -62,7 +62,7 @@ namespace drawing_application
             // initialize the singleton.
             ins ??= this;
             // get all types that derrive from customshape.
-            styles = Assembly.GetAssembly(typeof(ShapeGroup)).GetTypes().Where(T=>T.IsSubclassOf(typeof(ShapeGroup))).ToArray();
+            styles = Assembly.GetAssembly(typeof(CustomShape)).GetTypes().Where(T=>T.IsSubclassOf(typeof(CustomShape))&& T != typeof(Group)).ToArray();
 
             // make te style button a toggle for the shape buttons.
             button_style.Click += (a, b) => style_select.Visibility = style_select.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;                     
@@ -132,6 +132,7 @@ namespace drawing_application
                 // assign the correct text
                 Content = $"{_shape.GetType().Name} ({ID++})",
                 Margin = new Thickness(1),
+                HorizontalContentAlignment = HorizontalAlignment.Left,
                 FontSize = 20,
             };
             // if the textbox is clicked then select the curren shape
