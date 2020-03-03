@@ -33,9 +33,9 @@ namespace drawing_application
         public Point orgin_pos_handle;
 
         // the currently selected shape.
-        public Shape shape_selected;
+        public CustomShape shape_selected;
         // the shape that is currently being drawn.
-        public Shape shape_drawn;
+        public CustomShape shape_drawn;
 
         // the rectangle you see around shapes when they are selected.
         public Shape selection_outline;
@@ -124,7 +124,7 @@ namespace drawing_application
             }
         }
 
-        public Button CreateSelectButton(Shape _shape)
+        public Button CreateSelectButton(CustomShape _shape)
         {
             // create a new textbox
             Button button = new Button
@@ -148,10 +148,10 @@ namespace drawing_application
             debug_text.Text = $"state:{this.state.ToString()}";
         }
 
-        public Shape CreateShape(int index)
+        public CustomShape CreateShape(int index)
         {
             // create a new shape based on the selected shape.
-            var shape = (Shape)System.Activator.CreateInstance(styles[index]);
+            var shape = (CustomShape)System.Activator.CreateInstance(styles[index]);
             {
                 shape.Width     = 0;
                 shape.Height    = 0;

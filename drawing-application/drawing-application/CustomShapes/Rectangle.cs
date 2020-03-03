@@ -9,7 +9,6 @@ namespace drawing_application.CustomShapes
     {
         protected override void DrawShape(out List<Point> coords)
         {
-            StrokeThickness = 5;
 
             coords = new List<Point>
             {
@@ -18,7 +17,7 @@ namespace drawing_application.CustomShapes
                 new Point(1,1),
                 new Point(0,1),
             }
-            .Select(i=>i= new Point(i.X*Width,i.Y*Height)).ToList();
+            .Select(i=>i= new Point(i.X*Width-StrokeThickness,i.Y*Height-StrokeThickness)).ToList();
         }
     }
 }

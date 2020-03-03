@@ -1,24 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using drawing_application.CustomShapes;
+using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Shapes;
+
 
 namespace drawing_application.Commands
 {
     class ClearCommand : Command
     {
-        List<Shape>  shape_list;
+        List<CustomShape>  shape_list;
         List<Button> button_list;
 
         public ClearCommand()
         {
             m.DeleteSelectionItems();
 
-            shape_list  = new List<Shape>();
+            shape_list  = new List<CustomShape>();
             button_list = new List<Button>();
 
             for (int i = 0; i < m.draw_canvas.Children.Count; i++)
             {
-                shape_list.Add((Shape)m.draw_canvas.Children[i]);
+                shape_list.Add((CustomShape)m.draw_canvas.Children[i]);
 
                 button_list.Add((Button)m.selection_row.Children[i]);
             }

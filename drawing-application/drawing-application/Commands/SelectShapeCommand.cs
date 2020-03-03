@@ -1,16 +1,17 @@
-﻿using System;
+﻿using drawing_application.CustomShapes;
+using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
+
 
 namespace drawing_application.Commands
 {
     class SelectShapeCommand : Command
     {
-        Shape shape;
+        CustomShape shape;
 
-        public SelectShapeCommand(Shape shape)
+        public SelectShapeCommand(CustomShape shape)
         {
             this.shape = shape;
         }

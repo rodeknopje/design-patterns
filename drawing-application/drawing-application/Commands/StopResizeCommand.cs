@@ -1,12 +1,12 @@
-﻿using System.Windows;
+﻿using drawing_application.CustomShapes;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Shapes;
 
 namespace drawing_application.Commands
 {
     class StopResizeCommand : Command
     {
-        Shape shape;
+        CustomShape shape;
 
         Point orgin_scale;
 

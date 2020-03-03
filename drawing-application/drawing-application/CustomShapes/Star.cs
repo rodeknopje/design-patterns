@@ -22,7 +22,7 @@ namespace drawing_application.CustomShapes
                 new Point(0,.4f),
                 new Point(.375f,.4f),
             }
-            .Select(i=>i=new Point(i.X*Width,i.Y*Height)).ToList();
+            .Select(i=>i=new Point(i.X*Width-StrokeThickness,i.Y*Height-StrokeThickness)).ToList();
         }
 
     }

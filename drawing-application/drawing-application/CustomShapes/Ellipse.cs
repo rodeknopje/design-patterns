@@ -17,8 +17,8 @@ namespace drawing_application.CustomShapes
 
             for (int i = 0; i < 65; i++)
             {
-                var x =  x_radius + -Math.Cos(i*.1) * x_radius - StrokeThickness / 2;
-                var y =  y_radius +  Math.Sin(i*.1) * y_radius - StrokeThickness / 2;
+                var x =  x_radius + -Math.Cos(i*.1) * x_radius - StrokeThickness;
+                var y =  y_radius +  Math.Sin(i*.1) * y_radius - StrokeThickness;
 
                 coords.Add(new Point(x, y));
             }

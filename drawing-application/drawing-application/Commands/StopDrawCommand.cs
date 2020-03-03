@@ -1,12 +1,12 @@
-﻿using System;
+﻿using drawing_application.CustomShapes;
+using System;
 using System.Windows.Controls;
-using System.Windows.Shapes;
 
 namespace drawing_application.Commands
 {
     class StopDrawCommand : Command
     {
-        Shape shape;
+        CustomShape shape;
         Button button;
 
         public StopDrawCommand() 

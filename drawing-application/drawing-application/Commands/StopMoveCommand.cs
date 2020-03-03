@@ -1,16 +1,14 @@
 ﻿
+using drawing_application.CustomShapes;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Shapes;
 
 namespace drawing_application.Commands
 {
     class StopMoveCommand : Command
     {
-
-
         // the shape binded to this command.
-        Shape shape;
+        CustomShape shape;
         // the orginal pos of this shape.
         Point orgin_pos;
 
