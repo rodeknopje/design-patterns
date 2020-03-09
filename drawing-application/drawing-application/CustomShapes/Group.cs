@@ -10,5 +10,23 @@ namespace drawing_application.CustomShapes
         private List<CustomShape> childeren = new List<CustomShape>();
 
         protected override void DrawShape(out List<Point> coords) => coords = null;
+
+
+
+        public override void UpdateOrginPos()
+        {
+            foreach (var child in childeren)
+            {
+                child.UpdateOrginPos();
+            }
+        }
+
+        public override void UpdateOrginScale()
+        {
+            foreach (var child in childeren)
+            {
+                child.UpdateOrginScale();
+            }
+        }
     }
 }

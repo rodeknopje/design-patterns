@@ -12,6 +12,7 @@ namespace drawing_application.CustomShapes
         public Point orginPos   { get; private set; }
         public Point orginScale { get; private set; }
 
+        
 
         public virtual void UpdateOrginPos()
         {
@@ -20,7 +21,14 @@ namespace drawing_application.CustomShapes
 
         public virtual void UpdateOrginScale()
         {
-            orginScale = new Point(this.Width, this.Height);
+            orginScale = new Point(Width, Height);
+        }
+
+        public virtual void Move(Point offset)
+        {
+            Canvas.SetLeft(this, offset.X + orginPos.X);
+            Canvas.SetTop (this, offset.Y + orginPos.Y);
+
         }
 
         protected Geometry DefineGeometry()

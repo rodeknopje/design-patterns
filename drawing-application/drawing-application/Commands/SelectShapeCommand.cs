@@ -68,7 +68,7 @@ namespace drawing_application.Commands
             m.selection_outline.MouseLeave += (a, b) => Mouse.OverrideCursor = Cursors.Arrow;
 
             // when the selection outline is clicked.
-            m.selection_outline.MouseDown += (a, b) => new StartMoveCommand(b.GetPosition(m.draw_canvas)).Execute();
+            m.selection_outline.MouseLeftButtonDown += (a, b) => new StartMoveCommand(b.GetPosition(m.draw_canvas)).Execute();
         
             // move the resize handle it to the bottum right.
             Canvas.SetLeft(m.handle, Canvas.GetLeft(m.selection_outline) + m.selection_outline.Width  - m.handle.Width  / 2);
