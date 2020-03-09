@@ -15,13 +15,12 @@ namespace drawing_application
     public partial class MainWindow : Window
     {
         // singleton of this class.
-        public static MainWindow ins; 
+        public static MainWindow ins;
 
         // ID of each shape.
         public int ID;
         // list with all the shapes in it.
         public List<Shape> shapelist = new List<Shape>();
-        // the selected shape style can be recktangle or circle
 
         // the point where the mouse started when dragging.
         public Point orgin_mouse;
@@ -82,7 +81,11 @@ namespace drawing_application
                 if (b.Key == Key.Z) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Undo();
                 if (b.Key == Key.R) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Redo();
             };
-
+            // go to back to draw state when rmb is pressed.
+            MouseRightButtonDown += (a, b) => 
+            {
+                if(state==states.select) new ChangeShapeStyleCommand(style_index).Execute();               
+            };
         }
 
         private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
@@ -93,10 +96,7 @@ namespace drawing_application
                 // start a new drawing.
                 new StartDrawCommand(e.GetPosition(draw_canvas)).Execute();
             }
-
         }
-
-       
 
         private void Canvas_Mousemove(object sender, MouseEventArgs e)
         {
