@@ -20,10 +20,10 @@ namespace drawing_application.Commands
             var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
             // add the offset to the handle's position.
             Canvas.SetLeft(m.handle, m.orgin_pos_handle.X + x_offset);
-            Canvas.SetTop(m.handle, m.orgin_pos_handle.Y + y_offset);
+            Canvas.SetTop (m.handle, m.orgin_pos_handle.Y + y_offset);
             // calculate the new width and heigth by adding the offset to the orginal scale.
-            var width = m.orgin_scale.X + x_offset;
-            var heigth = m.orgin_scale.Y + y_offset;
+            var width  = m.shape_selected.orginScale.X + x_offset;
+            var heigth = m.shape_selected.orginScale.Y + y_offset;
 
             // if the new width is positive. 
             if (width >= 0)

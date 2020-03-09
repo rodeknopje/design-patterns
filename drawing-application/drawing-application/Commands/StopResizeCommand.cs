@@ -19,13 +19,12 @@ namespace drawing_application.Commands
         public StopResizeCommand()
         {
             shape          = m.shape_selected;
-            orgin_scale    = m.orgin_scale;
-            orgin_position = m.orgin_position;
+            orgin_scale    = m.shape_selected.orginScale;
+            orgin_position = m.shape_selected.orginPos;
 
             new_scale    = new Point(shape.Width, shape.Height);
 
             new_position = new Point(Canvas.GetLeft(shape), Canvas.GetTop(shape));
-
         }
 
         public override void Execute()

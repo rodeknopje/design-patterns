@@ -20,10 +20,11 @@ namespace drawing_application.Commands
             m.orgin_mouse = mouse_pos;
             // set the handle orgin.
             m.orgin_pos_handle = new Point(Canvas.GetLeft(m.handle), Canvas.GetTop(m.handle));
-            // save the shape orgin.
-            m.orgin_position = new Point(Canvas.GetLeft(m.shape_selected), Canvas.GetTop(m.shape_selected));
+            // save the position orgin.
+            m.shape_selected.UpdateOrginPos();
             // set the scale orgin.
-            m.orgin_scale = new Point(m.shape_selected.Width, m.shape_selected.Height);
+            m.shape_selected.UpdateOrginScale();
+
         }
 
         public override void Undo()

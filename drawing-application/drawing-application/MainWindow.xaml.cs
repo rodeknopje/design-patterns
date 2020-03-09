@@ -25,11 +25,7 @@ namespace drawing_application
 
         // the point where the mouse started when dragging.
         public Point orgin_mouse;
-        // the point where the shape started when dragging.
-        public Point orgin_position;
-        // the scale of the shape before resizing.
-        public Point orgin_scale;
-
+        // the point where the handle started when resizing
         public Point orgin_pos_handle;
 
         // the currently selected shape.
