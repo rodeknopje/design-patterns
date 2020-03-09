@@ -62,7 +62,7 @@ namespace drawing_application
             // initialize the singleton.
             ins ??= this;
             // get all types that derrive from customshape.
-            styles = Assembly.GetAssembly(typeof(CustomShape)).GetTypes().Where(T=>T.IsSubclassOf(typeof(CustomShape))&& T != typeof(Group)).ToArray();
+            styles = Assembly.GetAssembly(typeof(CustomShape)).GetTypes().Where(T=>T.IsSubclassOf(typeof(CustomShape))).ToArray();
 
             // make te style button a toggle for the shape buttons.
             button_style.Click += (a, b) => style_select.Visibility = style_select.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;                     
@@ -173,6 +173,12 @@ namespace drawing_application
             // for all different styles.
             for (int i = 0; i < styles.Length; i++)
             {
+                // skip if the syle is a group, since we dont want to draw groups directly
+                if (styles[i] == typeof(Group))
+                {
+                    continue;
+                }
+
                 // define the index to which the button should switch.
                 int index = i;
                 // initialize the buttons.

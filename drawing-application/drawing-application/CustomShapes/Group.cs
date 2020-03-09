@@ -9,14 +9,6 @@ namespace drawing_application.CustomShapes
     {
         private List<CustomShape> childeren = new List<CustomShape>();
 
-        protected override void DrawShape(out List<Point> coords)
-        {
-            coords = null;
-
-            if (childeren.Count == 0)
-            {
-
-            }
-        }
+        protected override void DrawShape(out List<Point> coords) => coords = null;
     }
 }
