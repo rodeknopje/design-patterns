@@ -19,7 +19,7 @@ namespace drawing_application.Commands
             // assign the shape.
             shape = m.shape_selected;
             // assign the orgin pos.
-            orgin_pos = m.orgin_position;
+            orgin_pos = m.shape_selected.orginPos;
             // assign the new pos.
             new_pos = new Point(Canvas.GetLeft(shape),Canvas.GetTop(shape));
         }

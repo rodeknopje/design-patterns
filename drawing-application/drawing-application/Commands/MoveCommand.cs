@@ -21,8 +21,8 @@ namespace drawing_application.Commands
 
 
             // add the mouse offset to the shape offset to move the shape outline.
-            Canvas.SetLeft(m.shape_selected, m.orgin_position.X + x_offset);
-            Canvas.SetTop(m.shape_selected,  m.orgin_position.Y + y_offset);
+            Canvas.SetLeft(m.shape_selected, m.shape_selected.orginPos.X + x_offset);
+            Canvas.SetTop(m.shape_selected,  m.shape_selected.orginPos.Y + y_offset);
 
             // add the mouse offset to the shape offset to move the selection outline.
             Canvas.SetLeft(m.selection_outline, Canvas.GetLeft(m.shape_selected) - m.selection_outline.StrokeThickness * 2);

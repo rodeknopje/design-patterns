@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -8,7 +9,19 @@ namespace drawing_application.CustomShapes
 {
     public abstract class CustomShape : Shape
     {
+        public Point orginPos   { get; private set; }
+        public Point orginScale { get; private set; }
 
+
+        public virtual void UpdateOrginPos()
+        {
+            orginPos = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
+        }
+
+        public virtual void UpdateOrginScale()
+        {
+            orginScale = new Point(this.Width, this.Height);
+        }
 
         protected Geometry DefineGeometry()
         {

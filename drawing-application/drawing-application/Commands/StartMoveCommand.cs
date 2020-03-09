@@ -19,7 +19,7 @@ namespace drawing_application.Commands
             // set the mouse orgin.
             m.orgin_mouse = mouse_pos;
             // set the shape orgin.
-            m.orgin_position = new Point(Canvas.GetLeft(m.shape_selected), Canvas.GetTop(m.shape_selected));
+            m.shape_selected.UpdateOrginPos();
         }
 
         public override void Undo()
