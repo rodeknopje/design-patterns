@@ -13,7 +13,6 @@ namespace drawing_application.CustomShapes
         public Point orginScale { get; private set; }
 
         
-
         public virtual void UpdateOrginPos()
         {
             orginPos = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
@@ -28,7 +27,6 @@ namespace drawing_application.CustomShapes
         {
             Canvas.SetLeft(this, offset.X + orginPos.X);
             Canvas.SetTop (this, offset.Y + orginPos.Y);
-
         }
 
         protected Geometry DefineGeometry()
@@ -36,6 +34,11 @@ namespace drawing_application.CustomShapes
             DrawShape(out coords);
             
             StreamGeometry geom = new StreamGeometry();
+
+            if (coords == null)
+            {
+                return geom;
+            }
 
             using (var gc = geom.Open())
             {

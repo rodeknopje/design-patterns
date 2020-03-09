@@ -5,13 +5,24 @@ using System.Windows;
 
 namespace drawing_application.CustomShapes
 {
-    class Group : CustomShape
+    public class Group : CustomShape
     {
         private List<CustomShape> childeren = new List<CustomShape>();
 
         protected override void DrawShape(out List<Point> coords) => coords = null;
 
+        public void AddChild(CustomShape shape)
+        {
+            childeren.Add(shape);
+        }
 
+        public override void Move(Point offset)
+        {
+            foreach (var child in childeren)
+            {
+                child.Move(offset);
+            }
+        }
 
         public override void UpdateOrginPos()
         {
