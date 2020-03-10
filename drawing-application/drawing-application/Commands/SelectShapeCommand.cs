@@ -16,28 +16,6 @@ namespace drawing_application.Commands
             this.shape = shape;
         }
 
-        private void InitializeSelectionShapes()
-        {
-            // assign the selection outline.
-            m.selection_outline = new Rectangle
-            {
-                Fill = Brushes.Transparent,
-                Stroke = Brushes.White,
-                StrokeThickness = 2f,
-                StrokeDashArray = { 5, 5 }
-            };
-
-            // create the handle.
-            m.handle = new Ellipse
-            {
-                Width = 20,
-                Height = 20,
-                StrokeThickness = 2,
-                Stroke = Brushes.White,
-                Fill = Brushes.Gray,
-
-            };
-        }
 
         public override void Execute()
         {
@@ -45,6 +23,10 @@ namespace drawing_application.Commands
 
 
             m.shape_selected = shape;
+
+            m.selection.AddChild(shape);
+            m.GetSelectionTransform();
+
             // if there is already something selected
             if (m.selection_outline != null)
             {
@@ -52,8 +34,10 @@ namespace drawing_application.Commands
                 m.DeleteSelectionItems();
             }
 
+
+
             // create the selection outline and the resize handle.
-            InitializeSelectionShapes();      
+            m.InitializeSelectionShapes();      
             // set the left and top position te be the same as the selected shape.
             Canvas.SetLeft(m.selection_outline, Canvas.GetLeft(shape) - m.selection_outline.StrokeThickness * 2);
             Canvas.SetTop(m.selection_outline,  Canvas.GetTop(shape)  - m.selection_outline.StrokeThickness * 2);

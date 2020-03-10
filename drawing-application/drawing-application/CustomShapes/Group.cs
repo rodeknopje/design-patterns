@@ -17,22 +17,22 @@ namespace drawing_application.CustomShapes
             childeren.Add(shape);
         }
 
-        public List<CustomShape> GetAllShapes()
+        public void RemoveChild(CustomShape shape)
+        {
+            childeren.Remove(shape);
+        }
+
+        public List<CustomShape> GetChilderen()
         {
             var shapes = childeren.Where(T => T.GetType() != typeof(Group)).ToList();
             var groups = childeren.Where(T => T.GetType() == typeof(Group)).ToList();
 
             foreach (var group in groups)
             {
-                shapes.AddRange(((Group)group).GetAllShapes());
+                shapes.AddRange(((Group)group).GetChilderen());
             }
 
             return shapes;
-        }
-
-        public void RemoveChild(CustomShape shape)
-        {
-            childeren.Remove(shape);
         }
 
         public override void Move(Point offset)
@@ -40,6 +40,14 @@ namespace drawing_application.CustomShapes
             foreach (var child in childeren)
             {
                 child.Move(offset);
+            }
+        }
+
+        public override void Scale(Point diff)
+        {
+            foreach (var child in childeren)
+            {
+                child.Scale(diff);
             }
         }
 

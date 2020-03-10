@@ -11,7 +11,6 @@ namespace drawing_application.CustomShapes
     {
         public Point orginPos   { get; private set; }
         public Point orginScale { get; private set; }
-
         
         public virtual void UpdateOrginPos()
         {
@@ -27,6 +26,11 @@ namespace drawing_application.CustomShapes
         {
             Canvas.SetLeft(this, offset.X + orginPos.X);
             Canvas.SetTop (this, offset.Y + orginPos.Y);
+        }
+
+        public virtual void Scale(Point diff)
+        {
+            throw new NotImplementedException();
         }
 
         protected Geometry DefineGeometry()
