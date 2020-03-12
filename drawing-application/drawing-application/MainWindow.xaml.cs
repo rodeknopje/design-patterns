@@ -118,7 +118,7 @@ namespace drawing_application
             switch (state)
             {
                 case states.draw:   cmd_manager.InvokeCMD(new StopDrawCommand  ()); break;
-                case states.move:   cmd_manager.InvokeCMD(new StopMoveCommand  ()); break;
+                case states.move:   cmd_manager.InvokeCMD(new StopMoveCommand  (e.GetPosition(draw_canvas))); break;
                 case states.resize: cmd_manager.InvokeCMD(new StopResizeCommand()); break;
             }
         }

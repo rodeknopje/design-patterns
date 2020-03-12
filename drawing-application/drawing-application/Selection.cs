@@ -56,14 +56,20 @@ namespace drawing_application
 
         public void Add(CustomShape shape)
         {
+            group.Clear();
+
             group.AddChild(shape);
         }
 
+        public Group GetGroup()
+        {
+            return group;
+        }
 
-        public (double x, double y, double width, double heigth) CalculateTransform()
+        public Transform CalculateTransform()
         {
             // Create a transform tuple.
-            (double x, double y, double width, double heigth) transform = (double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
+            var transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
 
             // loop through all childeren in the selection.
             foreach (var shape in group.GetChilderen())
@@ -117,12 +123,12 @@ namespace drawing_application
             var transform = CalculateTransform();
 
             // set the left and top position te be the same as the selected shape.
-            Canvas.SetLeft(outline, Canvas.GetLeft(shape) - outline.StrokeThickness * 2);
-            Canvas.SetTop (outline,  Canvas.GetTop(shape) - outline.StrokeThickness * 2);
+            Canvas.SetLeft(outline, transform.x  - outline.StrokeThickness * 2);
+            Canvas.SetTop (outline, transform.y - outline.StrokeThickness * 2);
 
             // set the width and heigth to be the same as the selected shape.
-            outline.Width  = shape.Width  + outline.StrokeThickness * 4;
-            outline.Height = shape.Height + outline.StrokeThickness * 4;
+            outline.Width  = transform.width  + outline.StrokeThickness * 4;
+            outline.Height = transform.heigth + outline.StrokeThickness * 4;
 
             // move the resize handle it to the bottum right.
             Canvas.SetLeft(handle, Canvas.GetLeft(outline) + outline.Width  - handle.Width  / 2);
@@ -142,5 +148,22 @@ namespace drawing_application
                 MainWindow.ins.draw_canvas.Children.Remove(handle);
             }
         }
+    }
+}
+
+public struct Transform 
+{
+    public double x;
+    public double y;
+    public double width;
+    public double heigth;
+
+    public Transform(double x, double y, double width, double heigth)
+    {
+        this.x = x;
+        this.y = y;
+
+        this.width  = width;
+        this.heigth = heigth;
     }
 }

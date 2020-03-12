@@ -1,5 +1,6 @@
 ﻿
 using drawing_application.CustomShapes;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,42 +9,58 @@ namespace drawing_application.Commands
     class StopMoveCommand : Command
     {
         // the shape binded to this command.
-        CustomShape shape;
-        // the orginal pos of this shape.
-        Point orgin_pos;
+        List<CustomShape>  shapes;
 
-        Point new_pos;
 
-        public StopMoveCommand()
+        Point offset;
+
+        public StopMoveCommand(Point mouse_pos)
         {
             // assign the shape.
-            shape = m.selection.shape;
-            // assign the orgin pos.
-            orgin_pos = m.selection.shape.orginPos;
-            // assign the new pos.
-            new_pos = new Point(Canvas.GetLeft(shape),Canvas.GetTop(shape));
+            shapes = m.selection.GetGroup().GetChilderen();
+            // calculate the mouse offset
+            var x_offset = mouse_pos.X - m.orgin_mouse.X;
+            var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
+            // assign the offset.
+            offset = new Point(x_offset, y_offset);
+
+            foreach (var shape in shapes)
+            {
+                // set the shape to their orgin pos.
+                Canvas.SetLeft(shape, shape.orginPos.X);
+                Canvas.SetTop (shape, shape.orginPos.Y);
+            }
+
         }
 
         public override void Execute()
         {
-            // set the shape to his orginal position.
-            Canvas.SetLeft(shape, new_pos.X);
-            Canvas.SetTop (shape, new_pos.Y);
+            foreach (var shape in shapes)
+            {
+                // set the shape to his orginal position.
+                shape.Move(offset);
+            }
             // toggle the outline off.
             m.selection.ToggleOutline(false);
-            // select it.
-            new SelectShapeCommand(shape).Execute();
+
+            m.selection.ToggleOutline(false);
+            // switch to select state.
+            m.SwitchState(states.select);
         }
 
         public override void Undo()
         {
-            // set the shape to his orginal position.
-            Canvas.SetLeft(shape, orgin_pos.X);
-            Canvas.SetTop (shape, orgin_pos.Y);
+            foreach (var shape in shapes)
+            {
+                // set the shape to his orginal position.
+                shape.Move(new Point(-offset.X, -offset.Y));
+            }
             // toggle the outlnie off.
             m.selection.ToggleOutline(false);
-            // select it.
-            new SelectShapeCommand(shape).Execute();
+
+            m.selection.ToggleOutline(false);
+            // switch to select state.
+            m.SwitchState(states.select);
         }
     }
 }

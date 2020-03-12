@@ -17,6 +17,11 @@ namespace drawing_application.CustomShapes
             childeren.Add(shape);
         }
 
+        public void Clear()
+        {
+            childeren.Clear();
+        }
+
         public void RemoveChild(CustomShape shape)
         {
             childeren.Remove(shape);

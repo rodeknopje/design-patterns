@@ -20,7 +20,7 @@ namespace drawing_application.Commands
             // set the mouse orgin.
             m.orgin_mouse = mouse_pos;
             // set the shape orgin.
-            m.selection.shape.UpdateOrginPos();
+            m.selection.GetGroup().UpdateOrginPos();
         }
 
         public override void Undo()

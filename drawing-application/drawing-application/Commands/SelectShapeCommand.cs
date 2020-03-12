@@ -23,7 +23,7 @@ namespace drawing_application.Commands
             // switch to select state.
             m.SwitchState(states.select);
             // assign the selected shape.
-            m.selection.shape = shape;
+            m.selection.Add(shape);
             // toggle the outline on.
             m.selection.ToggleOutline(true);
             // draw the outline
