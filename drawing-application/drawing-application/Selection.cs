@@ -1,9 +1,9 @@
 ﻿using drawing_application.Commands;
 using drawing_application.CustomShapes;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace drawing_application
 {
@@ -12,15 +12,17 @@ namespace drawing_application
     {
         Group group;
 
-        private Shape outline;
+        private Rectangle outline;
 
-        private Shape handle;
+        private Ellipse handle;
+
+        Transform transform;
 
         public Selection()
         {
             group = new Group();
             // assign the selection outline.
-            outline = new System.Windows.Shapes.Rectangle
+            outline = new Rectangle
             {
                 Fill   = Brushes.Transparent,
                 Stroke = Brushes.White,
@@ -28,7 +30,7 @@ namespace drawing_application
                 StrokeDashArray = { 5, 5 }
             };
             // create the handle.
-            handle = new System.Windows.Shapes.Ellipse
+            handle = new Ellipse
             {
                 Width  = 20,
                 Height = 20,      
@@ -48,7 +50,15 @@ namespace drawing_application
             // when the selection outline is clicked.
             outline.MouseLeftButtonDown += (a, b) => new StartMoveCommand(b.GetPosition(MainWindow.ins.draw_canvas)).Execute();
             // when the handle is clicked.
-            handle.MouseDown += (a, b) => new StartResizeCommand(b.GetPosition(MainWindow.ins.draw_canvas)).Execute();
+            handle.MouseLeftButtonDown += (a, b) => new StartResizeCommand(b.GetPosition(MainWindow.ins.draw_canvas)).Execute();
+        }
+
+        public void Move(Point offset)
+        {
+            // move the group handle and outline.
+            group.Move(offset);
+            outline.Move(offset);
+            handle.Move(offset);
         }
 
 
@@ -73,7 +83,7 @@ namespace drawing_application
         public Transform CalculateTransform()
         {
             // Create a transform tuple.
-            var transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
+            transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
 
             // loop through all childeren in the selection.
             foreach (var shape in group.GetChilderen())
@@ -124,8 +134,6 @@ namespace drawing_application
 
         public void DrawOutline()
         {
-            var transform = CalculateTransform();
-
             // set the left and top position te be the same as the selected shape.
             Canvas.SetLeft(outline, transform.x  - outline.StrokeThickness * 4);
             Canvas.SetTop (outline, transform.y  - outline.StrokeThickness * 4);
@@ -143,11 +151,23 @@ namespace drawing_application
         {
             if (state)
             {
+                // calculate the transform of the outline.
+                CalculateTransform();
+                // draw it for the first time.
+                DrawOutline();
+                // update the orgin pos and scale of the outlnie.
+                outline.UpdateOrginPos();
+                outline.UpdateOrginScale();
+                // and also for the handle.
+                handle.UpdateOrginPos();
+                handle.UpdateOrginScale();
+                // instantiate it.
                 MainWindow.ins.draw_canvas.Children.Add(outline);
                 MainWindow.ins.draw_canvas.Children.Add(handle);
             }
             else
             {
+                // remove it.
                 MainWindow.ins.draw_canvas.Children.Remove(outline);
                 MainWindow.ins.draw_canvas.Children.Remove(handle);
             }

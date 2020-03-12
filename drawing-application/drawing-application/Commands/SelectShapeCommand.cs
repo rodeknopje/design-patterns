@@ -26,8 +26,6 @@ namespace drawing_application.Commands
             m.selection.Select(shape);
             // toggle the outline on.
             m.selection.ToggleOutline(true);
-            // draw the outline
-            m.selection.DrawOutline();
         }
 
         public override void Undo()

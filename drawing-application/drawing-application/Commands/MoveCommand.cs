@@ -20,9 +20,9 @@ namespace drawing_application.Commands
             var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
 
             // move the shape based on the offset.
-            m.selection.GetGroup().Move(new Point(x_offset, y_offset));
+            m.selection.Move(new Point(x_offset, y_offset));
             // draw the outline.
-            m.selection.DrawOutline();
+            // m.selection.DrawOutline();
         }
 
         public override void Undo()
