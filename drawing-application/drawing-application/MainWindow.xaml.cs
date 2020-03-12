@@ -117,8 +117,8 @@ namespace drawing_application
             // when the mouse up event is fired do something depending on the state of the program.
             switch (state)
             {
-                case states.draw:   cmd_manager.InvokeCMD(new StopDrawCommand  ()); break;
                 case states.move:   cmd_manager.InvokeCMD(new StopMoveCommand  (e.GetPosition(draw_canvas))); break;
+                case states.draw:   cmd_manager.InvokeCMD(new StopDrawCommand  ()); break;
                 case states.resize: cmd_manager.InvokeCMD(new StopResizeCommand()); break;
             }
         }
@@ -130,9 +130,10 @@ namespace drawing_application
             {
                 // assign the correct text
                 Content = $"{_shape.GetType().Name} ({ID++})",
-                Margin = new Thickness(1),
+                Margin  = new Thickness(1),
                 HorizontalContentAlignment = HorizontalAlignment.Left,
                 FontSize = 20,
+                Foreground = Brushes.DarkRed,      
             };
             // if the textbox is clicked then select the curren shape
             button.Click += (a, b) => new SelectShapeCommand(_shape).Execute();

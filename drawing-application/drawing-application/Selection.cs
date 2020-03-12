@@ -12,8 +12,6 @@ namespace drawing_application
     {
         Group group;
 
-        public CustomShape shape;
-
         private Shape outline;
 
         private Shape handle;
@@ -54,11 +52,17 @@ namespace drawing_application
         }
 
 
-        public void Add(CustomShape shape)
+        public void Select(CustomShape shape)
         {
-            group.Clear();
+            if (group.GetChilderen().Contains(shape) == false)
+            {
+                group.AddChild(shape);
+            }
+        }
 
-            group.AddChild(shape);
+        public void Remove(CustomShape shape)
+        {
+            group.RemoveChild(shape);
         }
 
         public Group GetGroup()
@@ -123,12 +127,12 @@ namespace drawing_application
             var transform = CalculateTransform();
 
             // set the left and top position te be the same as the selected shape.
-            Canvas.SetLeft(outline, transform.x  - outline.StrokeThickness * 2);
-            Canvas.SetTop (outline, transform.y - outline.StrokeThickness * 2);
+            Canvas.SetLeft(outline, transform.x  - outline.StrokeThickness * 4);
+            Canvas.SetTop (outline, transform.y  - outline.StrokeThickness * 4);
 
             // set the width and heigth to be the same as the selected shape.
-            outline.Width  = transform.width  + outline.StrokeThickness * 4;
-            outline.Height = transform.heigth + outline.StrokeThickness * 4;
+            outline.Width  = transform.width  + outline.StrokeThickness * 6;
+            outline.Height = transform.heigth + outline.StrokeThickness * 6;
 
             // move the resize handle it to the bottum right.
             Canvas.SetLeft(handle, Canvas.GetLeft(outline) + outline.Width  - handle.Width  / 2);
