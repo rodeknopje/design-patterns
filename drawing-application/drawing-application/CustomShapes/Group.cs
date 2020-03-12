@@ -27,17 +27,22 @@ namespace drawing_application.CustomShapes
             childeren.Remove(shape);
         }
 
-        public List<CustomShape> GetChilderen()
+        public List<CustomShape> GetAllShapes()
         {
             var shapes = childeren.Where(T => T.GetType() != typeof(Group)).ToList();
             var groups = childeren.Where(T => T.GetType() == typeof(Group)).ToList();
 
             foreach (var group in groups)
             {
-                shapes.AddRange(((Group)group).GetChilderen());
+                shapes.AddRange(((Group)group).GetAllShapes());
             }
 
             return shapes;
+        }
+
+        public List<CustomShape> GetChilderen()
+        {
+            return childeren;
         }
 
         public override void Move(Point offset)

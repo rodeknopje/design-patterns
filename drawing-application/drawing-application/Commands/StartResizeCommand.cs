@@ -18,12 +18,13 @@ namespace drawing_application.Commands
             m.SwitchState(states.resize);
             // set the mouse orgin.
             m.orgin_mouse = mouse_pos;
+
             // set the handle orgin.
-            m.orgin_pos_handle = new Point(Canvas.GetLeft(m.handle), Canvas.GetTop(m.handle));
+            // m.orgin_pos_handle = new Point(Canvas.GetLeft(m.handle), Canvas.GetTop(m.handle));
             // save the position orgin.
-            m.shape_selected.UpdateOrginPos();
+            // m.shape_selected.UpdateOrginPos();
             // set the scale orgin.
-            m.shape_selected.UpdateOrginScale();
+            // m.shape_selected.UpdateOrginScale();
 
         }
 

@@ -61,10 +61,29 @@ namespace drawing_application
             handle.Move(offset);
         }
 
+        public void Scale(Point diff)
+        {
+            // scale the group handle and outline.
+            group.Move(diff);
+            outline.Move(diff);
+            handle.Move(diff);
+        }
+
+        public void Merge()
+        {
+            var merged = new Group();
+
+            foreach (var child in group.GetChilderen())
+            {
+                merged.AddChild(child);
+            }
+
+        }
+
 
         public void Select(CustomShape shape)
         {
-            if (group.GetChilderen().Contains(shape) == false)
+            if (group.GetAllShapes().Contains(shape) == false)
             {
                 group.AddChild(shape);
             }
@@ -86,7 +105,7 @@ namespace drawing_application
             transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
 
             // loop through all childeren in the selection.
-            foreach (var shape in group.GetChilderen())
+            foreach (var shape in group.GetAllShapes())
             {
                 // get their x and y coords.
                 var x = Canvas.GetLeft(shape);
@@ -161,6 +180,9 @@ namespace drawing_application
                 // and also for the handle.
                 handle.UpdateOrginPos();
                 handle.UpdateOrginScale();
+                // update the orgin pos and scale of the outlnie.
+                group.UpdateOrginPos();
+                group.UpdateOrginScale();
                 // instantiate it.
                 MainWindow.ins.draw_canvas.Children.Add(outline);
                 MainWindow.ins.draw_canvas.Children.Add(handle);
