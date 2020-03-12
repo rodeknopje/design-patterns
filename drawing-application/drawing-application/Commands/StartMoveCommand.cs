@@ -15,11 +15,12 @@ namespace drawing_application.Commands
 
         public override void Execute()
         {
+            // switch to the move state.
             m.SwitchState(states.move);
             // set the mouse orgin.
             m.orgin_mouse = mouse_pos;
             // set the shape orgin.
-            m.shape_selected.UpdateOrginPos();
+            m.selection.shape.UpdateOrginPos();
         }
 
         public override void Undo()

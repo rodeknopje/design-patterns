@@ -19,54 +19,15 @@ namespace drawing_application.Commands
 
         public override void Execute()
         {
+            m.selection.ToggleOutline(false);
+            // switch to select state.
             m.SwitchState(states.select);
-
-
-            m.shape_selected = shape;
-
-            m.selection.AddChild(shape);
-            m.GetSelectionTransform();
-
-            // if there is already something selected
-            if (m.selection_outline != null)
-            {
-                // remove the current selection outline.
-                m.DeleteSelectionItems();
-            }
-
-
-
-            // create the selection outline and the resize handle.
-            m.InitializeSelectionShapes();      
-            // set the left and top position te be the same as the selected shape.
-            Canvas.SetLeft(m.selection_outline, Canvas.GetLeft(shape) - m.selection_outline.StrokeThickness * 2);
-            Canvas.SetTop(m.selection_outline,  Canvas.GetTop(shape)  - m.selection_outline.StrokeThickness * 2);
-            // set the width and heigth to be the same as the selected shape.
-            m.selection_outline.Width  = shape.Width  + m.selection_outline.StrokeThickness * 4;
-            m.selection_outline.Height = shape.Height + m.selection_outline.StrokeThickness * 4;
-            // add the selection outline to the draw_canvas.
-            m.draw_canvas.Children.Add(m.selection_outline);
-
-            // give the cursor a different icon, when hovering over the outlne.
-            m.selection_outline.MouseEnter += (a, b) => Mouse.OverrideCursor = Cursors.SizeAll;
-            m.selection_outline.MouseLeave += (a, b) => Mouse.OverrideCursor = Cursors.Arrow;
-
-            // when the selection outline is clicked.
-            m.selection_outline.MouseLeftButtonDown += (a, b) => new StartMoveCommand(b.GetPosition(m.draw_canvas)).Execute();
-        
-            // move the resize handle it to the bottum right.
-            Canvas.SetLeft(m.handle, Canvas.GetLeft(m.selection_outline) + m.selection_outline.Width  - m.handle.Width  / 2);
-            Canvas.SetTop(m.handle,  Canvas.GetTop(m.selection_outline)  + m.selection_outline.Height - m.handle.Height / 2);
-
-            // add it to the draw canvas.
-            m.draw_canvas.Children.Add(m.handle);
-
-            // when the handle is clicked.
-            m.handle.MouseDown += (a, b) => new StartResizeCommand(b.GetPosition(m.draw_canvas)).Execute();
-
-            // give the cursor a different icon, when hovering over the outlne.
-            m.handle.MouseEnter += (a, b) => Mouse.OverrideCursor = Cursors.Hand;
-            m.handle.MouseLeave += (a, b) => Mouse.OverrideCursor = Cursors.Arrow;
+            // assign the selected shape.
+            m.selection.shape = shape;
+            // toggle the outline on.
+            m.selection.ToggleOutline(true);
+            // draw the outline
+            m.selection.DrawOutline();
         }
 
         public override void Undo()

@@ -45,7 +45,7 @@ namespace drawing_application.Commands
 
         public override void Undo()
         {
-            m.DeleteSelectionItems();
+            m.selection.ToggleOutline(false);
 
             m.draw_canvas.Children.Remove(shape);
 

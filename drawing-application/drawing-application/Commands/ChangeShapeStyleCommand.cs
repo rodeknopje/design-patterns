@@ -12,8 +12,9 @@
         public override void Execute()
         {
             m.style_index = index;
-            m.draw_canvas.Children.Remove(m.selection_outline);
-            m.draw_canvas.Children.Remove(m.handle);
+
+            m.selection.ToggleOutline(false);
+  
             m.SwitchState(states.none);
         }
 

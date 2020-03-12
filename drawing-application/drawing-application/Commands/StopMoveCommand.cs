@@ -17,9 +17,9 @@ namespace drawing_application.Commands
         public StopMoveCommand()
         {
             // assign the shape.
-            shape = m.shape_selected;
+            shape = m.selection.shape;
             // assign the orgin pos.
-            orgin_pos = m.shape_selected.orginPos;
+            orgin_pos = m.selection.shape.orginPos;
             // assign the new pos.
             new_pos = new Point(Canvas.GetLeft(shape),Canvas.GetTop(shape));
         }
@@ -29,7 +29,9 @@ namespace drawing_application.Commands
             // set the shape to his orginal position.
             Canvas.SetLeft(shape, new_pos.X);
             Canvas.SetTop (shape, new_pos.Y);
-
+            // toggle the outline off.
+            m.selection.ToggleOutline(false);
+            // select it.
             new SelectShapeCommand(shape).Execute();
         }
 
@@ -38,6 +40,8 @@ namespace drawing_application.Commands
             // set the shape to his orginal position.
             Canvas.SetLeft(shape, orgin_pos.X);
             Canvas.SetTop (shape, orgin_pos.Y);
+            // toggle the outlnie off.
+            m.selection.ToggleOutline(false);
             // select it.
             new SelectShapeCommand(shape).Execute();
         }

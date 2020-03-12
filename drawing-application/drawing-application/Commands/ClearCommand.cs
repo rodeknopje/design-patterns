@@ -12,7 +12,7 @@ namespace drawing_application.Commands
 
         public ClearCommand()
         {
-            m.DeleteSelectionItems();
+            m.selection.ToggleOutline(false);
 
             shape_list  = new List<CustomShape>();
             button_list = new List<Button>();

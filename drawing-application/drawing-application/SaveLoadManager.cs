@@ -36,7 +36,7 @@ namespace drawing_application
         {
             File.WriteAllText(textfile, "");
 
-            MainWindow.ins.DeleteSelectionItems();
+            MainWindow.ins.selection.ToggleOutline(false);
 
             foreach (Shape shape in MainWindow.ins.draw_canvas.Children)
             {

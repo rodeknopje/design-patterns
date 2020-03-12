@@ -27,16 +27,17 @@ namespace drawing_application
         // the point where the handle started when resizing
         public Point orgin_pos_handle;
 
-        public Group selection = new Group();
-        // the currently selected shape.
-        public CustomShape shape_selected;
-        // the shape that is currently being drawn.
-        public CustomShape shape_drawn;
 
         // the rectangle you see around shapes when they are selected.
         public Shape selection_outline;
         // the handle which you drag to resize shapes.
         public Shape handle;
+
+        public Selection selection = new Selection();
+        // the currently selected shape.
+        public CustomShape shape_selected;
+        // the shape that is currently being drawn.
+        public CustomShape shape_drawn;
 
         // the current state of the program.
         public states state;
@@ -44,6 +45,7 @@ namespace drawing_application
         public SaveLoadManager saveload = new SaveLoadManager();
        
         public CmdManager cmd_manager = new CmdManager();
+
 
         // all types that derrive from ShapeGroup.
         public System.Type[] styles;
@@ -54,7 +56,6 @@ namespace drawing_application
         public MainWindow()
         {
             InitializeComponent();
-
             // initialize the singleton.
             ins ??= this;
             // get all types that derrive from customshape.
@@ -87,6 +88,7 @@ namespace drawing_application
             {
                 if(state==states.select) new ChangeShapeStyleCommand(style_index).Execute();               
             };
+
         }
 
         private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
@@ -159,85 +161,6 @@ namespace drawing_application
             return shape;
         }
 
-        public void DeleteSelectionItems()
-        {
-            draw_canvas.Children.Remove(selection_outline);
-            draw_canvas.Children.Remove(handle);
-        }
-
-        public (double x, double y, double width, double heigth) GetSelectionTransform()
-        {
-             // Create a transform tuple.
-            (double x, double y, double width, double heigth ) transform = (double.MaxValue,double.MaxValue, double.MinValue, double.MinValue );
-
-            // loop through all childeren in the selection.
-            foreach (var shape in selection.GetChilderen())
-            {
-                // get their x and y coords.
-                var x = Canvas.GetLeft(shape);
-                var y = Canvas.GetTop (shape);
-
-                // check if this is the lowes x so far.
-                if (x < transform.x)
-                {
-                    // is so assign it.
-                    transform.x = x;
-                }
-                // check if this is the lowes x so far.
-                if (y < transform.y)
-                {
-                    // is so assign it.
-                    transform.y = y;
-                }
-
-                // calculate the width and assign it.
-                var width  = shape.Width  + x ;
-                // calculate the heigth and assign it.
-                var heigth = shape.Height + y ;
-
-                // check if its to biggest so far.
-                if(width > transform.width)
-                {
-                    // if so assign it
-                    transform.width = width;
-                }
-                // check if its to biggest so far.
-                if (heigth > transform.heigth)
-                {
-                    // if so assign it
-                    transform.heigth = heigth;
-                }
-            }
-            // calculate the width of the final transform.
-            transform.width  -= transform.x;
-            // calculate the heigth of the final transform.
-            transform.heigth -= transform.y;
-            // return the transform
-            return transform;
-        }
-
-        public void InitializeSelectionShapes()
-        {
-            // assign the selection outline.
-            selection_outline = new System.Windows.Shapes.Rectangle
-            {
-                Fill = Brushes.Transparent,
-                Stroke = Brushes.White,
-                StrokeThickness = 2f,
-                StrokeDashArray = { 5, 5 }
-            };
-
-            // create the handle.
-            handle = new System.Windows.Shapes.Ellipse
-            {
-                Width = 20,
-                Height = 20,
-                StrokeThickness = 2,
-                Stroke = Brushes.White,
-                Fill = Brushes.Gray,
-
-            };
-        }
 
         private void InitializeStyleButtons()
         {
