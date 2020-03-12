@@ -39,10 +39,10 @@ namespace drawing_application.Commands
             {
                 // set the shape to his orginal position.
                 shape.Move(offset);
+                // update their orgin position
+                shape.UpdateOrginPos();
             }
             // toggle the outline off.
-            m.selection.ToggleOutline(false);
-
             m.selection.ToggleOutline(false);
             // switch to select state.
             m.SwitchState(states.select);
@@ -54,10 +54,10 @@ namespace drawing_application.Commands
             {
                 // set the shape to his orginal position.
                 shape.Move(new Point(-offset.X, -offset.Y));
+                // update their orgin position
+                shape.UpdateOrginPos();
             }
             // toggle the outlnie off.
-            m.selection.ToggleOutline(false);
-
             m.selection.ToggleOutline(false);
             // switch to select state.
             m.SwitchState(states.select);

@@ -26,6 +26,8 @@ namespace drawing_application.CustomShapes
         {
             Canvas.SetLeft(this, offset.X + orginPos.X);
             Canvas.SetTop (this, offset.Y + orginPos.Y);
+
+            
         }
 
         public virtual void Scale(Point diff)
