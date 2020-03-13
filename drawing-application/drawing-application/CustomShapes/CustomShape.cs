@@ -30,9 +30,18 @@ namespace drawing_application.CustomShapes
             
         }
 
-        public virtual void Scale(Point diff)
+        public virtual void Scale(Transform diff)
         {
-            throw new NotImplementedException();
+            Width  = orginScale.X * diff.width;
+            Height = orginScale.Y * diff.height;
+
+            var xpercent = Canvas.GetLeft(this) - Canvas.GetLeft(MainWindow.ins.selection.outline) * diff.x;
+            var ypercent = Canvas.GetTop(this) - Canvas.GetTop(MainWindow.ins.selection.outline) * diff.x;
+
+            Canvas.SetLeft(this, xpercent);
+            Canvas.SetTop(this, ypercent);
+
+            //Canvas.SetLeft(this, orginPos.X * diff.x);
         }
 
         protected Geometry DefineGeometry()

@@ -53,11 +53,11 @@ namespace drawing_application.CustomShapes
             }
         }
 
-        public override void Scale(Point diff)
+        public override void Scale(Transform transform)
         {
             foreach (var child in childeren)
             {
-                child.Scale(diff);
+                child.Scale(transform);
             }
         }
 

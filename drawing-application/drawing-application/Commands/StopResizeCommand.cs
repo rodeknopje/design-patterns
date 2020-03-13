@@ -23,6 +23,7 @@ namespace drawing_application.Commands
             orgin_position = m.shape_selected.orginPos;
 
             new_scale    = new Point(shape.Width, shape.Height);
+            new_scale    = new Point(shape.Width, shape.Height);
 
             new_position = new Point(Canvas.GetLeft(shape), Canvas.GetTop(shape));
         }

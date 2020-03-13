@@ -12,11 +12,11 @@ namespace drawing_application
     {
         Group group;
 
-        private Rectangle outline;
+        public Rectangle outline { get; private set; }
 
-        private Ellipse handle;
+        public Ellipse handle { get; private set; }
 
-        Transform transform;
+        private Transform transform;
 
         public Selection()
         {
@@ -56,17 +56,21 @@ namespace drawing_application
         public void Move(Point offset)
         {
             // move the group handle and outline.
-            group.Move(offset);
+            group.Move  (offset);
+            handle.Move (offset);
             outline.Move(offset);
-            handle.Move(offset);
         }
 
-        public void Scale(Point diff)
+        public void Scale(Transform transform)
         {
-            // scale the group handle and outline.
-            group.Move(diff);
-            outline.Move(diff);
-            handle.Move(diff);
+            // scale the group and outline.
+            group.Scale  (transform);
+            outline.Scale(transform);
+        }
+
+        public void MoveHandle(Point offset)       
+        {
+            handle.Move(offset);
         }
 
         public void Merge()
@@ -97,6 +101,11 @@ namespace drawing_application
         public Group GetGroup()
         {
             return group;
+        }
+
+        public Transform GetTransform()
+        {
+            return transform;
         }
 
         public Transform CalculateTransform()
@@ -136,16 +145,16 @@ namespace drawing_application
                     transform.width = width;
                 }
                 // check if its to biggest so far.
-                if (heigth > transform.heigth)
+                if (heigth > transform.height)
                 {
                     // if so assign it
-                    transform.heigth = heigth;
+                    transform.height = heigth;
                 }
             }
             // calculate the width of the final transform.
             transform.width -= transform.x;
             // calculate the heigth of the final transform.
-            transform.heigth -= transform.y;
+            transform.height -= transform.y;
             // return the transform
             return transform;
         }
@@ -154,12 +163,12 @@ namespace drawing_application
         public void DrawOutline()
         {
             // set the left and top position te be the same as the selected shape.
-            Canvas.SetLeft(outline, transform.x  - outline.StrokeThickness * 4);
-            Canvas.SetTop (outline, transform.y  - outline.StrokeThickness * 4);
+            Canvas.SetLeft(outline, transform.x);
+            Canvas.SetTop (outline, transform.y);
 
             // set the width and heigth to be the same as the selected shape.
-            outline.Width  = transform.width  + outline.StrokeThickness * 6;
-            outline.Height = transform.heigth + outline.StrokeThickness * 6;
+            outline.Width  = transform.width ;
+            outline.Height = transform.height;
 
             // move the resize handle it to the bottum right.
             Canvas.SetLeft(handle, Canvas.GetLeft(outline) + outline.Width  - handle.Width  / 2);
@@ -202,7 +211,7 @@ public struct Transform
     public double x;
     public double y;
     public double width;
-    public double heigth;
+    public double height;
 
     public Transform(double x, double y, double width, double heigth)
     {
@@ -210,6 +219,6 @@ public struct Transform
         this.y = y;
 
         this.width  = width;
-        this.heigth = heigth;
+        this.height = heigth;
     }
 }
