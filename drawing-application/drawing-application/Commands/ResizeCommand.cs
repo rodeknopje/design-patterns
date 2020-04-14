@@ -41,7 +41,7 @@ namespace drawing_application.Commands
                     transform.x = newX;
 
                     // multiply the shape width with the offset percentage.
-                    transform.width = shape.orginTransform.x * x_percent;
+                    transform.width = shape.orginTransform.width * x_percent;
                 }
                 if (y_percent >= 0)
                 {
@@ -53,7 +53,7 @@ namespace drawing_application.Commands
                     transform.y = newY;
 
                     // multiply the shape heigth with the offset percentage.
-                    transform.heigth = shape.orginTransform.y * y_percent;
+                    transform.heigth = shape.orginTransform.heigth * y_percent;
                 }
 
                 Canvas.SetLeft(shape, transform.x);
