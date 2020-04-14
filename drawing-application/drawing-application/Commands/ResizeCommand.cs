@@ -22,7 +22,7 @@ namespace drawing_application.Commands
             var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
             // calculate offset in percentages.
             var x_percent = (x_offset / sTransform.width)  + 1;
-            var y_percent = (y_offset / sTransform.height) + 1;
+            var y_percent = (y_offset / sTransform.heigth) + 1;
 
             m.selection.MoveHandle(new Point(x_offset, y_offset));
           
@@ -34,33 +34,33 @@ namespace drawing_application.Commands
                 if (x_percent >= 0)
                 {
                     // caculate how much the x position is relitive of the width.
-                    var xRelativeToWidth = (shape.orginPos.X - sTransform.x) / sTransform.width;
+                    var xRelativeToWidth = (shape.orginTransform.x - sTransform.x) / sTransform.width;
                     // multiply the relative width to the width multiply that with the move percentage and add it to the xposition.
                     var newX = sTransform.x + (sTransform.width * xRelativeToWidth) * x_percent;
                     // assign it to the transform.
                     transform.x = newX;
 
                     // multiply the shape width with the offset percentage.
-                    transform.width = shape.orginScale.X * x_percent;
+                    transform.width = shape.orginTransform.x * x_percent;
                 }
                 if (y_percent >= 0)
                 {
                     // caculate how much the x position is relitive of the width.
-                    var yRelativeToHeight = (shape.orginPos.Y - sTransform.y) / sTransform.height;
+                    var yRelativeToHeight = (shape.orginTransform.y - sTransform.y) / sTransform.heigth;
                     // multiply the relative width to the width multiply that with the move percentage and add it to the xposition.
-                    var newY = sTransform.y + (sTransform.height * yRelativeToHeight) * y_percent;
+                    var newY = sTransform.y + (sTransform.heigth * yRelativeToHeight) * y_percent;
                     // assign it to the transform.
                     transform.y = newY;
 
                     // multiply the shape heigth with the offset percentage.
-                    transform.height = shape.orginScale.Y * y_percent;
+                    transform.heigth = shape.orginTransform.y * y_percent;
                 }
 
                 Canvas.SetLeft(shape, transform.x);
                 Canvas.SetTop (shape, transform.y);
 
                 shape.Width  = transform.width;
-                shape.Height = transform.height;
+                shape.Height = transform.heigth;
 
             });
 

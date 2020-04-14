@@ -27,8 +27,8 @@ namespace drawing_application.Commands
             foreach (var shape in shapes)
             {
                 // set the shape to their orgin pos.
-                Canvas.SetLeft(shape, shape.orginPos.X);
-                Canvas.SetTop (shape, shape.orginPos.Y);
+                Canvas.SetLeft(shape, shape.orginTransform.x);
+                Canvas.SetTop (shape, shape.orginTransform.y);
             }
 
         }
@@ -40,7 +40,7 @@ namespace drawing_application.Commands
                 // set the shape to his orginal position.
                 shape.Move(offset);
                 // update their orgin position
-                shape.UpdateOrginPos();
+                shape.UpdateOrginTransform();
             }
             // toggle the outline off.
             m.selection.ToggleOutline(false);
@@ -55,7 +55,7 @@ namespace drawing_application.Commands
                 // set the shape to his orginal position.
                 shape.Move(new Point(-offset.X, -offset.Y));
                 // update their orgin position
-                shape.UpdateOrginPos();
+                shape.UpdateOrginTransform();
             }
             // toggle the outlnie off.
             m.selection.ToggleOutline(false);

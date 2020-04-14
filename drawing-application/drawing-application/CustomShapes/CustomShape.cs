@@ -9,31 +9,31 @@ namespace drawing_application.CustomShapes
 {
     public abstract class CustomShape : Shape
     {
-        public Point orginPos   { get; private set; }
-        public Point orginScale { get; private set; }
-        
-        public virtual void UpdateOrginPos()
+        public Transform orginTransform { get; private set; }
+
+        public virtual void UpdateOrginTransform()
         {
-            orginPos = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
+            //orginPos = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
+            orginTransform = new Transform(Canvas.GetLeft(this),Canvas.GetTop(this),Width,Height);
         }
 
-        public virtual void UpdateOrginScale()
-        {
-            orginScale = new Point(Width, Height);
-        }
+        //public virtual void UpdateOrginScale()
+        //{
+        //    //orginScale = new Point(Width, Height);
+        //}
 
         public virtual void Move(Point offset)
         {
-            Canvas.SetLeft(this, offset.X + orginPos.X);
-            Canvas.SetTop (this, offset.Y + orginPos.Y);
+            Canvas.SetLeft(this, offset.X + orginTransform.x);
+            Canvas.SetTop (this, offset.Y + orginTransform.y);
 
             
         }
 
         public virtual void Scale(Transform diff)
         {
-            Width  = orginScale.X * diff.width;
-            Height = orginScale.Y * diff.height;
+            Width  = orginTransform.width  * diff.width;
+            Height = orginTransform.heigth * diff.heigth;
 
             var xpercent = Canvas.GetLeft(this) - Canvas.GetLeft(MainWindow.ins.selection.outline) * diff.x;
             var ypercent = Canvas.GetTop(this) - Canvas.GetTop(MainWindow.ins.selection.outline) * diff.x;

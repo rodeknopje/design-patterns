@@ -61,20 +61,13 @@ namespace drawing_application.CustomShapes
             }
         }
 
-        public override void UpdateOrginPos()
+        public override void UpdateOrginTransform()
         {
             foreach (var child in childeren)
             {
-                child.UpdateOrginPos();
+                child.UpdateOrginTransform();
             }
         }
 
-        public override void UpdateOrginScale()
-        {
-            foreach (var child in childeren)
-            {
-                child.UpdateOrginScale();
-            }
-        }
     }
 }

@@ -18,9 +18,11 @@ namespace drawing_application.Commands
 
         public StopResizeCommand()
         {
+            Transform t = m.shape_selected.orginTransform;
+
             shape          = m.shape_selected;
-            orgin_scale    = m.shape_selected.orginScale;
-            orgin_position = m.shape_selected.orginPos;
+            orgin_scale    = new Point(t.width,t.heigth);
+            orgin_position = new Point(t.x,t.y);
 
             new_scale    = new Point(shape.Width, shape.Height);
             new_scale    = new Point(shape.Width, shape.Height);

@@ -117,13 +117,13 @@ namespace drawing_application
                 var x = Canvas.GetLeft(shape);
                 var y = Canvas.GetTop (shape);
 
-                // check if this is the lowes x so far.
+                // check if this is the lowest x so far.
                 if (x < transform.x)
                 {
                     // is so assign it.
                     transform.x = x;
                 }
-                // check if this is the lowes x so far.
+                // check if this is the lowest y so far.
                 if (y < transform.y)
                 {
                     // is so assign it.
@@ -142,16 +142,16 @@ namespace drawing_application
                     transform.width = width;
                 }
                 // check if its to biggest so far.
-                if (heigth > transform.height)
+                if (heigth > transform.heigth)
                 {
                     // if so assign it
-                    transform.height = heigth;
+                    transform.heigth = heigth;
                 }
             }
             // calculate the width of the final transform.
             transform.width -= transform.x;
             // calculate the heigth of the final transform.
-            transform.height -= transform.y;
+            transform.heigth -= transform.y;
             // return the transform
             return transform;
         }
@@ -165,7 +165,7 @@ namespace drawing_application
 
             // set the width and heigth to be the same as the selected shape.
             outline.Width  = transform.width ;
-            outline.Height = transform.height;
+            outline.Height = transform.heigth;
 
             // move the resize handle it to the bottum right.
             Canvas.SetLeft(handle, Canvas.GetLeft(outline) + outline.Width  - handle.Width  / 2);
@@ -181,14 +181,11 @@ namespace drawing_application
                 // draw it for the first time.
                 DrawOutline();
                 // update the orgin pos and scale of the outlnie.
-                outline.UpdateOrginPos();
-                outline.UpdateOrginScale();
+                outline.UpdateOrginTransform();
                 // and also for the handle.
-                handle.UpdateOrginPos();
-                handle.UpdateOrginScale();
+                handle.UpdateOrginTransform();
                 // update the orgin pos and scale of the outlnie.
-                UpdateOrginPos();
-                UpdateOrginScale();
+                UpdateOrginTransform();
                 // instantiate it.
                 MainWindow.ins.draw_canvas.Children.Add(outline);
                 MainWindow.ins.draw_canvas.Children.Add(handle);
@@ -208,7 +205,7 @@ public struct Transform
     public double x;
     public double y;
     public double width;
-    public double height;
+    public double heigth;
 
     public Transform(double x, double y, double width, double heigth)
     {
@@ -216,6 +213,6 @@ public struct Transform
         this.y = y;
 
         this.width  = width;
-        this.height = heigth;
+        this.heigth = heigth;
     }
 }
