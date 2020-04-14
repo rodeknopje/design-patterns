@@ -88,7 +88,8 @@ namespace drawing_application
             {
                 if(state==states.select) new ChangeShapeStyleCommand(style_index).Execute();               
             };
-
+            // click the first shape button
+            ((Button)style_select.Children[0]).RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
         }
 
         private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
@@ -169,7 +170,7 @@ namespace drawing_application
             for (int i = 0; i < styles.Length; i++)
             {
                 // skip if the syle is a group, since we dont want to draw groups directly
-                if (styles[i] == typeof(Group))
+                if (styles[i].IsSubclassOf(typeof(Group)) || styles[i] == typeof(Group))
                 {
                     continue;
                 }

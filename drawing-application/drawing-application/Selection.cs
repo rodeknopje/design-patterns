@@ -8,10 +8,8 @@ using System.Windows.Media;
 namespace drawing_application
 {
 
-    public class Selection
+    public class Selection : Group
     {
-        Group group;
-
         public Rectangle outline { get; private set; }
 
         public Ellipse handle { get; private set; }
@@ -20,7 +18,6 @@ namespace drawing_application
 
         public Selection()
         {
-            group = new Group();
             // assign the selection outline.
             outline = new Rectangle
             {
@@ -53,18 +50,18 @@ namespace drawing_application
             handle.MouseLeftButtonDown += (a, b) => new StartResizeCommand(b.GetPosition(MainWindow.ins.draw_canvas)).Execute();
         }
 
-        public void Move(Point offset)
+        public override void Move(Point offset)
         {
             // move the group handle and outline.
-            group.Move  (offset);
+            base.Move   (offset);
             handle.Move (offset);
             outline.Move(offset);
         }
 
-        public void Scale(Transform transform)
+        public override void Scale(Transform transform)
         {
             // scale the group and outline.
-            group.Scale  (transform);
+            base.Scale   (transform);
             outline.Scale(transform);
         }
 
@@ -77,7 +74,7 @@ namespace drawing_application
         {
             var merged = new Group();
 
-            foreach (var child in group.GetChilderen())
+            foreach (var child in GetChilderen())
             {
                 merged.AddChild(child);
             }
@@ -87,20 +84,20 @@ namespace drawing_application
 
         public void Select(CustomShape shape)
         {
-            if (group.GetAllShapes().Contains(shape) == false)
+            if (GetAllShapes().Contains(shape) == false)
             {
-                group.AddChild(shape);
+                AddChild(shape);
             }
         }
 
         public void Remove(CustomShape shape)
         {
-            group.RemoveChild(shape);
+            RemoveChild(shape);
         }
 
         public Group GetGroup()
         {
-            return group;
+            return this;
         }
 
         public Transform GetTransform()
@@ -114,7 +111,7 @@ namespace drawing_application
             transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
 
             // loop through all childeren in the selection.
-            foreach (var shape in group.GetAllShapes())
+            foreach (var shape in GetAllShapes())
             {
                 // get their x and y coords.
                 var x = Canvas.GetLeft(shape);
@@ -190,8 +187,8 @@ namespace drawing_application
                 handle.UpdateOrginPos();
                 handle.UpdateOrginScale();
                 // update the orgin pos and scale of the outlnie.
-                group.UpdateOrginPos();
-                group.UpdateOrginScale();
+                UpdateOrginPos();
+                UpdateOrginScale();
                 // instantiate it.
                 MainWindow.ins.draw_canvas.Children.Add(outline);
                 MainWindow.ins.draw_canvas.Children.Add(handle);
