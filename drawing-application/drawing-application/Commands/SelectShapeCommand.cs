@@ -19,9 +19,10 @@ namespace drawing_application.Commands
 
         public override void Execute()
         {
-            m.selection.ToggleOutline(false);
             // switch to select state.
             m.SwitchState(states.select);
+            // deselect the shape.
+            m.selection.ToggleOutline(false);
             // assign the selected shape.
             m.selection.Select(shape);
             // toggle the outline on.

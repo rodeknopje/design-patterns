@@ -53,13 +53,6 @@ namespace drawing_application.CustomShapes
             }
         }
 
-        public override void Scale(Transform transform)
-        {
-            foreach (var child in childeren)
-            {
-                child.Scale(transform);
-            }
-        }
 
         public override void UpdateOrginTransform()
         {

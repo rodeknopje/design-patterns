@@ -58,12 +58,6 @@ namespace drawing_application
             outline.Move(offset);
         }
 
-        public override void Scale(Transform transform)
-        {
-            // scale the group and outline.
-            base.Scale   (transform);
-            outline.Scale(transform);
-        }
 
         public void MoveHandle(Point offset)       
         {
@@ -93,11 +87,6 @@ namespace drawing_application
         public void Remove(CustomShape shape)
         {
             RemoveChild(shape);
-        }
-
-        public Group GetGroup()
-        {
-            return this;
         }
 
         public Transform GetTransform()

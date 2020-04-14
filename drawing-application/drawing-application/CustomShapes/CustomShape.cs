@@ -9,7 +9,7 @@ namespace drawing_application.CustomShapes
 {
     public abstract class CustomShape : Shape
     {
-        public Transform orginTransform { get; private set; }
+        public Transform orginTransform { get; protected set; }
 
         public virtual void UpdateOrginTransform()
         {
@@ -22,19 +22,7 @@ namespace drawing_application.CustomShapes
             Canvas.SetTop (this, offset.Y + orginTransform.y);     
         }
 
-        public virtual void Scale(Transform diff)
-        {
-            //Width  = orginTransform.width  * diff.width;
-            //Height = orginTransform.heigth * diff.heigth;
 
-            //var xpercent = Canvas.GetLeft(this) - Canvas.GetLeft(MainWindow.ins.selection.outline) * diff.x;
-            //var ypercent = Canvas.GetTop(this) - Canvas.GetTop(MainWindow.ins.selection.outline) * diff.y;
-
-            //Canvas.SetLeft(this, xpercent);
-            //Canvas.SetTop(this, ypercent);
-
-            //Canvas.SetLeft(this, orginPos.X * diff.x);
-        }
 
         protected Geometry DefineGeometry()
         {

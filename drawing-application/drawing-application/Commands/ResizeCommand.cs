@@ -27,7 +27,7 @@ namespace drawing_application.Commands
             m.selection.MoveHandle(new Point(x_offset, y_offset));
           
 
-            m.selection.GetGroup().GetAllShapes().ForEach(shape =>
+            m.selection.GetAllShapes().ForEach(shape =>
             {
                 var transform = new Transform();
 
@@ -42,6 +42,8 @@ namespace drawing_application.Commands
 
                     // multiply the shape width with the offset percentage.
                     transform.width = shape.orginTransform.width * x_percent;
+
+                    m.selection.outline.Width = Canvas.GetLeft(m.selection.handle) - Canvas.GetLeft(m.selection.outline) + (m.selection.handle.Width / 2); 
                 }
                 if (y_percent >= 0)
                 {
@@ -54,6 +56,8 @@ namespace drawing_application.Commands
 
                     // multiply the shape heigth with the offset percentage.
                     transform.heigth = shape.orginTransform.heigth * y_percent;
+
+                    m.selection.outline.Height = Canvas.GetTop(m.selection.handle) - Canvas.GetTop(m.selection.outline) + (m.selection.handle.Width / 2);
                 }
 
                 Canvas.SetLeft(shape, transform.x);
@@ -61,7 +65,6 @@ namespace drawing_application.Commands
 
                 shape.Width  = transform.width;
                 shape.Height = transform.heigth;
-
             });
 
 

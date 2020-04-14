@@ -17,7 +17,7 @@ namespace drawing_application.Commands
         public StopMoveCommand(Point mouse_pos)
         {
             // assign the shape.
-            shapes = m.selection.GetGroup().GetAllShapes();
+            shapes = m.selection.GetAllShapes();
             // calculate the mouse offset
             var x_offset = mouse_pos.X - m.orgin_mouse.X;
             var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
