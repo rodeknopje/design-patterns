@@ -13,33 +13,25 @@ namespace drawing_application.CustomShapes
 
         public virtual void UpdateOrginTransform()
         {
-            //orginPos = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
             orginTransform = new Transform(Canvas.GetLeft(this),Canvas.GetTop(this),Width,Height);
         }
-
-        //public virtual void UpdateOrginScale()
-        //{
-        //    //orginScale = new Point(Width, Height);
-        //}
 
         public virtual void Move(Point offset)
         {
             Canvas.SetLeft(this, offset.X + orginTransform.x);
-            Canvas.SetTop (this, offset.Y + orginTransform.y);
-
-            
+            Canvas.SetTop (this, offset.Y + orginTransform.y);     
         }
 
         public virtual void Scale(Transform diff)
         {
-            Width  = orginTransform.width  * diff.width;
-            Height = orginTransform.heigth * diff.heigth;
+            //Width  = orginTransform.width  * diff.width;
+            //Height = orginTransform.heigth * diff.heigth;
 
-            var xpercent = Canvas.GetLeft(this) - Canvas.GetLeft(MainWindow.ins.selection.outline) * diff.x;
-            var ypercent = Canvas.GetTop(this) - Canvas.GetTop(MainWindow.ins.selection.outline) * diff.x;
+            //var xpercent = Canvas.GetLeft(this) - Canvas.GetLeft(MainWindow.ins.selection.outline) * diff.x;
+            //var ypercent = Canvas.GetTop(this) - Canvas.GetTop(MainWindow.ins.selection.outline) * diff.y;
 
-            Canvas.SetLeft(this, xpercent);
-            Canvas.SetTop(this, ypercent);
+            //Canvas.SetLeft(this, xpercent);
+            //Canvas.SetTop(this, ypercent);
 
             //Canvas.SetLeft(this, orginPos.X * diff.x);
         }
