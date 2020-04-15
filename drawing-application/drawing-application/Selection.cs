@@ -58,11 +58,6 @@ namespace drawing_application
         }
 
 
-        public void MoveHandle(Point offset)       
-        {
-            handle.Move(offset);
-        }
-
         public void Merge()
         {
             var merged = new Group();
@@ -71,7 +66,6 @@ namespace drawing_application
             {
                 merged.AddChild(child);
             }
-
         }
 
 
@@ -91,6 +85,41 @@ namespace drawing_application
         public Transform GetTransform()
         {
             return orginTransform;
+        }
+
+        public void ApplyOutlineOffset(Point offset)
+        {
+            // move the handle.
+            handle.Move(offset);
+
+            // if the outline is on the right side.
+            if (offset.X + orginTransform.width > 0 )
+            {
+                // apply the offset to the width.
+                outline.Width = orginTransform.width + offset.X;
+            }
+            // if the outline is on the top side.
+            if(offset.Y + orginTransform.heigth > 0)
+            {
+                // apply the offset to the heigth.
+                outline.Height = orginTransform.heigth + offset.Y;
+            }
+            // if the outline is on the left side.
+            if(offset.X + orginTransform.width <= 0)
+            {
+                // apply the offset to the x position
+                Canvas.SetLeft(outline, offset.X + orginTransform.x + orginTransform.width);
+                // inverse the offset and substract the width to make the widt face the original x position
+                outline.Width = -(offset.X + orginTransform.width);
+            }
+            // if the outline is on the bottum side.
+            if (offset.Y + orginTransform.heigth <= 0)
+            {
+                // apply the offset to the y position
+                Canvas.SetTop(outline, offset.Y + orginTransform.y + orginTransform.heigth);
+                // inverse the offset and substract the heigth to make the widt face the original y position
+                outline.Height = -(offset.Y + orginTransform.heigth);
+            }
         }
 
         public void CalculateTransform()

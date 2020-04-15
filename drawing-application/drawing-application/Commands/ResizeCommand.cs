@@ -23,8 +23,7 @@ namespace drawing_application.Commands
             var x_percent = (x_offset / sTransform.width)  + 1;
             var y_percent = (y_offset / sTransform.heigth) + 1;
 
-            m.selection.MoveHandle(new Point(x_offset, y_offset));
-
+            m.selection.ApplyOutlineOffset(new Point(x_offset, y_offset));
 
             m.selection.GetAllShapes().ForEach(shape =>
             {
@@ -41,8 +40,6 @@ namespace drawing_application.Commands
 
                     // multiply the shape width with the offset percentage.
                     transform.width = shape.orginTransform.width * x_percent;
-
-                    m.selection.outline.Width = sTransform.width + x_offset;
                 }
                 if (y_percent > 0)
                 {
@@ -55,10 +52,8 @@ namespace drawing_application.Commands
 
                     // multiply the shape heigth with the offset percentage.
                     transform.heigth = shape.orginTransform.heigth * y_percent;
-
-                    m.selection.outline.Height =  sTransform.heigth + y_offset ;
                 }
-                if(x_percent < 0)
+                if(x_percent <= 0)
                 {
                     // caculate how much the x position is relitive of the width.
                     var xRelativeToWidth = (shape.orginTransform.x - sTransform.x) / sTransform.width;
@@ -70,14 +65,8 @@ namespace drawing_application.Commands
 
                     // multiply the orgiginal width of the shape with the x percent
                     transform.width = shape.orginTransform.width * -x_percent;
-
-
-
-                    Canvas.SetLeft(m.selection.outline, x_offset + sTransform.x + sTransform.width );
-
-                    m.selection.outline.Width =  -(x_offset + sTransform.width);
                 }
-                if(y_percent < 0)
+                if(y_percent <= 0)
                 {
                     // caculate how much the y position is relitive of the heigth.
                     var yRelativeToWidth = (shape.orginTransform.y - sTransform.y) / sTransform.heigth;
@@ -88,10 +77,6 @@ namespace drawing_application.Commands
 
                     // multiply the orgiginal heigth of the shape with the x percent
                     transform.heigth = shape.orginTransform.heigth * -y_percent;
-
-                    Canvas.SetTop(m.selection.outline, y_offset + sTransform.y + sTransform.heigth);
-
-                    m.selection.outline.Height = -(y_offset + sTransform.heigth);
                 }
                 // small number to calculate an always offset and scale. so shapes stay relative to each othet.
                 float smallnumber = 0.000001f;
