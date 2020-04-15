@@ -86,7 +86,7 @@ namespace drawing_application
             // go to back to draw state when rmb is pressed.
             MouseRightButtonDown += (a, b) => 
             {
-                if(state==states.select) new ChangeShapeStyleCommand(style_index).Execute();               
+                if(state==states.select) new ChangeShapeStyleCommand(style_index).Execute(); selection.Clear();
             };
             // click the first shape button
             ((Button)style_select.Children[0]).RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
@@ -124,22 +124,10 @@ namespace drawing_application
             }
         }
 
-        public Button CreateSelectButton(CustomShape _shape)
+        public Button CreateSelectButton(CustomShape shape)
         {
-            // create a new textbox
-            Button button = new Button
-            {
-                // assign the correct text
-                Content = $"{_shape.GetType().Name} ({ID++})",
-                Margin  = new Thickness(1),
-                HorizontalContentAlignment = HorizontalAlignment.Left,
-                FontSize = 20,
-                Foreground = Brushes.DarkRed,      
-            };
-            // if the textbox is clicked then select the curren shape
-            button.Click += (a, b) => new SelectShapeCommand(_shape).Execute();
-
-            return button;
+ 
+           return new SelectButton(shape);
         }
 
         public void SwitchState(states state)
