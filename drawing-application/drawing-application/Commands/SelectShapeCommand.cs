@@ -25,8 +25,7 @@ namespace drawing_application.Commands
             m.selection.ToggleOutline(false);
             // assign the selected shape.
             m.selection.Select(shape);
-            // toggle the outline on.
-            m.selection.ToggleOutline(true);
+
         }
 
         public override void Undo()

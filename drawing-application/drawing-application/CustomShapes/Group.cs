@@ -22,7 +22,7 @@ namespace drawing_application.CustomShapes
             childeren.Clear();
         }
 
-        public void RemoveChild(CustomShape shape)
+        public virtual void RemoveChild(CustomShape shape)
         {
             childeren.Remove(shape);
         }

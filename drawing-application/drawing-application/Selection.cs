@@ -75,11 +75,22 @@ namespace drawing_application
             {
                 AddChild(shape);
             }
+            // toggle the outline on.
+            ToggleOutline(true);
         }
 
-        public void Remove(CustomShape shape)
+
+
+        public override void RemoveChild(CustomShape shape)
         {
-            RemoveChild(shape);
+            base.RemoveChild(shape);
+            // if there are still childeren
+            if(GetChilderen().Count > 0)
+            {
+                // togle the outline.
+                ToggleOutline(true);
+            }
+            
         }
 
         public Transform GetTransform()
@@ -191,6 +202,9 @@ namespace drawing_application
 
         public void ToggleOutline(bool state)
         {
+            MainWindow.ins.draw_canvas.Children.Remove(outline);
+            MainWindow.ins.draw_canvas.Children.Remove(handle);
+
             if (state)
             {
                 // calculate the transform of the outline.
