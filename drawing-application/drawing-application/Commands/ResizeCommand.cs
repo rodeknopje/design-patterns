@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -42,8 +41,8 @@ namespace drawing_application.Commands
 
                     // multiply the shape width with the offset percentage.
                     transform.width = shape.orginTransform.width * x_percent;
-                    
-                    m.selection.outline.Width = Canvas.GetLeft(m.selection.handle) - Canvas.GetLeft(m.selection.outline) + (m.selection.handle.Width / 2); 
+
+                    m.selection.outline.Width = sTransform.width + x_offset;
                 }
                 if (y_percent > 0)
                 {
@@ -57,21 +56,42 @@ namespace drawing_application.Commands
                     // multiply the shape heigth with the offset percentage.
                     transform.heigth = shape.orginTransform.heigth * y_percent;
 
-                    m.selection.outline.Height = Canvas.GetTop(m.selection.handle) - Canvas.GetTop(m.selection.outline) + (m.selection.handle.Width / 2);
+                    m.selection.outline.Height =  sTransform.heigth + y_offset ;
                 }
                 if(x_percent < 0)
                 {
-                    Canvas.SetLeft(m.selection.outline, Canvas.GetLeft( m.selection.handle) + m.selection.handle.Width / 2);
+                    // caculate how much the x position is relitive of the width.
+                    var xRelativeToWidth = (shape.orginTransform.x - sTransform.x) / sTransform.width;
+                    // multiply the relative width to the width, multiply that with the move inverse move percentage and add it to the xposition.
+                    var newX = sTransform.x + (sTransform.width * xRelativeToWidth) * -x_percent;
 
-                    m.selection.outline.Width =  (-x_offset - m.selection.orginTransform.width);
+                    // assign it to the transform.
+                    transform.x = x_offset + sTransform.width + newX;
+
+                    // multiply the orgiginal width of the shape with the x percent
+                    transform.width = shape.orginTransform.width * -x_percent;
+
+
+
+                    Canvas.SetLeft(m.selection.outline, x_offset + sTransform.x + sTransform.width );
+
+                    m.selection.outline.Width =  -(x_offset + sTransform.width);
                 }
                 if(y_percent < 0)
                 {
-                    Canvas.SetTop(m.selection.outline, Canvas.GetTop(m.selection.handle) + m.selection.handle.Height / 2);
+                    // caculate how much the y position is relitive of the heigth.
+                    var yRelativeToWidth = (shape.orginTransform.y - sTransform.y) / sTransform.heigth;
+                    // multiply the relative width to the width, multiply that with the move inverse move percentage and add it to the xposition.
+                    var newY = sTransform.y + (sTransform.heigth * yRelativeToWidth) * -y_percent;
+                    // assign it to the transform.
+                    transform.y = y_offset + sTransform.heigth + newY;
 
-                    m.selection.outline.Height = (-y_offset - m.selection.orginTransform.heigth);
+                    // multiply the orgiginal heigth of the shape with the x percent
+                    transform.heigth = shape.orginTransform.heigth * -y_percent;
 
+                    Canvas.SetTop(m.selection.outline, y_offset + sTransform.y + sTransform.heigth);
 
+                    m.selection.outline.Height = -(y_offset + sTransform.heigth);
                 }
                 // small number to calculate an always offset and scale. so shapes stay relative to each othet.
                 float smallnumber = 0.000001f;
@@ -85,60 +105,6 @@ namespace drawing_application.Commands
             });
 
 
-
-           // m.debug_text.Text = $"{Math.Round(x_percent,2)}, {Math.Round(y_percent,2)}";
-
-            //// get the offset from the orginal mouse position.
-            //var x_offset = mouse_pos.X - m.orgin_mouse.X;
-            //var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
-            //// add the offset to the handle's position.
-            //Canvas.SetLeft(m.handle, m.orgin_pos_handle.X + x_offset);
-            //Canvas.SetTop (m.handle, m.orgin_pos_handle.Y + y_offset);
-            //// calculate the new width and heigth by adding the offset to the orginal scale.
-            //var width  = m.shape_selected.orginScale.X + x_offset;
-            //var heigth = m.shape_selected.orginScale.Y + y_offset;
-
-            //// if the new width is positive. 
-            //if (width >= 0)
-            //{
-            //    // assign selected shape width with the new width.
-            //    m.shape_selected.Width = width;
-            //    // assign selection outline width with the new width.
-            //    m.selection_outline.Width = width + m.selection_outline.StrokeThickness * 4;
-
-            //}
-            //// if the new width is negative.
-            //else
-            //{
-            //    // assign the left from the selected shape with the orignal possition minus the offset.
-            //    Canvas.SetLeft(m.shape_selected, m.orgin_pos_handle.X + x_offset);
-            //    // assign the width from the selected shape with the inversed width, so it becomes the line on the right side.
-            //    m.shape_selected.Width = -width;
-
-            //    // assign the left from the selection outline with the orignal possition minus the offset.
-            //    Canvas.SetLeft(m.selection_outline, m.orgin_pos_handle.X + x_offset - m.selection_outline.StrokeThickness * 2);
-            //    // assign the width from the selection outline with the inversed width, so it becomes the line on the right side.
-            //    m.selection_outline.Width = -width + m.selection_outline.StrokeThickness * 4;
-            //}
-            //if (heigth >= 0)
-            //{
-            //    // assign selected shape heigth with the new width.
-            //    m.shape_selected.Height = heigth;
-            //    // assign selection outline heigth with the new width.
-            //    m.selection_outline.Height = heigth + m.selection_outline.StrokeThickness * 4;
-            //}
-            //else
-            //{
-            //    // assign the top from the selected shape with the orignal possition minus the offset
-            //    Canvas.SetTop(m.shape_selected, m.orgin_pos_handle.Y + y_offset);
-            //    // assign the top from the selected shape with the inversed width, so it becomes the line on the right side.
-            //    m.shape_selected.Height = -heigth;
-
-            //    // assign the top from the selection outline with the orignal possition minus the offset.
-            //    Canvas.SetTop(m.selection_outline, m.orgin_pos_handle.Y + y_offset - m.selection_outline.StrokeThickness * 2);
-            //    // assign the top from the selection outline with the inversed width, so it becomes the line on the right side.
-            //    m.selection_outline.Height = -heigth + m.selection_outline.StrokeThickness * 4;
-            //}
         }
 
         public override void Undo()
