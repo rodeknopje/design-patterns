@@ -14,7 +14,6 @@ namespace drawing_application
 
         public Ellipse handle { get; private set; }
 
-        private Transform transform;
 
         public Selection()
         {
@@ -91,13 +90,13 @@ namespace drawing_application
 
         public Transform GetTransform()
         {
-            return transform;
+            return orginTransform;
         }
 
-        public Transform CalculateTransform()
+        public void CalculateTransform()
         {
             // Create a transform tuple.
-            transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
+            Transform transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
 
             // loop through all childeren in the selection.
             foreach (var shape in GetAllShapes())
@@ -141,20 +140,20 @@ namespace drawing_application
             transform.width -= transform.x;
             // calculate the heigth of the final transform.
             transform.heigth -= transform.y;
-            // return the transform
-            return transform;
+            // assign the transform to the orgin transform.
+            orginTransform = transform;
         }
 
 
         public void DrawOutline()
         {
             // set the left and top position te be the same as the selected shape.
-            Canvas.SetLeft(outline, transform.x);
-            Canvas.SetTop (outline, transform.y);
+            Canvas.SetLeft(outline, orginTransform.x);
+            Canvas.SetTop (outline, orginTransform.y);
 
             // set the width and heigth to be the same as the selected shape.
-            outline.Width  = transform.width ;
-            outline.Height = transform.heigth;
+            outline.Width  = orginTransform.width ;
+            outline.Height = orginTransform.heigth;
 
             // move the resize handle it to the bottum right.
             Canvas.SetLeft(handle, Canvas.GetLeft(outline) + outline.Width  - handle.Width  / 2);

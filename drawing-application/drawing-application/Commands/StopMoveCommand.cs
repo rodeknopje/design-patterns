@@ -11,7 +11,6 @@ namespace drawing_application.Commands
         // the shape binded to this command.
         List<CustomShape>  shapes;
 
-
         Point offset;
 
         public StopMoveCommand(Point mouse_pos)

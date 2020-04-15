@@ -1,4 +1,5 @@
 ﻿using drawing_application.CustomShapes;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,50 +7,69 @@ namespace drawing_application.Commands
 {
     class StopResizeCommand : Command
     {
-        CustomShape shape;
-
-        Point orgin_scale;
-
-        Point orgin_position;
-
-        Point new_scale;
-
-        Point new_position;
+        // list off all shapes which have scaled.
+        List<CustomShape> shapes = new List<CustomShape>();
+        // their old and new positions
+        List<Point> orginPositions = new List<Point>();
+        List<Point> newPositions   = new List<Point>();
+        // their old and new scales.
+        List<Point> orginScales = new List<Point>();
+        List<Point> newScales   = new List<Point>();
 
         public StopResizeCommand()
         {
-            Transform t = m.shape_selected.orginTransform;
-
-            shape          = m.shape_selected;
-            orgin_scale    = new Point(t.width,t.heigth);
-            orgin_position = new Point(t.x,t.y);
-
-            new_scale    = new Point(shape.Width, shape.Height);
-            new_position = new Point(Canvas.GetLeft(shape), Canvas.GetTop(shape));
+            // loop through all shapes in the selection.
+            m.selection.GetAllShapes().ForEach(shape =>
+            {
+                // add them to this shape list.
+                shapes.Add(shape);
+                // add their original scale the the list.
+                orginScales.Add(new Point(shape.orginTransform.width, shape.orginTransform.heigth));
+                // add their current scale to the list
+                newScales.Add(new Point(shape.Width,shape.Height));
+                // add their original pos to the list
+                orginPositions.Add(new Point(shape.orginTransform.x, shape.orginTransform.y));
+                // add their new pos to the list.
+                newPositions.Add(new Point(Canvas.GetLeft(shape), Canvas.GetTop(shape)));
+            });
         }
 
         public override void Execute()
         {
-            //m.SwitchState(states.select);
+            // loop through all the shapes.
+            for(int i = 0; i < shapes.Count; i++)
+            {
+                // set the new width and heigth.
+                shapes[i].Width  = newScales[i].X;
+                shapes[i].Height = newScales[i].Y;
+                // set the new x and y
+                Canvas.SetLeft(shapes[i], newPositions[i].X);
+                Canvas.SetTop (shapes[i], newPositions[i].Y);
 
-            shape.Width  = new_scale.X;
-            shape.Height = new_scale.Y;
-
-            Canvas.SetLeft(shape, new_position.X);
-            Canvas.SetTop (shape, new_position.Y);
-
-            new SelectShapeCommand(shape).Execute();
+            }
+            // toggle the outline off.
+            m.selection.ToggleOutline(false);
+            // switch to none state.
+            m.SwitchState(states.none);
         }
 
         public override void Undo()
         {
-            shape.Width  = orgin_scale.X;
-            shape.Height = orgin_scale.Y;
+            // loop through all the shapes.
+            for (int i = 0; i < shapes.Count; i++)
+            {
+                // set the new width and heigth.
+                shapes[i].Width  = orginScales[i].X;
+                shapes[i].Height = orginScales[i].Y;
+                // set the new x and y
+                Canvas.SetLeft(shapes[i], orginPositions[i].X);
+                Canvas.SetTop(shapes[i],  orginPositions[i].Y);
 
-            Canvas.SetLeft(shape, orgin_position.X );
-            Canvas.SetTop (shape, orgin_position.Y);
-
-            new SelectShapeCommand(shape).Execute();
+            }
+            // toggle the outline off.
+            m.selection.ToggleOutline(false);
+            // switch to none state.
+            m.SwitchState(states.none);
         }
     }
 }
