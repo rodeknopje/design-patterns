@@ -8,20 +8,20 @@ namespace drawing_application.Commands
     class ClearCommand : Command
     {
         List<CustomShape>  shape_list;
-        List<Button> button_list;
+        List<SelectButton> button_list;
 
         public ClearCommand()
         {
             m.selection.ToggleOutline(false);
 
             shape_list  = new List<CustomShape>();
-            button_list = new List<Button>();
+            button_list = new List<SelectButton>();
 
             for (int i = 0; i < m.draw_canvas.Children.Count; i++)
             {
                 shape_list.Add((CustomShape)m.draw_canvas.Children[i]);
 
-                button_list.Add((Button)m.selection_row.Children[i]);
+                button_list.Add((SelectButton)m.selection_row.Children[i]);
             }
         }
         public override void Execute()

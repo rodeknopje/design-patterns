@@ -10,8 +10,7 @@ using System.Windows.Input;
 
 namespace drawing_application
 {
-    class SelectButton : Button
-
+    public class SelectButton : TextBlock
     {
         private static int ID;
         private bool selected;
@@ -20,26 +19,28 @@ namespace drawing_application
         {
             this.shape = shape;
             // assign the correct text
-            Content = $"{shape.GetType().Name} ({ID++})";
-            Margin = new Thickness(1);
-            HorizontalContentAlignment = HorizontalAlignment.Left;
+            Text = $"{shape.GetType().Name} ({ID++})";
+            //Margin = new Thickness(3);
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+            
+
+            Height = 30;
+
             FontSize = 20;
-            Foreground = Brushes.DarkRed;
-            selected = false;
 
-            // if the textbox is clicked then select the curren shape
+            Background = Brushes.LightGray;
 
-            Click += (a, b) => Onclick(); 
+            Foreground = Brushes.Black;
 
-
+            // if the text box is clicked then select the current shape
+            MouseLeftButtonDown += (a, b) => Onclick();
         }
-
 
         public void Onclick()
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
-                if (selected == true)
+                if (selected)
                 {
                     //hier moet hij uitgezet worden
                     MainWindow.ins.selection.RemoveChild(shape);
@@ -53,14 +54,17 @@ namespace drawing_application
             else
             {
                 MainWindow.ins.selection.Clear();
+
                 if (selected == false)
                 {
                     new SelectShapeCommand(shape).Execute();
                 }
                
             }
+
             selected = !selected;
-            Background = selected == true ? Brushes.LightSkyBlue : Brushes.Gray;
+
+            Background = selected ? Brushes.LightSkyBlue : Brushes.LightGray;
         }
         
 

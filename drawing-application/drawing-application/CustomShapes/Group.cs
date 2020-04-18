@@ -17,7 +17,7 @@ namespace drawing_application.CustomShapes
             childeren.Add(shape);
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
             childeren.Clear();
         }

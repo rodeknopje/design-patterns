@@ -12,30 +12,17 @@ using drawing_application.CustomShapes;
 
 namespace drawing_application
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         // singleton of this class.
         public static MainWindow ins;
-
-        // ID of each shape.
-        public int ID;
         // list with all the shapes in it.
         public List<Shape> shapelist = new List<Shape>();
-
         // the point where the mouse started when dragging.
         public Point orgin_mouse;
-        // the point where the handle started when resizing
-        public Point orgin_pos_handle;
 
 
-        // the rectangle you see around shapes when they are selected.
-        public Shape selection_outline;
-        // the handle which you drag to resize shapes.
-        public Shape handle;
 
-        public Selection selection = new Selection();
-        // the currently selected shape.
-        public CustomShape shape_selected;
         // the shape that is currently being drawn.
         public CustomShape shape_drawn;
 
@@ -46,19 +33,21 @@ namespace drawing_application
        
         public CmdManager cmd_manager = new CmdManager();
 
-
         // all types that derrive from ShapeGroup.
         public System.Type[] styles;
         // the current index of the styles array.
         public int style_index;
-        
+
+
+        public Selection selection = new Selection();
+
 
         public MainWindow()
         {
             InitializeComponent();
             // initialize the singleton.
             ins ??= this;
-            // get all types that derrive from customshape.
+            // get all types that derive from custom shape.
             styles = Assembly.GetAssembly(typeof(CustomShape)).GetTypes().Where(T=>T.IsSubclassOf(typeof(CustomShape))).ToArray();
 
             // make te style button a toggle for the shape buttons.
@@ -74,10 +63,10 @@ namespace drawing_application
             // Initialize the buttons
             InitializeStyleButtons();
 
-            // bind the undo and redo actions to their conrresponsing buttons
+            // bind the undo and redo actions to their corresponding  buttons
             button_undo.Click += (a, b) => cmd_manager.Undo();
             button_redo.Click += (a, b) => cmd_manager.Redo();
-            // als bind it to the cntrl+z and contrl+r keys
+            // als bind it to the control+z and contrl+r keys
             KeyDown += (a, b) => 
             {
                 if (b.Key == Key.Z) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Undo();
@@ -124,10 +113,9 @@ namespace drawing_application
             }
         }
 
-        public Button CreateSelectButton(CustomShape shape)
+        public SelectButton CreateSelectButton(CustomShape shape)
         {
- 
-           return new SelectButton(shape);
+            return new SelectButton(shape);
         }
 
         public void SwitchState(states state)
@@ -155,16 +143,16 @@ namespace drawing_application
         private void InitializeStyleButtons()
         {
             // for all different styles.
-            for (int i = 0; i < styles.Length; i++)
+            for (var i = 0; i < styles.Length; i++)
             {
-                // skip if the syle is a group, since we dont want to draw groups directly
+                // skip if the style is a group, since we don't want to draw groups directly
                 if (styles[i].IsSubclassOf(typeof(Group)) || styles[i] == typeof(Group))
                 {
                     continue;
                 }
 
                 // define the index to which the button should switch.
-                int index = i;
+                var index = i;
                 // initialize the buttons.
                 var button = new Button
                 {
@@ -180,12 +168,12 @@ namespace drawing_application
                 {
                     // make the style button display the current style.
                     button_style.Content = styles[index].Name;
-                    // collapse the syle select element.
+                    // collapse the style select element.
                     style_select.Visibility = Visibility.Collapsed;
                     // switch the style.
                     new ChangeShapeStyleCommand(index).Execute();
                 };               
-                // add this button to the style select stackpanel.
+                // add this button to the style select stack panel.
                 style_select.Children.Add(button);
             }
         }

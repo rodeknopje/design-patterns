@@ -1,5 +1,7 @@
 ﻿using drawing_application.Commands;
 using drawing_application.CustomShapes;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,9 +12,9 @@ namespace drawing_application
 
     public class Selection : Group
     {
-        public Rectangle outline { get; private set; }
+        public Rectangle outline { get; }
 
-        public Ellipse handle { get; private set; }
+        public Ellipse handle { get; }
 
 
         public Selection()
@@ -79,18 +81,23 @@ namespace drawing_application
             ToggleOutline(true);
         }
 
+        public void Select(List<CustomShape> shape)
+        {
 
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+
+            ToggleOutline(false);
+        }
 
         public override void RemoveChild(CustomShape shape)
         {
             base.RemoveChild(shape);
-            // if there are still childeren
-            if(GetChilderen().Count > 0)
-            {
-                // togle the outline.
-                ToggleOutline(true);
-            }
-            
+            // remove or update the outline bases on if there are children in the group.
+            ToggleOutline(GetChilderen().Any());
         }
 
         public Transform GetTransform()
@@ -123,7 +130,7 @@ namespace drawing_application
                 // inverse the offset and substract the width to make the widt face the original x position
                 outline.Width = -(offset.X + orginTransform.width);
             }
-            // if the outline is on the bottum side.
+            // if the outline is on the bottum  side.
             if (offset.Y + orginTransform.heigth <= 0)
             {
                 // apply the offset to the y position
@@ -138,7 +145,7 @@ namespace drawing_application
             // Create a transform tuple.
             Transform transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
 
-            // loop through all childeren in the selection.
+            // loop through all childrenin the selection.
             foreach (var shape in GetAllShapes())
             {
                 // get their x and y coords.
@@ -178,9 +185,9 @@ namespace drawing_application
             }
             // calculate the width of the final transform.
             transform.width -= transform.x;
-            // calculate the heigth of the final transform.
+            // calculate the height of the final transform.
             transform.heigth -= transform.y;
-            // assign the transform to the orgin transform.
+            // assign the transform to the origin transform.
             orginTransform = transform;
         }
 
@@ -211,11 +218,11 @@ namespace drawing_application
                 CalculateTransform();
                 // draw it for the first time.
                 DrawOutline();
-                // update the orgin pos and scale of the outlnie.
+                // update the origin pos and scale of the outline.
                 outline.UpdateOrginTransform();
                 // and also for the handle.
                 handle.UpdateOrginTransform();
-                // update the orgin pos and scale of the outlnie.
+                // update the origin pos and scale of the outline.
                 UpdateOrginTransform();
                 // instantiate it.
                 MainWindow.ins.draw_canvas.Children.Add(outline);

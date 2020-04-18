@@ -7,7 +7,8 @@ namespace drawing_application.Commands
     class StopDrawCommand : Command
     {
         CustomShape shape;
-        Button button;
+
+        SelectButton button;
 
         public StopDrawCommand() 
         {
