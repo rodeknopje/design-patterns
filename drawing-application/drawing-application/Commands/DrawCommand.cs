@@ -1,49 +1,49 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace drawing_application.Commands
 {
-    class DrawCommand : Command
+    public class DrawCommand : Command
     {
-        Point mouse_pos;
+        // the current position of the mouse.
+        private readonly Point mousePos;
 
-        public DrawCommand(Point mouse_pos)
+        public DrawCommand(Point mousePos)
         {
-            this.mouse_pos = mouse_pos;
+            // assign the mouse position.
+            this.mousePos = mousePos;
         }
 
         public override void Execute()
         {
-            // get the offset from the orgin point.
-            var x_offset = mouse_pos.X - m.orgin_mouse.X;
-            var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
+            // get the offset from the origin point.
+            var xOffset = mousePos.X - M.orgin_mouse.X;
+            var yOffset = mousePos.Y - M.orgin_mouse.Y;
             // if the x offset is greater than zero.
-            if (x_offset > 0)
+            if (xOffset > 0)
             {
                 // set the width to the offset.
-                m.shape_drawn.Width = x_offset;
+                M.shape_drawn.Width = xOffset;
             }
             else
             {
                 // otherwise set the left 
-                Canvas.SetLeft(m.shape_drawn, x_offset + m.orgin_mouse.X);
+                Canvas.SetLeft(M.shape_drawn, xOffset + M.orgin_mouse.X);
                 // inverse the offset to make it positive.
-                m.shape_drawn.Width = -x_offset;
+                M.shape_drawn.Width = -xOffset;
             }
-            if (y_offset > 0)
+            if (yOffset > 0)
             {
                 // set the width to the offset.
-                m.shape_drawn.Height = y_offset;
+                M.shape_drawn.Height = yOffset;
             }
             else
             {
                 // otherwise set the left 
-                Canvas.SetTop(m.shape_drawn, y_offset + m.orgin_mouse.Y);
+                Canvas.SetTop(M.shape_drawn, yOffset + M.orgin_mouse.Y);
                 // inverse the offset to make it positive.
-                m.shape_drawn.Height = -y_offset;
+                M.shape_drawn.Height = -yOffset;
             }
         }
 

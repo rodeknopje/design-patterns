@@ -1,36 +1,38 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace drawing_application.Commands
 {
-    class StartDrawCommand : Command
+    public class StartDrawCommand : Command
     {
-        Point orgin;
-        public StartDrawCommand(Point orgin)
+        // the mouse position of the mouse when the draw started.
+        private readonly Point mousePos;
+        public StartDrawCommand(Point mousePos)
         {
-            this.orgin = orgin;
+            // assign the mouse position.
+            this.mousePos = mousePos;
         }
 
         public override void Execute()
         {
-            m.style_select.Visibility = Visibility.Collapsed;
-
-            m.SwitchState(states.draw);
-            // create a point variable to store coordinates
-            m.orgin_mouse = orgin;
+            // collapse the style selection.
+            M.style_select.Visibility = Visibility.Collapsed;
+            // switch to the draw state.
+            M.SwitchState(states.draw);
+            // set the mouse origin in the main.
+            M.orgin_mouse = mousePos;
             // create a new shape based on the selected shape.
-            m.shape_drawn = m.CreateShape(m.style_index);
+            M.shape_drawn = M.CreateShape(M.style_index);
 
-            // set the position of the shape.
-            Canvas.SetLeft(m.shape_drawn, orgin.X);
-            Canvas.SetTop(m.shape_drawn, orgin.Y);
+            // set x position of the shape equal to the mouse x
+            Canvas.SetLeft(M.shape_drawn, mousePos.X);
+            // set y position of the shape equal to the mouse y
+            Canvas.SetTop(M.shape_drawn, mousePos.Y);
             // add it to the canvas.
-            m.draw_canvas.Children.Add(m.shape_drawn);
-            // add the new shape to the shapelist.
-            m.shapelist.Add(m.shape_drawn);
+            M.draw_canvas.Children.Add(M.shape_drawn);
+            // add the new shape to the shape list.
+            M.shapelist.Add(M.shape_drawn);
         }
 
         public override void Undo()

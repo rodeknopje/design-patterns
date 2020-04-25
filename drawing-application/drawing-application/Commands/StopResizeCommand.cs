@@ -19,7 +19,7 @@ namespace drawing_application.Commands
         public StopResizeCommand()
         {
             // loop through all shapes in the selection.
-            m.selection.GetAllShapes().ForEach(shape =>
+            M.selection.GetAllShapes().ForEach(shape =>
             {
                 // add them to this shape list.
                 shapes.Add(shape);
@@ -49,7 +49,7 @@ namespace drawing_application.Commands
                 shapes[i].UpdateOriginTransform();
             }
             // Deselect all the shapes, because we can only select non selected shapes.
-            shapes.ForEach(m.selection.RemoveChild);
+            shapes.ForEach(M.selection.RemoveChild);
             // select all these shapes.
             new SelectShapeCommand(shapes).Execute();
         }
@@ -68,7 +68,7 @@ namespace drawing_application.Commands
 
             }
             // Deselect all the shapes, because we can only select non selected shapes.
-            shapes.ForEach(m.selection.RemoveChild);
+            shapes.ForEach(M.selection.RemoveChild);
             // select all these shapes.
             new SelectShapeCommand(shapes).Execute();
         }

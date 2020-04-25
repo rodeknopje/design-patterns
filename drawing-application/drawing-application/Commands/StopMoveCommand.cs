@@ -16,14 +16,14 @@ namespace drawing_application.Commands
         public StopMoveCommand(Point mouse_pos)
         {
             // assign the shape.
-            shapes = m.selection.GetAllShapes();
+            shapes = M.selection.GetAllShapes();
             
             // assign the offset
             offset = new Point
             {
                 // calculate the mouse offset
-                X = mouse_pos.X - m.orgin_mouse.X,
-                Y = mouse_pos.Y - m.orgin_mouse.Y,
+                X = mouse_pos.X - M.orgin_mouse.X,
+                Y = mouse_pos.Y - M.orgin_mouse.Y,
             };
 
             foreach (var shape in shapes)
@@ -45,7 +45,7 @@ namespace drawing_application.Commands
                 shape.UpdateOriginTransform();
             }
             // Deselect all the shapes, because we can only select non selected shapes.
-            shapes.ForEach(m.selection.RemoveChild);
+            shapes.ForEach(M.selection.RemoveChild);
             // select all these shapes.
             new SelectShapeCommand(shapes).Execute();
         }
@@ -60,7 +60,7 @@ namespace drawing_application.Commands
                 shape.UpdateOriginTransform();
             }
             // Deselect all the shapes, because we can only select non selected shapes.
-            shapes.ForEach(m.selection.RemoveChild);
+            shapes.ForEach(M.selection.RemoveChild);
             // select all these shapes.
             new SelectShapeCommand(shapes).Execute();
         }

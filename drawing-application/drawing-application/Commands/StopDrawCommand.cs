@@ -1,58 +1,61 @@
 ﻿using drawing_application.CustomShapes;
-using System;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace drawing_application.Commands
 {
-    class StopDrawCommand : Command
+    public class StopDrawCommand : Command
     {
-        CustomShape shape;
-
-        SelectButton button;
+        // the shape that which is drawn
+        private readonly CustomShape shape;
+        // the button corresponding to the shape.
+        private readonly SelectButton button;
 
         public StopDrawCommand() 
         {
             // assign the shape of this command with the drawn shape.
-            shape = m.shape_drawn;
+            shape = M.shape_drawn;
             // remove the drawn_shape from the canvas.
-            m.draw_canvas.Children.Remove(shape);
-
-            button = m.CreateSelectButton(shape);
+            M.draw_canvas.Children.Remove(shape);
+            // create a button based on this shape.
+            button = M.CreateSelectButton(shape);
         }
 
-        // alternate constructor for loading shapes from the savefile.
-        public StopDrawCommand(int index, int[] pos_data)
+        // alternate constructor for loading shapes from the save file.
+        public StopDrawCommand(int index, IReadOnlyList<int> posData)
         {                      
-            shape = m.CreateShape(index);
-
-            Canvas.SetLeft(shape, pos_data[0]);
-            Canvas.SetTop (shape, pos_data[1]);
-
-            shape.Width  = pos_data[2];
-            shape.Height = pos_data[3];
-            
-            button = m.CreateSelectButton(shape);
+            // create a new shape based on the index.
+            shape = M.CreateShape(index);
+            // set the position of the shape based on the given data.
+            Canvas.SetLeft(shape, posData[0]);
+            Canvas.SetTop (shape, posData[1]);
+            // set the dimensions of the shape based on the given data.
+            shape.Width  = posData[2];
+            shape.Height = posData[3];
+            // create a button based on this shape.
+            button = M.CreateSelectButton(shape);
         }
 
         public override void Execute()
         {
-            // add the shape of this command to the canvas.
-            m.draw_canvas.Children.Add(shape);
-            // add it to the selection row.
-            m.selection_row.Children.Add(button);
-
-            m.SwitchState(states.none);
+            // add the shape to the canvas.
+            M.draw_canvas.Children.Add(shape);
+            // add the button to the selection row.
+            M.selection_row.Children.Add(button);
+            // switch to the none state.
+            M.SwitchState(states.none);
         }
 
         public override void Undo()
         {
-            m.selection.ToggleOutline(false);
-
-            m.draw_canvas.Children.Remove(shape);
-
-            m.selection_row.Children.Remove(button);
-
-            m.SwitchState(states.none);
+            // disable the selection outline.
+            M.selection.ToggleOutline(false);
+            // remove the shape from the canvas.
+            M.draw_canvas.Children.Remove(shape);
+            // remove the button from the selection row.
+            M.selection_row.Children.Remove(button);
+            // switch to the none state.
+            M.SwitchState(states.none);
 
         }
     }

@@ -4,21 +4,23 @@ using System.Windows.Controls;
 
 namespace drawing_application.Commands
 {
-    class StartMoveCommand : Command
+    public class StartMoveCommand : Command
     {
-        Point mouse_pos;
+        // the current mouse position.
+        private readonly Point mousePos;
 
-        public StartMoveCommand(Point mouse_pos)
+        public StartMoveCommand(Point mousePos)
         {
-            this.mouse_pos = mouse_pos;
+            // assign the mouse position.
+            this.mousePos = mousePos;
         }
 
         public override void Execute()
         {
             // switch to the move state.
-            m.SwitchState(states.move);
-            // set the mouse orgin.
-            m.orgin_mouse = mouse_pos;
+            M.SwitchState(states.move);
+            // set the mouse origin.
+            M.orgin_mouse = mousePos;
         }
 
         public override void Undo()

@@ -1,46 +1,51 @@
 ﻿using drawing_application.CustomShapes;
 using System.Collections.Generic;
 
-
 namespace drawing_application.Commands
 {
     public class ClearCommand : Command
     {
-        List<CustomShape>  shape_list;
-        List<SelectButton> button_list;
+        // the buttons that are currently in the scene.
+        private readonly List<CustomShape>  shapes;
+        // the shapes that are currently in the scene.
+        private readonly List<SelectButton> buttons;
 
         public ClearCommand()
         {
-            m.selection.ToggleOutline(false);
+            // toggle the outline off.
+            M.selection.ToggleOutline(false);
+            // initialize the shapes list.
+            shapes  = new List<CustomShape>();
+            // initialize the buttons list.
+            buttons = new List<SelectButton>();
 
-            shape_list  = new List<CustomShape>();
-            button_list = new List<SelectButton>();
-
-            for (var i = 0; i < m.draw_canvas.Children.Count; i++)
+            // loop through the buttons and shapes.
+            for (var i = 0; i < M.draw_canvas.Children.Count; i++)
             {
-                shape_list.Add((CustomShape)m.draw_canvas.Children[i]);
+                // 
+                shapes.Add((CustomShape)M.draw_canvas.Children[i]);
 
-                button_list.Add((SelectButton)m.selection_row.Children[i]);
+                buttons.Add((SelectButton)M.selection_row.Children[i]);
             }
         }
         public override void Execute()
         {   
             // remove all shapes.
-            m.draw_canvas.Children.Clear();
+            M.draw_canvas.Children.Clear();
             // remove all buttons in the selection row.
-            m.selection_row.Children.Clear();
+            M.selection_row.Children.Clear();
             // program state is none.
-            m.SwitchState(states.none);
+            M.SwitchState(states.none);
             // clear the save file.
-            m.saveload.ClearFile();
+            M.saveload.ClearFile();
         }
 
         public override void Undo()
         {
-            for (var i = 0; i < shape_list.Count; i++)
+            for (var i = 0; i < shapes.Count; i++)
             {
-                m.draw_canvas.Children.Add(shape_list[i]);
-                m.selection_row.Children.Add(button_list[i]);
+                M.draw_canvas.Children.Add(shapes[i]);
+                M.selection_row.Children.Add(buttons[i]);
             }
         }
     }

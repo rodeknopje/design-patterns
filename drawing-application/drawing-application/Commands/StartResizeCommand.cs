@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace drawing_application.Commands
 {
-    class StartResizeCommand : Command
+    public class StartResizeCommand : Command
     {
-        Point mouse_pos;
+        // the mouse position when the resize started.
+        private readonly Point mousePos;
 
-        public StartResizeCommand(Point mouse_pos)
+        public StartResizeCommand(Point mousePos)
         {
-            this.mouse_pos = mouse_pos;
+            // assign the mouse pos.
+            this.mousePos = mousePos;
         }
 
         public override void Execute()
         {
-            m.SwitchState(states.resize);
-            // set the mouse orgin.
-            m.orgin_mouse = mouse_pos;
-
-
+            // switch to the resize state.
+            M.SwitchState(states.resize);
+            // set the mouse origin.
+            M.orgin_mouse = mousePos;
         }
 
         public override void Undo()

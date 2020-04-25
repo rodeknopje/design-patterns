@@ -1,28 +1,31 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace drawing_application.Commands
 {
-    class MoveCommand : Command
+    public class MoveCommand : Command
     {
-        Point mouse_pos;
+        // the current position of the mouse.
+        private readonly Point mousePos;
 
-        public MoveCommand(Point mouse_pos)
+        public MoveCommand(Point mousePos)
         {
-            this.mouse_pos = mouse_pos;
+            // assign the mouse position.
+            this.mousePos = mousePos;
         }
 
         public override void Execute()
         {
-            // calculate the mouse offset
-            var x_offset = mouse_pos.X - m.orgin_mouse.X;
-            var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
+            // the offset from the start pos the the current pos.
+            var offset = new Point
+            { 
+                // calculate the mouse offset
+                X = mousePos.X - M.orgin_mouse.X,
+                Y = mousePos.Y - M.orgin_mouse.Y,
+            };
 
             // move the shape based on the offset.
-            m.selection.Move(new Point(x_offset, y_offset));
-            // draw the outline.
-            // m.selection.DrawOutline();
+            M.selection.Move(offset);
         }
 
         public override void Undo()

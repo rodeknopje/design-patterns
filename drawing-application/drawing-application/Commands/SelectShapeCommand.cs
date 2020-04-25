@@ -1,14 +1,10 @@
 ﻿using drawing_application.CustomShapes;
 using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-
 
 namespace drawing_application.Commands
 {
-    class SelectShapeCommand : Command
+    public class SelectShapeCommand : Command
     {
         // the shapes which will be selected.
         private readonly List<CustomShape> shapes;
@@ -25,9 +21,9 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // switch to select state.
-            m.SwitchState(states.select);
+            M.SwitchState(states.select);
             // assign the selected shapes.
-            m.selection.Select(shapes);
+            M.selection.Select(shapes);
         }
 
         public override void Undo()
