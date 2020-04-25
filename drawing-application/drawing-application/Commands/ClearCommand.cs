@@ -1,11 +1,10 @@
 ﻿using drawing_application.CustomShapes;
 using System.Collections.Generic;
-using System.Windows.Controls;
 
 
 namespace drawing_application.Commands
 {
-    class ClearCommand : Command
+    public class ClearCommand : Command
     {
         List<CustomShape>  shape_list;
         List<SelectButton> button_list;
@@ -17,7 +16,7 @@ namespace drawing_application.Commands
             shape_list  = new List<CustomShape>();
             button_list = new List<SelectButton>();
 
-            for (int i = 0; i < m.draw_canvas.Children.Count; i++)
+            for (var i = 0; i < m.draw_canvas.Children.Count; i++)
             {
                 shape_list.Add((CustomShape)m.draw_canvas.Children[i]);
 
@@ -38,7 +37,7 @@ namespace drawing_application.Commands
 
         public override void Undo()
         {
-            for (int i = 0; i < shape_list.Count; i++)
+            for (var i = 0; i < shape_list.Count; i++)
             {
                 m.draw_canvas.Children.Add(shape_list[i]);
                 m.selection_row.Children.Add(button_list[i]);

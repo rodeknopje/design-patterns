@@ -92,7 +92,7 @@ namespace drawing_application
 
         public Transform GetTransform()
         {
-            return orginTransform;
+            return OriginTransform;
         }
 
         public void ApplyOutlineOffset(Point offset)
@@ -101,32 +101,32 @@ namespace drawing_application
             handle.Move(offset);
 
             // if the outline is on the right side.
-            if (offset.X + orginTransform.width > 0 )
+            if (offset.X + OriginTransform.width > 0 )
             {
                 // apply the offset to the width.
-                outline.Width = orginTransform.width + offset.X;
+                outline.Width = OriginTransform.width + offset.X;
             }
             // if the outline is on the top side.
-            if(offset.Y + orginTransform.heigth > 0)
+            if(offset.Y + OriginTransform.heigth > 0)
             {
                 // apply the offset to the heigth.
-                outline.Height = orginTransform.heigth + offset.Y;
+                outline.Height = OriginTransform.heigth + offset.Y;
             }
             // if the outline is on the left side.
-            if(offset.X + orginTransform.width <= 0)
+            if(offset.X + OriginTransform.width <= 0)
             {
                 // apply the offset to the x position
-                Canvas.SetLeft(outline, offset.X + orginTransform.x + orginTransform.width);
+                Canvas.SetLeft(outline, offset.X + OriginTransform.x + OriginTransform.width);
                 // inverse the offset and substract the width to make the widt face the original x position
-                outline.Width = -(offset.X + orginTransform.width);
+                outline.Width = -(offset.X + OriginTransform.width);
             }
             // if the outline is on the bottum  side.
-            if (offset.Y + orginTransform.heigth <= 0)
+            if (offset.Y + OriginTransform.heigth <= 0)
             {
                 // apply the offset to the y position
-                Canvas.SetTop(outline, offset.Y + orginTransform.y + orginTransform.heigth);
+                Canvas.SetTop(outline, offset.Y + OriginTransform.y + OriginTransform.heigth);
                 // inverse the offset and substract the heigth to make the widt face the original y position
-                outline.Height = -(offset.Y + orginTransform.heigth);
+                outline.Height = -(offset.Y + OriginTransform.heigth);
             }
         }
 
@@ -178,19 +178,19 @@ namespace drawing_application
             // calculate the height of the final transform.
             transform.heigth -= transform.y;
             // assign the transform to the origin transform.
-            orginTransform = transform;
+            OriginTransform = transform;
         }
 
 
         public void DrawOutline()
         {
             // set the left and top position te be the same as the selected shape.
-            Canvas.SetLeft(outline, orginTransform.x);
-            Canvas.SetTop (outline, orginTransform.y);
+            Canvas.SetLeft(outline, OriginTransform.x);
+            Canvas.SetTop (outline, OriginTransform.y);
 
             // set the width and heigth to be the same as the selected shape.
-            outline.Width  = orginTransform.width ;
-            outline.Height = orginTransform.heigth;
+            outline.Width  = OriginTransform.width ;
+            outline.Height = OriginTransform.heigth;
 
             // move the resize handle it to the bottum right.
             Canvas.SetLeft(handle, Canvas.GetLeft(outline) + outline.Width  - handle.Width  / 2);
@@ -209,11 +209,11 @@ namespace drawing_application
                 // draw it for the first time.
                 DrawOutline();
                 // update the origin pos and scale of the outline.
-                outline.UpdateOrginTransform();
+                outline.UpdateOriginTransform();
                 // and also for the handle.
-                handle.UpdateOrginTransform();
+                handle.UpdateOriginTransform();
                 // update the origin pos and scale of the outline.
-                UpdateOrginTransform();
+                UpdateOriginTransform();
                 // instantiate it.
                 MainWindow.ins.draw_canvas.Children.Add(outline);
                 MainWindow.ins.draw_canvas.Children.Add(handle);

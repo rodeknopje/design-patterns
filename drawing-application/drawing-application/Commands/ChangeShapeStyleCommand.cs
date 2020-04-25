@@ -1,8 +1,10 @@
-﻿namespace drawing_application.Commands
+﻿using System;
+
+namespace drawing_application.Commands
 {
-    class ChangeShapeStyleCommand : Command
+    public class ChangeShapeStyleCommand : Command
     {
-        int index;
+        private readonly int index;
 
         public ChangeShapeStyleCommand(int index)
         {
@@ -19,8 +21,8 @@
         }
 
         public override void Undo()
-        { 
-            
+        {
+            throw new NotImplementedException();
         }
     }
 }

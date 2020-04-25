@@ -15,7 +15,7 @@ namespace drawing_application.CustomShapes
             var x_radius = (Width  * .5);
             var y_radius = (Height * .5);
 
-            for (int i = 0; i < 65; i++)
+            for (var i = 0; i < 65; i++)
             {
                 var x =  x_radius + -Math.Cos(i*.1) * x_radius - StrokeThickness;
                 var y =  y_radius +  Math.Sin(i*.1) * y_radius - StrokeThickness;

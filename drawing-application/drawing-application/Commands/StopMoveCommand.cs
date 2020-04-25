@@ -29,8 +29,8 @@ namespace drawing_application.Commands
             foreach (var shape in shapes)
             {
                 // set the shape to their origin pos.
-                Canvas.SetLeft(shape, shape.orginTransform.x);
-                Canvas.SetTop (shape, shape.orginTransform.y);
+                Canvas.SetLeft(shape, shape.OriginTransform.x);
+                Canvas.SetTop (shape, shape.OriginTransform.y);
             }
 
         }
@@ -42,7 +42,7 @@ namespace drawing_application.Commands
                 // set the shape to his original position.
                 shape.Move(offset);
                 // update their origin position
-                shape.UpdateOrginTransform();
+                shape.UpdateOriginTransform();
             }
             // Deselect all the shapes, because we can only select non selected shapes.
             shapes.ForEach(m.selection.RemoveChild);
@@ -57,7 +57,7 @@ namespace drawing_application.Commands
                 // set the shape to his original position.
                 shape.Move(new Point(-offset.X, -offset.Y));
                 // update their origin position
-                shape.UpdateOrginTransform();
+                shape.UpdateOriginTransform();
             }
             // Deselect all the shapes, because we can only select non selected shapes.
             shapes.ForEach(m.selection.RemoveChild);

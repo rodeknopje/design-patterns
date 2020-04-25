@@ -24,11 +24,11 @@ namespace drawing_application.Commands
                 // add them to this shape list.
                 shapes.Add(shape);
                 // add their original scale the the list.
-                originScales.Add(new Point(shape.orginTransform.width, shape.orginTransform.heigth));
+                originScales.Add(new Point(shape.OriginTransform.width, shape.OriginTransform.heigth));
                 // add their current scale to the list
                 newScales.Add(new Point(shape.Width,shape.Height));
                 // add their original pos to the list
-                originPositions.Add(new Point(shape.orginTransform.x, shape.orginTransform.y));
+                originPositions.Add(new Point(shape.OriginTransform.x, shape.OriginTransform.y));
                 // add their new pos to the list.
                 newPositions.Add(new Point(Canvas.GetLeft(shape), Canvas.GetTop(shape)));
             });
@@ -46,7 +46,7 @@ namespace drawing_application.Commands
                 Canvas.SetLeft(shapes[i], newPositions[i].X);
                 Canvas.SetTop (shapes[i], newPositions[i].Y);
 
-                shapes[i].UpdateOrginTransform();
+                shapes[i].UpdateOriginTransform();
             }
             // Deselect all the shapes, because we can only select non selected shapes.
             shapes.ForEach(m.selection.RemoveChild);

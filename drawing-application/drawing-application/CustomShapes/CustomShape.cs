@@ -9,17 +9,17 @@ namespace drawing_application.CustomShapes
 {
     public abstract class CustomShape : Shape
     {
-        public Transform originTransform { get; protected set; }
+        public Transform OriginTransform { get; protected set; }
 
         public virtual void UpdateOriginTransform()
         {
-            originTransform = new Transform(Canvas.GetLeft(this),Canvas.GetTop(this),Width,Height);
+            OriginTransform = new Transform(Canvas.GetLeft(this),Canvas.GetTop(this),Width,Height);
         }
 
         public virtual void Move(Point offset)
         {
-            Canvas.SetLeft(this, offset.X + originTransform.x);
-            Canvas.SetTop (this, offset.Y + originTransform.y);     
+            Canvas.SetLeft(this, offset.X + OriginTransform.x);
+            Canvas.SetTop (this, offset.Y + OriginTransform.y);     
         }
 
 

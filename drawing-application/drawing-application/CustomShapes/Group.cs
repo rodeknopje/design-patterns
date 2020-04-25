@@ -54,11 +54,11 @@ namespace drawing_application.CustomShapes
         }
 
 
-        public override void UpdateOrginTransform()
+        public override void UpdateOriginTransform()
         {
             foreach (var child in childeren)
             {
-                child.UpdateOrginTransform();
+                child.UpdateOriginTransform();
             }
         }
 
