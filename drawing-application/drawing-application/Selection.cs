@@ -16,7 +16,6 @@ namespace drawing_application
 
         public Ellipse handle { get; }
 
-
         public Selection()
         {
             // assign the selection outline.

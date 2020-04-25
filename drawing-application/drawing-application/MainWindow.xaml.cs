@@ -33,7 +33,7 @@ namespace drawing_application
        
         public CmdManager cmd_manager = new CmdManager();
 
-        // all types that derrive from ShapeGroup.
+        // all types that derive from ShapeGroup.
         public System.Type[] styles;
         // the current index of the styles array.
         public int style_index;
@@ -41,6 +41,7 @@ namespace drawing_application
 
         public Selection selection = new Selection();
 
+        private readonly List<SelectButton> selectButtons = new List<SelectButton>();
 
         public MainWindow()
         {
@@ -115,7 +116,9 @@ namespace drawing_application
 
         public SelectButton CreateSelectButton(CustomShape shape)
         {
-            return new SelectButton(shape);
+            selectButtons.Add(new SelectButton(shape));
+
+            return selectButtons.Last();
         }
 
         public void SwitchState(states state)
