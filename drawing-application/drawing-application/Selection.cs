@@ -63,7 +63,7 @@ namespace drawing_application
         {
             var merged = new Group();
 
-            foreach (var child in GetChilderen())
+            foreach (var child in GetChildren())
             {
                 merged.AddChild(child);
             }
@@ -87,7 +87,7 @@ namespace drawing_application
         {
             base.RemoveChild(shape);
             // remove or update the outline bases on if there are children in the group.
-            ToggleOutline(GetChilderen().Any());
+            ToggleOutline(GetChildren().Any());
         }
 
         public Transform GetTransform()

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 using System.Linq;
 using System.Windows;
 
@@ -17,7 +16,7 @@ namespace drawing_application.CustomShapes
                 new Point(1,1),
                 new Point(0,1),
             }
-            .Select(i=>i= new Point(i.X*Width-StrokeThickness,i.Y*Height-StrokeThickness)).ToList();
+            .Select(i=>new Point(i.X*Width-StrokeThickness,i.Y*Height-StrokeThickness)).ToList();
         }
     }
 }

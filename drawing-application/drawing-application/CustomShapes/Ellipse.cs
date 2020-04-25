@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Media;
 
 namespace drawing_application.CustomShapes
 {
@@ -10,16 +8,18 @@ namespace drawing_application.CustomShapes
     {
         protected override void DrawShape(out List<Point> coords)
         {
+            // initialize the coordinates.
             coords = new List<Point>();
-
-            var x_radius = (Width  * .5);
-            var y_radius = (Height * .5);
+            // calculate the radius.
+            var xRadius = (Width  * .5);
+            var yRadius = (Height * .5);
 
             for (var i = 0; i < 65; i++)
             {
-                var x =  x_radius + -Math.Cos(i*.1) * x_radius - StrokeThickness;
-                var y =  y_radius +  Math.Sin(i*.1) * y_radius - StrokeThickness;
-
+                // calculate the next coordinate.
+                var x =  xRadius + -Math.Cos(i*.1) * xRadius - StrokeThickness;
+                var y =  yRadius +  Math.Sin(i*.1) * yRadius - StrokeThickness;
+                // add it to the coordinates list.
                 coords.Add(new Point(x, y));
             }
         }
