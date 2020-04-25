@@ -9,17 +9,17 @@ namespace drawing_application.CustomShapes
 {
     public abstract class CustomShape : Shape
     {
-        public Transform orginTransform { get; protected set; }
+        public Transform originTransform { get; protected set; }
 
-        public virtual void UpdateOrginTransform()
+        public virtual void UpdateOriginTransform()
         {
-            orginTransform = new Transform(Canvas.GetLeft(this),Canvas.GetTop(this),Width,Height);
+            originTransform = new Transform(Canvas.GetLeft(this),Canvas.GetTop(this),Width,Height);
         }
 
         public virtual void Move(Point offset)
         {
-            Canvas.SetLeft(this, offset.X + orginTransform.x);
-            Canvas.SetTop (this, offset.Y + orginTransform.y);     
+            Canvas.SetLeft(this, offset.X + originTransform.x);
+            Canvas.SetTop (this, offset.Y + originTransform.y);     
         }
 
 
@@ -28,7 +28,7 @@ namespace drawing_application.CustomShapes
         {
             DrawShape(out coords);
             
-            StreamGeometry geom = new StreamGeometry();
+            var geom = new StreamGeometry();
 
             if (coords == null)
             {
@@ -39,7 +39,7 @@ namespace drawing_application.CustomShapes
             {
                 gc.BeginFigure(new Point(coords[0].X, coords[0].Y), true, true);
 
-                for (int i = 1; i < coords.Count; i++)
+                for (var i = 1; i < coords.Count; i++)
                 {
                     gc.LineTo(new Point(coords[i].X, coords[i].Y), true, true);
                 }
