@@ -22,8 +22,8 @@ namespace drawing_application.Commands
             offset = new Point
             {
                 // calculate the mouse offset
-                X = mouse_pos.X - M.mouseOrigin.X,
-                Y = mouse_pos.Y - M.mouseOrigin.Y,
+                X = mouse_pos.X - m.mouseOrigin.X,
+                Y = mouse_pos.Y - m.mouseOrigin.Y,
             };
 
             foreach (var shape in shapes)

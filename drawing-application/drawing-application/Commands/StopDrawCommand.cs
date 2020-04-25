@@ -14,18 +14,18 @@ namespace drawing_application.Commands
         public StopDrawCommand() 
         {
             // assign the shape of this command with the drawn shape.
-            shape = M.shapeDrawn;
+            shape = m.shapeDrawn;
             // remove the drawn_shape from the canvas.
-            M.drawCanvas.Children.Remove(shape);
+            m.drawCanvas.Children.Remove(shape);
             // create a button based on this shape.
-            button = M.CreateSelectButton(shape);
+            button = m.CreateSelectButton(shape);
         }
 
         // alternate constructor for loading shapes from the save file.
         public StopDrawCommand(int index, IReadOnlyList<int> posData)
         {                      
             // create a new shape based on the index.
-            shape = M.CreateShape(index);
+            shape = m.CreateShape(index);
             // set the position of the shape based on the given data.
             Canvas.SetLeft(shape, posData[0]);
             Canvas.SetTop (shape, posData[1]);
@@ -33,17 +33,17 @@ namespace drawing_application.Commands
             shape.Width  = posData[2];
             shape.Height = posData[3];
             // create a button based on this shape.
-            button = M.CreateSelectButton(shape);
+            button = m.CreateSelectButton(shape);
         }
 
         public override void Execute()
         {
             // add the shape to the canvas.
-            M.drawCanvas.Children.Add(shape);
+            m.drawCanvas.Children.Add(shape);
             // add the button to the selection row.
-            M.selectionDisplay.Children.Add(button);
+            m.selectionDisplay.Children.Add(button);
             // switch to the None state.
-            M.SwitchState(States.None);
+            m.SwitchState(States.None);
         }
 
         public override void Undo()
@@ -51,11 +51,11 @@ namespace drawing_application.Commands
             // disable the selection outline.
             Selection.GetInstance().ToggleOutline(false);
             // remove the shape from the canvas.
-            M.drawCanvas.Children.Remove(shape);
+            m.drawCanvas.Children.Remove(shape);
             // remove the button from the selection row.
-            M.selectionDisplay.Children.Remove(button);
+            m.selectionDisplay.Children.Remove(button);
             // switch to the None state.
-            M.SwitchState(States.None);
+            m.SwitchState(States.None);
 
         }
     }

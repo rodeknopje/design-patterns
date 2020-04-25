@@ -2,9 +2,9 @@
 {
     public abstract class Command
     {
-        protected MainWindow M;
+        protected MainWindow m;
 
-        protected Command() => M = MainWindow.ins;
+        protected Command() => m = MainWindow.ins;
 
         public abstract void Execute();
 

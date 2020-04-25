@@ -18,8 +18,8 @@ namespace drawing_application.Commands
             // the transform of the selection.
             var sTransform = Selection.GetInstance().GetTransform();
             // get the offset from the original mouse position.
-            var xOffset = mousePos.X - M.mouseOrigin.X;
-            var yOffset = mousePos.Y - M.mouseOrigin.Y;
+            var xOffset = mousePos.X - m.mouseOrigin.X;
+            var yOffset = mousePos.Y - m.mouseOrigin.Y;
             // calculate offset in percentages.
             var xPercent = xOffset / sTransform.width  + 1;
             var yPercent = yOffset / sTransform.height + 1;

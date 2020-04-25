@@ -16,12 +16,11 @@ namespace drawing_application
     {
         // singleton of this class.
         public static MainWindow ins;
+
         // list with all the shapes in it.
         public List<Shape> shapes = new List<Shape>();
         // the point where the mouse started when dragging.
         public Point mouseOrigin;
-
-
 
         // the shape that is currently being drawn.
         public CustomShape shapeDrawn;
@@ -74,7 +73,7 @@ namespace drawing_application
             // go to back to Draw newState when rmb is pressed.
             MouseRightButtonDown += (a, b) => 
             {
-                if(state==States.Select) new ChangeShapeStyleCommand(styleIndex).Execute(); Selection.GetInstance().Clear();
+                if(state==States.Select) new ChangeShapeStyleCommand(styleIndex).Execute(); DeselectAllShapes();
             };
             // click the first shape button
             ((Button)stylesDisplay.Children[0]).RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));

@@ -17,22 +17,22 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // collapse the style selection.
-            M.stylesDisplay.Visibility = Visibility.Collapsed;
+            m.stylesDisplay.Visibility = Visibility.Collapsed;
             // switch to the Draw state.
-            M.SwitchState(States.Draw);
+            m.SwitchState(States.Draw);
             // set the mouse origin in the main.
-            M.mouseOrigin = mousePos;
+            m.mouseOrigin = mousePos;
             // create a new shape based on the selected shape.
-            M.shapeDrawn = M.CreateShape(M.styleIndex);
+            m.shapeDrawn = m.CreateShape(m.styleIndex);
 
             // set x position of the shape equal to the mouse x
-            Canvas.SetLeft(M.shapeDrawn, mousePos.X);
+            Canvas.SetLeft(m.shapeDrawn, mousePos.X);
             // set y position of the shape equal to the mouse y
-            Canvas.SetTop(M.shapeDrawn, mousePos.Y);
+            Canvas.SetTop(m.shapeDrawn, mousePos.Y);
             // add it to the canvas.
-            M.drawCanvas.Children.Add(M.shapeDrawn);
+            m.drawCanvas.Children.Add(m.shapeDrawn);
             // add the new shape to the shape list.
-            M.shapes.Add(M.shapeDrawn);
+            m.shapes.Add(m.shapeDrawn);
         }
 
         public override void Undo()

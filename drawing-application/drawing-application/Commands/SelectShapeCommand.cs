@@ -21,7 +21,7 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // switch to Select state.
-            M.SwitchState(States.Select);
+            m.SwitchState(States.Select);
             // assign the selected shapes.
             Selection.GetInstance().Select(shapes);
         }

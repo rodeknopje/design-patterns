@@ -17,9 +17,9 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // switch to the Resize state.
-            M.SwitchState(States.Resize);
+            m.SwitchState(States.Resize);
             // set the mouse origin.
-            M.mouseOrigin = mousePos;
+            m.mouseOrigin = mousePos;
         }
 
         public override void Undo()

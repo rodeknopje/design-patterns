@@ -17,9 +17,9 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // switch to the Move state.
-            M.SwitchState(States.Move);
+            m.SwitchState(States.Move);
             // set the mouse origin.
-            M.mouseOrigin = mousePos;
+            m.mouseOrigin = mousePos;
         }
 
         public override void Undo()
