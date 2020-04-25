@@ -6,26 +6,29 @@ using System.Windows.Controls;
 
 namespace drawing_application.Commands
 {
-    class StopMoveCommand : Command
+    public class StopMoveCommand : Command
     {
-        // the shape binded to this command.
-        List<CustomShape>  shapes;
-
-        Point offset;
+        // the shape bounded to this command.
+        private readonly List<CustomShape> shapes;
+        // offset of the mouse movement.
+        private readonly Point offset;
 
         public StopMoveCommand(Point mouse_pos)
         {
             // assign the shape.
             shapes = m.selection.GetAllShapes();
-            // calculate the mouse offset
-            var x_offset = mouse_pos.X - m.orgin_mouse.X;
-            var y_offset = mouse_pos.Y - m.orgin_mouse.Y;
-            // assign the offset.
-            offset = new Point(x_offset, y_offset);
+            
+            // assign the offset
+            offset = new Point
+            {
+                // calculate the mouse offset
+                X = mouse_pos.X - m.orgin_mouse.X,
+                Y = mouse_pos.Y - m.orgin_mouse.Y,
+            };
 
             foreach (var shape in shapes)
             {
-                // set the shape to their orgin pos.
+                // set the shape to their origin pos.
                 Canvas.SetLeft(shape, shape.orginTransform.x);
                 Canvas.SetTop (shape, shape.orginTransform.y);
             }
@@ -36,30 +39,30 @@ namespace drawing_application.Commands
         {
             foreach (var shape in shapes)
             {
-                // set the shape to his orginal position.
+                // set the shape to his original position.
                 shape.Move(offset);
-                // update their orgin position
+                // update their origin position
                 shape.UpdateOrginTransform();
             }
-            // toggle the outline off.
-            m.selection.ToggleOutline(false);
-            // switch to select state.
-            m.SwitchState(states.select);
+            // Deselect all the shapes, because we can only select non selected shapes.
+            shapes.ForEach(m.selection.RemoveChild);
+            // select all these shapes.
+            new SelectShapeCommand(shapes).Execute();
         }
 
         public override void Undo()
         {
             foreach (var shape in shapes)
             {
-                // set the shape to his orginal position.
+                // set the shape to his original position.
                 shape.Move(new Point(-offset.X, -offset.Y));
-                // update their orgin position
+                // update their origin position
                 shape.UpdateOrginTransform();
             }
-            // toggle the outlnie off.
-            m.selection.ToggleOutline(false);
-            // switch to select state.
-            m.SwitchState(states.select);
+            // Deselect all the shapes, because we can only select non selected shapes.
+            shapes.ForEach(m.selection.RemoveChild);
+            // select all these shapes.
+            new SelectShapeCommand(shapes).Execute();
         }
     }
 }
