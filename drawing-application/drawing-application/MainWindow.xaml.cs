@@ -114,6 +114,14 @@ namespace drawing_application
             }
         }
 
+        public void DeselectAllShapes()
+        {
+            // clear the children of the selection.
+            selection.Clear();
+            // call the deselect on each button.
+            selectButtons.ForEach(x=>x.Deselect());
+        }
+
         public SelectButton CreateSelectButton(CustomShape shape)
         {
             selectButtons.Add(new SelectButton(shape));

@@ -44,33 +44,51 @@ namespace drawing_application
 
         public void Onclick()
         {
+            // if this control buttons is pressed.
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
+                // if this button already is selected.
                 if (selected)
                 {
-                    //hier moet hij uitgezet worden
+                    // remove the shape from the selection.
                     MainWindow.ins.selection.RemoveChild(shape);
                 }
                 else
                 {
+                    // otherwise add the shape to the selection.
                     new SelectShapeCommand(shape).Execute();
                 }
             }   
+            // when control is not pressed
             else
             {
-                MainWindow.ins.selection.Clear();
-
+                // deselect all other shapes.
+                MainWindow.ins.DeselectAllShapes();
+                // if the shape is not selected
                 if (selected == false)
                 {
+                    // select it.
                     new SelectShapeCommand(shape).Execute();
                 }
-               
             }
 
+            // invert the selected boolean.
             selected = !selected;
-
+            // set the background according to the selected boolean.
             Background = new BrushConverter().ConvertFromString(selected ? SelectColor : DefaultColor) as SolidColorBrush;
+        }
 
+        public void Deselect()
+        {
+            // return if this shape is currently selected.
+            if (selected == false)
+            {
+                return;
+            }
+            // set the background to its default color.
+            Background = new BrushConverter().ConvertFromString(DefaultColor) as SolidColorBrush;
+            // reset the selected status.
+            selected = false;
         }
     }
 }

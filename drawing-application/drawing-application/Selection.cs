@@ -40,7 +40,7 @@ namespace drawing_application
             outline.MouseEnter += (a, b) => Mouse.OverrideCursor = Cursors.SizeAll;
             outline.MouseLeave += (a, b) => Mouse.OverrideCursor = Cursors.Arrow;
 
-            // give the cursor a different icon, when hovering over the outlne.
+            // give the cursor a different icon, when hovering over the outline.
             handle.MouseEnter += (a, b) => Mouse.OverrideCursor = Cursors.Hand;
             handle.MouseLeave += (a, b) => Mouse.OverrideCursor = Cursors.Arrow;
 
@@ -69,20 +69,11 @@ namespace drawing_application
             }
         }
 
-
-        public void Select(CustomShape shape)
+        public void Select(List<CustomShape> shapes)
         {
-            if (GetAllShapes().Contains(shape) == false)
-            {
-                AddChild(shape);
-            }
+            shapes.ForEach(AddChild);
             // toggle the outline on.
             ToggleOutline(true);
-        }
-
-        public void Select(List<CustomShape> shape)
-        {
-
         }
 
         public override void Clear()
