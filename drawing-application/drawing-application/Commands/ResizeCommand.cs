@@ -16,7 +16,7 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // the transform of the selection.
-            var sTransform = M.selection.GetTransform();
+            var sTransform = Selection.GetInstance().GetTransform();
             // get the offset from the original mouse position.
             var xOffset = mousePos.X - M.mouseOrigin.X;
             var yOffset = mousePos.Y - M.mouseOrigin.Y;
@@ -25,10 +25,10 @@ namespace drawing_application.Commands
             var yPercent = yOffset / sTransform.height + 1;
 
             // update the outline and handle of the selection.
-            M.selection.ApplyOutlineOffset(new Point(xOffset, yOffset));
+            Selection.GetInstance().ApplyOutlineOffset(new Point(xOffset, yOffset));
 
             // loop through all the shapes in the selection.
-            M.selection.GetAllShapes().ForEach(shape =>
+            Selection.GetInstance().GetAllShapes().ForEach(shape =>
             {
                 // the new transform that will be assigned to the shape.
                 var transform = new Transform(sTransform.x,sTransform.y,0,0);

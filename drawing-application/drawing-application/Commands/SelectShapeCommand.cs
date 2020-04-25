@@ -23,7 +23,7 @@ namespace drawing_application.Commands
             // switch to Select state.
             M.SwitchState(States.Select);
             // assign the selected shapes.
-            M.selection.Select(shapes);
+            Selection.GetInstance().Select(shapes);
         }
 
         public override void Undo()

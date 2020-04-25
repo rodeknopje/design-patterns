@@ -13,7 +13,7 @@ namespace drawing_application.Commands
         public ClearCommand()
         {
             // toggle the outline off.
-            M.selection.ToggleOutline(false);
+            Selection.GetInstance().ToggleOutline(false);
             // initialize the shapes list.
             shapes  = new List<CustomShape>();
             // initialize the buttons list.
@@ -30,6 +30,8 @@ namespace drawing_application.Commands
         }
         public override void Execute()
         {   
+            // de select all shapes.
+            M.DeselectAllShapes();
             // remove all shapes.
             M.drawCanvas.Children.Clear();
             // remove all buttons in the selection row.

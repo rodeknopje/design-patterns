@@ -12,13 +12,23 @@ namespace drawing_application
 
     public class Selection : Group
     {
+        private static Selection _instance;
+
         // the outline to display when shapes are selected.
         public readonly Rectangle outline;
         // the handle to display when shapes are selected.
         public readonly Ellipse handle;
 
-        public Selection()
+
+        public static Selection GetInstance()
         {
+            return _instance ?? new Selection();
+        }
+
+        private Selection()
+        {
+            _instance = this;
+
             // assign the selection outline.
             outline = new Rectangle
             {

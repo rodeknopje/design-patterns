@@ -16,7 +16,7 @@ namespace drawing_application.Commands
         public StopMoveCommand(Point mouse_pos)
         {
             // assign the shape.
-            shapes = M.selection.GetAllShapes();
+            shapes = Selection.GetInstance().GetAllShapes();
             
             // assign the offset
             offset = new Point
@@ -45,7 +45,7 @@ namespace drawing_application.Commands
                 shape.UpdateOriginTransform();
             }
             // Deselect all the shapes, because we can only Select non selected shapes.
-            shapes.ForEach(M.selection.RemoveChild);
+            shapes.ForEach(Selection.GetInstance().RemoveChild);
             // Select all these shapes.
             new SelectShapeCommand(shapes).Execute();
         }
@@ -60,7 +60,7 @@ namespace drawing_application.Commands
                 shape.UpdateOriginTransform();
             }
             // Deselect all the shapes, because we can only Select non selected shapes.
-            shapes.ForEach(M.selection.RemoveChild);
+            shapes.ForEach(Selection.GetInstance().RemoveChild);
             // Select all these shapes.
             new SelectShapeCommand(shapes).Execute();
         }

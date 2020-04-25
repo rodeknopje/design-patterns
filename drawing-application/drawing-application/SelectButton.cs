@@ -51,7 +51,7 @@ namespace drawing_application
                 if (selected)
                 {
                     // remove the shape from the selection.
-                    MainWindow.ins.selection.RemoveChild(shape);
+                    Selection.GetInstance().RemoveChild(shape);
                 }
                 else
                 {

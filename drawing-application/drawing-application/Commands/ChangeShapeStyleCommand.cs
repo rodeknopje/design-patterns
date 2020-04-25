@@ -18,7 +18,7 @@ namespace drawing_application.Commands
             // set the style index from the main to this index.
             M.styleIndex = index;
             // toggle the outline to false.
-            M.selection.ToggleOutline(false);
+            Selection.GetInstance().ToggleOutline(false);
             // switch to None state.
             M.SwitchState(States.None);
         }

@@ -49,7 +49,7 @@ namespace drawing_application.Commands
         public override void Undo()
         {
             // disable the selection outline.
-            M.selection.ToggleOutline(false);
+            Selection.GetInstance().ToggleOutline(false);
             // remove the shape from the canvas.
             M.drawCanvas.Children.Remove(shape);
             // remove the button from the selection row.

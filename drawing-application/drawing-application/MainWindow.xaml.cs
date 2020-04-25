@@ -39,8 +39,6 @@ namespace drawing_application
         public int styleIndex;
 
 
-        public Selection selection = new Selection();
-
         private readonly List<SelectButton> selectButtons = new List<SelectButton>();
 
         public MainWindow()
@@ -76,7 +74,7 @@ namespace drawing_application
             // go to back to Draw newState when rmb is pressed.
             MouseRightButtonDown += (a, b) => 
             {
-                if(state==States.Select) new ChangeShapeStyleCommand(styleIndex).Execute(); selection.Clear();
+                if(state==States.Select) new ChangeShapeStyleCommand(styleIndex).Execute(); Selection.GetInstance().Clear();
             };
             // click the first shape button
             ((Button)stylesDisplay.Children[0]).RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
@@ -117,7 +115,7 @@ namespace drawing_application
         public void DeselectAllShapes()
         {
             // clear the children of the selection.
-            selection.Clear();
+            Selection.GetInstance().Clear();
             // call the deselect on each button.
             selectButtons.ForEach(x=>x.Deselect());
         }

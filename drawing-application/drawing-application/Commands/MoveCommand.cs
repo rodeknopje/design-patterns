@@ -25,7 +25,7 @@ namespace drawing_application.Commands
             };
 
             // Move the shape based on the offset.
-            M.selection.Move(offset);
+            Selection.GetInstance().Move(offset);
         }
 
         public override void Undo()

@@ -41,7 +41,7 @@ namespace drawing_application
             // clear the file.
             File.WriteAllText(textFile, "");
             // disable the outline.
-            MainWindow.ins.selection.ToggleOutline(false);
+            Selection.GetInstance().ToggleOutline(false);
 
             // loop through all the custom shapes
             foreach (CustomShape shape in MainWindow.ins.drawCanvas.Children)
