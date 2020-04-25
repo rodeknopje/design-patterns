@@ -16,11 +16,11 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // set the style index from the main to this index.
-            M.style_index = index;
+            M.styleIndex = index;
             // toggle the outline to false.
             M.selection.ToggleOutline(false);
-            // switch to none state.
-            M.SwitchState(states.none);
+            // switch to None state.
+            M.SwitchState(States.None);
         }
 
         public override void Undo()

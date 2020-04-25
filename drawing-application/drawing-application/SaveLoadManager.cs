@@ -2,56 +2,64 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
-using System.Windows.Shapes;
 using drawing_application.Commands;
+using drawing_application.CustomShapes;
 
 namespace drawing_application
 {
     public class SaveLoadManager
     {
-        string textfile;
+        // path to the text file.
+        private readonly string textFile;
 
         public SaveLoadManager()
         {         
-            textfile = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "savedata.txt");
+            // get the save file on the desktop.
+            textFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "data.txt");
         }
 
         public void LoadProgramState()
         {
-            if (File.Exists(textfile) == false)
+            // if the text file already exist, return.
+            if (File.Exists(textFile) == false)
             {
                 return;
             }
 
-            foreach (string line in File.ReadAllLines(textfile))
+            // loop through all the lines in the textFile.
+            foreach (var line in File.ReadAllLines(textFile))
             {
-                // split the string with each spacee
+                // split the string with each space
                 var data = line.Split(" ");
-                // check if the first word is a rectangle or a ellipse, then convert the rest of the data to ints.
+                // check if the first word is a rectangle or a ellipse, then convert the rest of the data to integers.
                 new StopDrawCommand(GetStyleIndex(data[0]), data.Skip(1).Select(x=>Convert.ToInt32(x)).ToArray()).Execute();
             }
         }
 
         public void SaveProgramState()
         {
-            File.WriteAllText(textfile, "");
-
+            // clear the file.
+            File.WriteAllText(textFile, "");
+            // disable the outline.
             MainWindow.ins.selection.ToggleOutline(false);
 
-            foreach (Shape shape in MainWindow.ins.draw_canvas.Children)
+            // loop through all the custom shapes
+            foreach (CustomShape shape in MainWindow.ins.drawCanvas.Children)
             {
-                File.AppendAllText(textfile, $"{shape.GetType().Name} {(int)Canvas.GetLeft(shape)} {(int)Canvas.GetTop(shape)} {(int)shape.Width} {(int)shape.Height}\n");
+                // get their type and transform and write it to the file.
+                File.AppendAllText(textFile, $"{shape.GetType().Name} {(int)Canvas.GetLeft(shape)} {(int)Canvas.GetTop(shape)} {(int)shape.Width} {(int)shape.Height}\n");
             }
         }
 
         public void ClearFile()
         {
-            File.Delete(textfile);
+            // delete the safe file.
+            File.Delete(textFile);
         }
 
-        private int GetStyleIndex(string style)
+        private static int GetStyleIndex(string style)
         {
-            for(int i=0;i<MainWindow.ins.styles.Length;i++)
+            for(var i=0;i<MainWindow.ins.styles.Length;i++)
             {
                 if (MainWindow.ins.styles[i].Name == style)
                 {

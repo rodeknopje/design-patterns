@@ -20,32 +20,32 @@ namespace drawing_application.Commands
             buttons = new List<SelectButton>();
 
             // loop through the buttons and shapes.
-            for (var i = 0; i < M.draw_canvas.Children.Count; i++)
+            for (var i = 0; i < M.drawCanvas.Children.Count; i++)
             {
                 // 
-                shapes.Add((CustomShape)M.draw_canvas.Children[i]);
+                shapes.Add((CustomShape)M.drawCanvas.Children[i]);
 
-                buttons.Add((SelectButton)M.selection_row.Children[i]);
+                buttons.Add((SelectButton)M.selectionDisplay.Children[i]);
             }
         }
         public override void Execute()
         {   
             // remove all shapes.
-            M.draw_canvas.Children.Clear();
+            M.drawCanvas.Children.Clear();
             // remove all buttons in the selection row.
-            M.selection_row.Children.Clear();
-            // program state is none.
-            M.SwitchState(states.none);
+            M.selectionDisplay.Children.Clear();
+            // program state is None.
+            M.SwitchState(States.None);
             // clear the save file.
-            M.saveload.ClearFile();
+            M.saveLoad.ClearFile();
         }
 
         public override void Undo()
         {
             for (var i = 0; i < shapes.Count; i++)
             {
-                M.draw_canvas.Children.Add(shapes[i]);
-                M.selection_row.Children.Add(buttons[i]);
+                M.drawCanvas.Children.Add(shapes[i]);
+                M.selectionDisplay.Children.Add(buttons[i]);
             }
         }
     }

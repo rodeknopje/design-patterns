@@ -12,9 +12,10 @@ namespace drawing_application
 
     public class Selection : Group
     {
-        public Rectangle outline { get; }
-
-        public Ellipse handle { get; }
+        // the outline to display when shapes are selected.
+        public readonly Rectangle outline;
+        // the handle to display when shapes are selected.
+        public readonly Ellipse handle;
 
         public Selection()
         {
@@ -45,14 +46,14 @@ namespace drawing_application
             handle.MouseLeave += (a, b) => Mouse.OverrideCursor = Cursors.Arrow;
 
             // when the selection outline is clicked.
-            outline.MouseLeftButtonDown += (a, b) => new StartMoveCommand(b.GetPosition(MainWindow.ins.draw_canvas)).Execute();
+            outline.MouseLeftButtonDown += (a, b) => new StartMoveCommand(b.GetPosition(MainWindow.ins.drawCanvas)).Execute();
             // when the handle is clicked.
-            handle.MouseLeftButtonDown += (a, b) => new StartResizeCommand(b.GetPosition(MainWindow.ins.draw_canvas)).Execute();
+            handle.MouseLeftButtonDown += (a, b) => new StartResizeCommand(b.GetPosition(MainWindow.ins.drawCanvas)).Execute();
         }
 
         public override void Move(Point offset)
         {
-            // move the group handle and outline.
+            // Move the group handle and outline.
             base.Move   (offset);
             handle.Move (offset);
             outline.Move(offset);
@@ -71,6 +72,7 @@ namespace drawing_application
 
         public void Select(List<CustomShape> shapes)
         {
+            // add the given shapes to the group.
             shapes.ForEach(AddChild);
             // toggle the outline on.
             ToggleOutline(true);
@@ -78,26 +80,25 @@ namespace drawing_application
 
         public override void Clear()
         {
+            // clear the children.
             base.Clear();
-
+            // toggle the outline to false.
             ToggleOutline(false);
         }
 
         public override void RemoveChild(CustomShape shape)
         {
+            // remove the given shape.
             base.RemoveChild(shape);
             // remove or update the outline bases on if there are children in the group.
             ToggleOutline(GetChildren().Any());
         }
 
-        public Transform GetTransform()
-        {
-            return OriginTransform;
-        }
+        public Transform GetTransform() => OriginTransform;
 
         public void ApplyOutlineOffset(Point offset)
         {
-            // move the handle.
+            // Move the handle.
             handle.Move(offset);
 
             // if the outline is on the right side.
@@ -107,26 +108,26 @@ namespace drawing_application
                 outline.Width = OriginTransform.width + offset.X;
             }
             // if the outline is on the top side.
-            if(offset.Y + OriginTransform.heigth > 0)
+            if(offset.Y + OriginTransform.height > 0)
             {
-                // apply the offset to the heigth.
-                outline.Height = OriginTransform.heigth + offset.Y;
+                // apply the offset to the height.
+                outline.Height = OriginTransform.height + offset.Y;
             }
             // if the outline is on the left side.
             if(offset.X + OriginTransform.width <= 0)
             {
                 // apply the offset to the x position
                 Canvas.SetLeft(outline, offset.X + OriginTransform.x + OriginTransform.width);
-                // inverse the offset and substract the width to make the widt face the original x position
+                // inverse the offset and subtract the width to make the width face the original x position
                 outline.Width = -(offset.X + OriginTransform.width);
             }
-            // if the outline is on the bottum  side.
-            if (offset.Y + OriginTransform.heigth <= 0)
+            // if the outline is on the bottom  side.
+            if (offset.Y + OriginTransform.height <= 0)
             {
                 // apply the offset to the y position
-                Canvas.SetTop(outline, offset.Y + OriginTransform.y + OriginTransform.heigth);
-                // inverse the offset and substract the heigth to make the widt face the original y position
-                outline.Height = -(offset.Y + OriginTransform.heigth);
+                Canvas.SetTop(outline, offset.Y + OriginTransform.y + OriginTransform.height);
+                // inverse the offset and subtract the height to make the width face the original y position
+                outline.Height = -(offset.Y + OriginTransform.height);
             }
         }
 
@@ -135,7 +136,7 @@ namespace drawing_application
             // Create a transform tuple.
             Transform transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
 
-            // loop through all childrenin the selection.
+            // loop through all children in the selection.
             foreach (var shape in GetAllShapes())
             {
                 // get their x and y coords.
@@ -157,8 +158,8 @@ namespace drawing_application
 
                 // calculate the width and assign it.
                 var width = shape.Width + x;
-                // calculate the heigth and assign it.
-                var heigth = shape.Height + y;
+                // calculate the height and assign it.
+                var height = shape.Height + y;
 
                 // check if its to biggest so far.
                 if (width > transform.width)
@@ -167,16 +168,16 @@ namespace drawing_application
                     transform.width = width;
                 }
                 // check if its to biggest so far.
-                if (heigth > transform.heigth)
+                if (height > transform.height)
                 {
                     // if so assign it
-                    transform.heigth = heigth;
+                    transform.height = height;
                 }
             }
             // calculate the width of the final transform.
             transform.width -= transform.x;
             // calculate the height of the final transform.
-            transform.heigth -= transform.y;
+            transform.height -= transform.y;
             // assign the transform to the origin transform.
             OriginTransform = transform;
         }
@@ -188,25 +189,25 @@ namespace drawing_application
             Canvas.SetLeft(outline, OriginTransform.x);
             Canvas.SetTop (outline, OriginTransform.y);
 
-            // set the width and heigth to be the same as the selected shape.
+            // set the width and height to be the same as the selected shape.
             outline.Width  = OriginTransform.width ;
-            outline.Height = OriginTransform.heigth;
+            outline.Height = OriginTransform.height;
 
-            // move the resize handle it to the bottum right.
+            // Move the Resize handle it to the bottom right.
             Canvas.SetLeft(handle, Canvas.GetLeft(outline) + outline.Width  - handle.Width  / 2);
             Canvas.SetTop (handle,  Canvas.GetTop(outline) + outline.Height - handle.Height / 2);
         }
 
         public void ToggleOutline(bool state)
         {
-            MainWindow.ins.draw_canvas.Children.Remove(outline);
-            MainWindow.ins.draw_canvas.Children.Remove(handle);
+            MainWindow.ins.drawCanvas.Children.Remove(outline);
+            MainWindow.ins.drawCanvas.Children.Remove(handle);
 
             if (state)
             {
                 // calculate the transform of the outline.
                 CalculateTransform();
-                // draw it for the first time.
+                // Draw it for the first time.
                 DrawOutline();
                 // update the origin pos and scale of the outline.
                 outline.UpdateOriginTransform();
@@ -215,14 +216,14 @@ namespace drawing_application
                 // update the origin pos and scale of the outline.
                 UpdateOriginTransform();
                 // instantiate it.
-                MainWindow.ins.draw_canvas.Children.Add(outline);
-                MainWindow.ins.draw_canvas.Children.Add(handle);
+                MainWindow.ins.drawCanvas.Children.Add(outline);
+                MainWindow.ins.drawCanvas.Children.Add(handle);
             }
             else
             {
                 // remove it.
-                MainWindow.ins.draw_canvas.Children.Remove(outline);
-                MainWindow.ins.draw_canvas.Children.Remove(handle);
+                MainWindow.ins.drawCanvas.Children.Remove(outline);
+                MainWindow.ins.drawCanvas.Children.Remove(handle);
             }
         }
     }
@@ -233,14 +234,14 @@ public struct Transform
     public double x;
     public double y;
     public double width;
-    public double heigth;
+    public double height;
 
-    public Transform(double x, double y, double width, double heigth)
+    public Transform(double x, double y, double width, double height)
     {
         this.x = x;
         this.y = y;
 
         this.width  = width;
-        this.heigth = heigth;
+        this.height = height;
     }
 }

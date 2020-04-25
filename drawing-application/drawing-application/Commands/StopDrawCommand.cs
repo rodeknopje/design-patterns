@@ -14,9 +14,9 @@ namespace drawing_application.Commands
         public StopDrawCommand() 
         {
             // assign the shape of this command with the drawn shape.
-            shape = M.shape_drawn;
+            shape = M.shapeDrawn;
             // remove the drawn_shape from the canvas.
-            M.draw_canvas.Children.Remove(shape);
+            M.drawCanvas.Children.Remove(shape);
             // create a button based on this shape.
             button = M.CreateSelectButton(shape);
         }
@@ -39,11 +39,11 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // add the shape to the canvas.
-            M.draw_canvas.Children.Add(shape);
+            M.drawCanvas.Children.Add(shape);
             // add the button to the selection row.
-            M.selection_row.Children.Add(button);
-            // switch to the none state.
-            M.SwitchState(states.none);
+            M.selectionDisplay.Children.Add(button);
+            // switch to the None state.
+            M.SwitchState(States.None);
         }
 
         public override void Undo()
@@ -51,11 +51,11 @@ namespace drawing_application.Commands
             // disable the selection outline.
             M.selection.ToggleOutline(false);
             // remove the shape from the canvas.
-            M.draw_canvas.Children.Remove(shape);
+            M.drawCanvas.Children.Remove(shape);
             // remove the button from the selection row.
-            M.selection_row.Children.Remove(button);
-            // switch to the none state.
-            M.SwitchState(states.none);
+            M.selectionDisplay.Children.Remove(button);
+            // switch to the None state.
+            M.SwitchState(States.None);
 
         }
     }

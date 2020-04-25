@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using drawing_application.Commands;
-using System.Linq;
+
 namespace drawing_application
 {
     public class CmdManager
     {
         // list of all commands.
-        private List<Command> commands;
+        private readonly List<Command> commands;
         // counter of the current command.
         private int counter = -1;
 
@@ -17,7 +15,7 @@ namespace drawing_application
             commands = new List<Command>();
         }
 
-        public void InvokeCMD(Command cmd)
+        public void InvokeCommand(Command cmd)
         {
             // if the current command is not the last.
             while (commands.Count - 1 > counter)

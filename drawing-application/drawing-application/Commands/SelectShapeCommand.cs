@@ -20,8 +20,8 @@ namespace drawing_application.Commands
 
         public override void Execute()
         {
-            // switch to select state.
-            M.SwitchState(states.select);
+            // switch to Select state.
+            M.SwitchState(States.Select);
             // assign the selected shapes.
             M.selection.Select(shapes);
         }

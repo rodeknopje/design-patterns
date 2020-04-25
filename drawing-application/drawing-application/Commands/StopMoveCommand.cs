@@ -22,8 +22,8 @@ namespace drawing_application.Commands
             offset = new Point
             {
                 // calculate the mouse offset
-                X = mouse_pos.X - M.orgin_mouse.X,
-                Y = mouse_pos.Y - M.orgin_mouse.Y,
+                X = mouse_pos.X - M.mouseOrigin.X,
+                Y = mouse_pos.Y - M.mouseOrigin.Y,
             };
 
             foreach (var shape in shapes)
@@ -44,9 +44,9 @@ namespace drawing_application.Commands
                 // update their origin position
                 shape.UpdateOriginTransform();
             }
-            // Deselect all the shapes, because we can only select non selected shapes.
+            // Deselect all the shapes, because we can only Select non selected shapes.
             shapes.ForEach(M.selection.RemoveChild);
-            // select all these shapes.
+            // Select all these shapes.
             new SelectShapeCommand(shapes).Execute();
         }
 
@@ -59,9 +59,9 @@ namespace drawing_application.Commands
                 // update their origin position
                 shape.UpdateOriginTransform();
             }
-            // Deselect all the shapes, because we can only select non selected shapes.
+            // Deselect all the shapes, because we can only Select non selected shapes.
             shapes.ForEach(M.selection.RemoveChild);
-            // select all these shapes.
+            // Select all these shapes.
             new SelectShapeCommand(shapes).Execute();
         }
     }

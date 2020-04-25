@@ -18,32 +18,32 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // get the offset from the origin point.
-            var xOffset = mousePos.X - M.orgin_mouse.X;
-            var yOffset = mousePos.Y - M.orgin_mouse.Y;
+            var xOffset = mousePos.X - M.mouseOrigin.X;
+            var yOffset = mousePos.Y - M.mouseOrigin.Y;
             // if the x offset is greater than zero.
             if (xOffset > 0)
             {
                 // set the width to the offset.
-                M.shape_drawn.Width = xOffset;
+                M.shapeDrawn.Width = xOffset;
             }
             else
             {
                 // otherwise set the left 
-                Canvas.SetLeft(M.shape_drawn, xOffset + M.orgin_mouse.X);
+                Canvas.SetLeft(M.shapeDrawn, xOffset + M.mouseOrigin.X);
                 // inverse the offset to make it positive.
-                M.shape_drawn.Width = -xOffset;
+                M.shapeDrawn.Width = -xOffset;
             }
             if (yOffset > 0)
             {
                 // set the width to the offset.
-                M.shape_drawn.Height = yOffset;
+                M.shapeDrawn.Height = yOffset;
             }
             else
             {
                 // otherwise set the left 
-                Canvas.SetTop(M.shape_drawn, yOffset + M.orgin_mouse.Y);
+                Canvas.SetTop(M.shapeDrawn, yOffset + M.mouseOrigin.Y);
                 // inverse the offset to make it positive.
-                M.shape_drawn.Height = -yOffset;
+                M.shapeDrawn.Height = -yOffset;
             }
         }
 

@@ -20,11 +20,11 @@ namespace drawing_application.Commands
             var offset = new Point
             { 
                 // calculate the mouse offset
-                X = mousePos.X - M.orgin_mouse.X,
-                Y = mousePos.Y - M.orgin_mouse.Y,
+                X = mousePos.X - M.mouseOrigin.X,
+                Y = mousePos.Y - M.mouseOrigin.Y,
             };
 
-            // move the shape based on the offset.
+            // Move the shape based on the offset.
             M.selection.Move(offset);
         }
 

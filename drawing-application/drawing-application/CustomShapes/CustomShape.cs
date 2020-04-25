@@ -25,7 +25,7 @@ namespace drawing_application.CustomShapes
 
         public virtual void Move(Point offset)
         {
-            // move the shape based on their origin transform plus an offset.
+            // Move the shape based on their origin transform plus an offset.
             Canvas.SetLeft(this, offset.X + OriginTransform.x);
             Canvas.SetTop (this, offset.Y + OriginTransform.y);     
         }

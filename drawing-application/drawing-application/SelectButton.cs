@@ -9,11 +9,11 @@ namespace drawing_application
 {
     public class SelectButton : TextBlock
     {
-        // id of this button.
-        private static int id;
+        // _id of this button.
+        private static int _id;
         // boolean that indicates if the shape is selected.
         private bool selected;
-        // the shape which to select when this button is selected.
+        // the shape which to Select when this button is selected.
         private readonly CustomShape shape;
         // the color of this item when the shape is not selected.
         private const string DefaultColor = "#FFD3D3D3";
@@ -25,7 +25,7 @@ namespace drawing_application
             // assign the shape.
             this.shape = shape;
             // assign the correct text
-            Text = $"{shape.GetType().Name} ({id++})";
+            Text = $"{shape.GetType().Name} ({_id++})";
             // set the margin.
             Margin = new Thickness(0,0,0,1);
             // make the alignment stretch.
@@ -67,7 +67,7 @@ namespace drawing_application
                 // if the shape is not selected
                 if (selected == false)
                 {
-                    // select it.
+                    // Select it.
                     new SelectShapeCommand(shape).Execute();
                 }
             }

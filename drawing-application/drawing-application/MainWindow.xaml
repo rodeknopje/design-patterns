@@ -8,7 +8,7 @@
         Title="Paint 2" Height="1000" Width="1000" WindowState="Maximized">
 
 
-    <Grid Name="main_grid"  >
+    <Grid Name="MainGrid"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <Grid Name="button_grid" Grid.Column="0" Grid.Row="0" Panel.ZIndex="1"  >
+        <Grid Name="ButtonGrid" Grid.Column="0" Grid.Row="0" Panel.ZIndex="1"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -27,10 +27,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="button_style" Grid.Column="0" Content="Ellipse"/>
-            <Button Name="button_undo"  Grid.Column="1" Content="Undo"/>
-            <Button Name="button_redo"  Grid.Column="2" Content="Redo"/>
-            <Button Name="button_clear" Grid.Column="3" Content="clear"/>
+            <Button Name="buttonStyle" Grid.Column="0" Content="Ellipse"/>
+            <Button Name="buttonUndo"  Grid.Column="1" Content="Undo"/>
+            <Button Name="buttonRedo"  Grid.Column="2" Content="Redo"/>
+            <Button Name="buttonClear" Grid.Column="3" Content="clear"/>
         </Grid>
 
         <Grid Name="grid" Grid.Row="1" >
@@ -40,22 +40,22 @@
             </Grid.ColumnDefinitions>
 
 
-            <Canvas Name="draw_canvas"  MouseMove="Canvas_Mousemove" MouseLeftButtonUp="Canvas_Mouseup" MouseLeftButtonDown="Canvas_Mousedown"  Background="Black"/>
-            <TextBlock x:Name="debug_text" Foreground="White" IsHitTestVisible="False"/>
+            <Canvas Name="drawCanvas"  MouseMove="canvasMouseDown" MouseLeftButtonUp="CanvasLeftButtonUp" MouseLeftButtonDown="CanvasLeftButtonDown"  Background="Black"/>
+            <TextBlock x:Name="debugText" Foreground="White" IsHitTestVisible="False"/>
 
 
             <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Hidden" Panel.ZIndex="1">
-                <StackPanel Name="selection_row"  Background="White"/>
+                <StackPanel Name="selectionDisplay"  Background="White"/>
             </ScrollViewer>
         </Grid>
        
-        <Grid x:Name="style_grid" Grid.Row="1"  >
+        <Grid x:Name="styleGrid" Grid.Row="1"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel x:Name="style_select" Visibility="Collapsed"/>
+            <StackPanel x:Name="stylesDisplay" Visibility="Collapsed"/>
         </Grid>
 
 

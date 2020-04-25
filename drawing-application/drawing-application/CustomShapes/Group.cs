@@ -52,7 +52,7 @@ namespace drawing_application.CustomShapes
 
         public override void Move(Point offset)
         {
-            // move all the children based on a offset.
+            // Move all the children based on a offset.
             children.ForEach(x=>x.Move(offset));
         }
 

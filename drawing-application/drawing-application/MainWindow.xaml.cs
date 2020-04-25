@@ -17,26 +17,26 @@ namespace drawing_application
         // singleton of this class.
         public static MainWindow ins;
         // list with all the shapes in it.
-        public List<Shape> shapelist = new List<Shape>();
+        public List<Shape> shapes = new List<Shape>();
         // the point where the mouse started when dragging.
-        public Point orgin_mouse;
+        public Point mouseOrigin;
 
 
 
         // the shape that is currently being drawn.
-        public CustomShape shape_drawn;
+        public CustomShape shapeDrawn;
 
-        // the current state of the program.
-        public states state;
+        // the current newState of the program.
+        public States state;
 
-        public SaveLoadManager saveload = new SaveLoadManager();
+        public SaveLoadManager saveLoad = new SaveLoadManager();
        
-        public CmdManager cmd_manager = new CmdManager();
+        public CmdManager commandManager = new CmdManager();
 
-        // all types that derive from ShapeGroup.
+        // all types that derive from custom shape.
         public System.Type[] styles;
         // the current index of the styles array.
-        public int style_index;
+        public int styleIndex;
 
 
         public Selection selection = new Selection();
@@ -52,65 +52,65 @@ namespace drawing_application
             styles = Assembly.GetAssembly(typeof(CustomShape)).GetTypes().Where(T=>T.IsSubclassOf(typeof(CustomShape))).ToArray();
 
             // make te style button a toggle for the shape buttons.
-            button_style.Click += (a, b) => style_select.Visibility = style_select.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;                     
+            buttonStyle.Click += (a, b) => stylesDisplay.Visibility = stylesDisplay.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;                     
             // initialize the clear button.
-            button_clear.Click += (a, b) => cmd_manager.InvokeCMD(new ClearCommand());
-            // set the current state to none.
-            SwitchState(states.none);
+            buttonClear.Click += (a, b) => commandManager.InvokeCommand(new ClearCommand());
+            // set the current newState to None.
+            SwitchState(States.None);
             // load the saved shapes.
-            saveload.LoadProgramState();
-            // call the save programs state when the application stops.
-            Closed += (a, b) => saveload.SaveProgramState();
+            saveLoad.LoadProgramState();
+            // call the save programs newState when the application stops.
+            Closed += (a, b) => saveLoad.SaveProgramState();
             // Initialize the buttons
             InitializeStyleButtons();
 
             // bind the undo and redo actions to their corresponding  buttons
-            button_undo.Click += (a, b) => cmd_manager.Undo();
-            button_redo.Click += (a, b) => cmd_manager.Redo();
+            buttonUndo.Click += (a, b) => commandManager.Undo();
+            buttonRedo.Click += (a, b) => commandManager.Redo();
             // als bind it to the control+z and contrl+r keys
             KeyDown += (a, b) => 
             {
-                if (b.Key == Key.Z) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Undo();
-                if (b.Key == Key.R) if (Keyboard.IsKeyDown(Key.LeftCtrl)) cmd_manager.Redo();
+                if (b.Key == Key.Z) if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Undo();
+                if (b.Key == Key.R) if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Redo();
             };
-            // go to back to draw state when rmb is pressed.
+            // go to back to Draw newState when rmb is pressed.
             MouseRightButtonDown += (a, b) => 
             {
-                if(state==states.select) new ChangeShapeStyleCommand(style_index).Execute(); selection.Clear();
+                if(state==States.Select) new ChangeShapeStyleCommand(styleIndex).Execute(); selection.Clear();
             };
             // click the first shape button
-            ((Button)style_select.Children[0]).RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+            ((Button)stylesDisplay.Children[0]).RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
         }
 
-        private void Canvas_Mousedown(object sender, MouseButtonEventArgs e)
+        private void CanvasLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //  if the game in not doing anything else.
-            if (state == states.none)
+            if (state == States.None)
             {
                 // start a new drawing.
-                new StartDrawCommand(e.GetPosition(draw_canvas)).Execute();
+                new StartDrawCommand(e.GetPosition(drawCanvas)).Execute();
             }
         }
 
-        private void Canvas_Mousemove(object sender, MouseEventArgs e)
+        private void CanvasMouseDown(object sender, MouseEventArgs e)
         {
-            // when the mouse moves do something depending on the state of the program.
+            // when the mouse moves do something depending on the newState of the program.
             switch (state)
             {
-                case states.draw:   new DrawCommand  (e.GetPosition(draw_canvas)).Execute(); break;
-                case states.move:   new MoveCommand  (e.GetPosition(draw_canvas)).Execute(); break;
-                case states.resize: new ResizeCommand(e.GetPosition(draw_canvas)).Execute(); break;
+                case States.Move:   new MoveCommand  (e.GetPosition(drawCanvas)).Execute(); break;
+                case States.Draw:   new DrawCommand  (e.GetPosition(drawCanvas)).Execute(); break;
+                case States.Resize: new ResizeCommand(e.GetPosition(drawCanvas)).Execute(); break;
             }
         }
 
-        private void Canvas_Mouseup(object sender, MouseButtonEventArgs e)
+        private void CanvasLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // when the mouse up event is fired do something depending on the state of the program.
+            // when the mouse up event is fired do something depending on the newState of the program.
             switch (state)
             {
-                case states.move:   cmd_manager.InvokeCMD(new StopMoveCommand  (e.GetPosition(draw_canvas))); break;
-                case states.draw:   cmd_manager.InvokeCMD(new StopDrawCommand  ()); break;
-                case states.resize: cmd_manager.InvokeCMD(new StopResizeCommand()); break;
+                case States.Move:   commandManager.InvokeCommand(new StopMoveCommand  (e.GetPosition(drawCanvas))); break;
+                case States.Draw:   commandManager.InvokeCommand(new StopDrawCommand  ()); break;
+                case States.Resize: commandManager.InvokeCommand(new StopResizeCommand()); break;
             }
         }
 
@@ -129,11 +129,12 @@ namespace drawing_application
             return selectButtons.Last();
         }
 
-        public void SwitchState(states state)
+        public void SwitchState(States newState)
         {
-            this.state = state;
-
-            debug_text.Text = $"state:{this.state.ToString()}";
+            // set the state to the new state.
+            state = newState;
+            // update the debug text
+            debugText.Text = $"newState:{this.state.ToString()}";
         }
 
         public CustomShape CreateShape(int index)
@@ -156,7 +157,7 @@ namespace drawing_application
             // for all different styles.
             for (var i = 0; i < styles.Length; i++)
             {
-                // skip if the style is a group, since we don't want to draw groups directly
+                // skip if the style is a group, since we don't want to Draw groups directly
                 if (styles[i].IsSubclassOf(typeof(Group)) || styles[i] == typeof(Group))
                 {
                     continue;
@@ -178,25 +179,24 @@ namespace drawing_application
                 button.Click += (a, b) =>
                 {
                     // make the style button display the current style.
-                    button_style.Content = styles[index].Name;
-                    // collapse the style select element.
-                    style_select.Visibility = Visibility.Collapsed;
+                    buttonStyle.Content = styles[index].Name;
+                    // collapse the style Select element.
+                    stylesDisplay.Visibility = Visibility.Collapsed;
                     // switch the style.
                     new ChangeShapeStyleCommand(index).Execute();
                 };               
-                // add this button to the style select stack panel.
-                style_select.Children.Add(button);
+                // add this button to the style Select stack panel.
+                stylesDisplay.Children.Add(button);
             }
         }
     }
 
-    public enum states
+    public enum States
     {
-        none,
-        draw,
-        select,
-        move,
-        resize,
+        None,
+        Draw,
+        Select,
+        Move,
+        Resize,
     }
-
 }
