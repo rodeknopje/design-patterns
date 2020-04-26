@@ -31,7 +31,6 @@ namespace drawing_application.CustomShapes
         }
 
 
-
         protected Geometry DefineGeometry()
         {
             // calculate the new coords.

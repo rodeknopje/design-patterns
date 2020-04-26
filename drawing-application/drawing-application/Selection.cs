@@ -76,6 +76,10 @@ namespace drawing_application
             {
                 merged.AddChild(child);
             }
+
+            MainWindow.ins.drawCanvas.Children.Add(merged);
+
+            MainWindow.ins.selectionDisplay.Children.Add(MainWindow.ins.CreateSelectButton(merged));
         }
 
         public void Select(List<CustomShape> shapes)
@@ -142,7 +146,7 @@ namespace drawing_application
         public void CalculateTransform()
         {
             // Create a transform tuple.
-            Transform transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
+            var transform = new Transform(double.MaxValue, double.MaxValue, double.MinValue, double.MinValue);
 
             // loop through all children in the selection.
             foreach (var shape in GetAllShapes())

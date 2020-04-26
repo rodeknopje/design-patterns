@@ -8,16 +8,16 @@ namespace drawing_application.Commands
 {
     public class StopMoveCommand : Command
     {
-        // the shape bounded to this command.
-        private readonly List<CustomShape> shapes;
+        // the shapes bounded to this command.
+        private readonly List<CustomShape> shapes = new List<CustomShape>();
         // offset of the mouse movement.
         private readonly Point offset;
 
         public StopMoveCommand(Point mouse_pos)
         {
-            // assign the shape.
-            shapes = Selection.GetInstance().GetAllShapes();
-            
+            // add the currently selected children to the shapes list.
+            Selection.GetInstance().GetChildren().ForEach(shapes.Add);
+
             // assign the offset
             offset = new Point
             {
@@ -25,14 +25,6 @@ namespace drawing_application.Commands
                 X = mouse_pos.X - m.mouseOrigin.X,
                 Y = mouse_pos.Y - m.mouseOrigin.Y,
             };
-
-            foreach (var shape in shapes)
-            {
-                // set the shape to their origin pos.
-                Canvas.SetLeft(shape, shape.OriginTransform.x);
-                Canvas.SetTop (shape, shape.OriginTransform.y);
-            }
-
         }
 
         public override void Execute()

@@ -3,14 +3,14 @@ using drawing_application.Commands;
 
 namespace drawing_application
 {
-    public class CmdManager
+    public class CommandManager
     {
         // list of all commands.
         private readonly List<Command> commands;
         // counter of the current command.
         private int counter = -1;
 
-        public CmdManager()
+        public CommandManager()
         {
             commands = new List<Command>();
         }

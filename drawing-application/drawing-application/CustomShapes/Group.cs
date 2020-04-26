@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace drawing_application.CustomShapes
 {
@@ -12,7 +13,15 @@ namespace drawing_application.CustomShapes
         // return null when asked for coords, since this object doesn't have visuals from itself..
         protected override void DrawShape(out List<Point> coords) => coords = null;
 
-        
+        public Group()
+        {
+            Canvas.SetLeft(this, 1);
+            Canvas.SetTop (this, 1);
+
+            Width  = 1;
+            Height = 1;
+        }
+
         public void AddChild(CustomShape shape)
         {
             // add a custom shape to the group.
@@ -48,14 +57,11 @@ namespace drawing_application.CustomShapes
             return shapes;
         }
 
-
-
         public override void Move(Point offset)
         {
             // Move all the children based on a offset.
             children.ForEach(x=>x.Move(offset));
         }
-
 
         public override void UpdateOriginTransform()
         {
