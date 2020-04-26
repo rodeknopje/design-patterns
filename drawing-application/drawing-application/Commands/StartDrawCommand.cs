@@ -32,7 +32,7 @@ namespace drawing_application.Commands
             // add it to the canvas.
             m.drawCanvas.Children.Add(m.shapeDrawn);
             // add the new shape to the shape list.
-            m.shapes.Add(m.shapeDrawn);
+            //m.shapes.Add(m.shapeDrawn);
         }
 
         public override void Undo()

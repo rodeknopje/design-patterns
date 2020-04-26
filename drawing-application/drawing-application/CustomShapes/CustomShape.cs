@@ -8,6 +8,8 @@ namespace drawing_application.CustomShapes
 {
     public abstract class CustomShape : Shape
     {
+        // id of this shape.
+        private static int _id;
         // the coordinates of connection points.
         private List<Point> coords;
 
@@ -16,6 +18,11 @@ namespace drawing_application.CustomShapes
 
         // abstract method which needs to calculate the coords.
         protected abstract void DrawShape(out List<Point> coords);
+
+        protected CustomShape()
+        {
+            _id++;
+        }
 
         public virtual void UpdateOriginTransform()
         {
@@ -63,5 +70,7 @@ namespace drawing_application.CustomShapes
 
         // calculate the geometry when asked for it.
         protected override Geometry DefiningGeometry => DefineGeometry();
+
+        public int GetId => _id;
     }
 }

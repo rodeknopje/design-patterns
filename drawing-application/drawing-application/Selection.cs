@@ -72,10 +72,7 @@ namespace drawing_application
         {
             var merged = new Group();
 
-            foreach (var child in GetChildren())
-            {
-                merged.AddChild(child);
-            }
+            GetChildren().ForEach(merged.AddChild);
 
             MainWindow.ins.drawCanvas.Children.Add(merged);
 
