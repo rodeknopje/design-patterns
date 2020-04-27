@@ -90,5 +90,10 @@ namespace drawing_application
             // reset the selected status.
             selected = false;
         }
+
+        public bool GetSelectionStatus()
+        {
+            return selected;
+        }
     }
 }

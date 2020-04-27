@@ -8,8 +8,6 @@ namespace drawing_application.CustomShapes
 {
     public abstract class CustomShape : Shape
     {
-        // id of this shape.
-        private static int _id;
         // the coordinates of connection points.
         private List<Point> coords;
 
@@ -21,7 +19,14 @@ namespace drawing_application.CustomShapes
 
         protected CustomShape()
         {
-            _id++;
+            // set the width and the height
+            Width = 0; Height = 0;
+            // make the shape transparent.
+            Fill = Brushes.Transparent;
+            // set the color.
+            Stroke = new SolidColorBrush(Color.FromRgb(255, 110, 199));
+            // set the stroke thickness.
+            StrokeThickness = 2.5;
         }
 
         public virtual void UpdateOriginTransform()
@@ -70,7 +75,5 @@ namespace drawing_application.CustomShapes
 
         // calculate the geometry when asked for it.
         protected override Geometry DefiningGeometry => DefineGeometry();
-
-        public int GetId => _id;
     }
 }

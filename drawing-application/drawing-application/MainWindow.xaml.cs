@@ -17,27 +17,21 @@ namespace drawing_application
         // singleton of this class.
         public static MainWindow ins;
 
-        // dictionary with shapes in it with their id as key.
-        private readonly Dictionary<int, CustomShape> shapes = new Dictionary<int, CustomShape>();
         // the point where the mouse started when dragging.
         public Point mouseOrigin;
-
         // the shape that is currently being drawn.
         public CustomShape shapeDrawn;
-
-        // the current newState of the program.
+        // the current state of the program.
         public States state;
-
+        // the save load manager which can save and load the program state.
         public SaveLoadManager saveLoad = new SaveLoadManager();
-       
+        // command manager which can undo and redo commands.
         public CommandManager commandManager = new CommandManager();
-
         // all types that derive from custom shape.
         public System.Type[] styles;
         // the current index of the styles array.
         public int styleIndex;
-
-
+        // collection of all the select buttons.
         private readonly List<SelectButton> selectButtons = new List<SelectButton>();
 
         public MainWindow()
@@ -47,7 +41,6 @@ namespace drawing_application
             ins ??= this;
             // get all types that derive from custom shape.
             styles = Assembly.GetAssembly(typeof(CustomShape)).GetTypes().Where(T=>T.IsSubclassOf(typeof(CustomShape))).ToArray();
-
             // make te style button a toggle for the shape buttons.
             buttonStyle.Click += (a, b) => stylesDisplay.Visibility = stylesDisplay.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;                     
             // initialize the clear button.
@@ -60,16 +53,18 @@ namespace drawing_application
             Closed += (a, b) => saveLoad.SaveProgramState();
             // Initialize the buttons
             InitializeStyleButtons();
-
             // bind the undo and redo actions to their corresponding  buttons
             buttonUndo.Click += (a, b) => commandManager.Undo();
             buttonRedo.Click += (a, b) => commandManager.Redo();
             // als bind it to the control+z and contrl+r keys
             KeyDown += (a, b) => 
             {
-                if (b.Key == Key.Z) if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Undo();
-                if (b.Key == Key.R) if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Redo();
-                if (b.Key == Key.J) if (Keyboard.IsKeyDown(Key.LeftCtrl)) Selection.GetInstance().Merge();
+                switch (b.Key)
+                {
+                    case Key.Z: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Undo(); break;
+                    case Key.R: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Redo(); break;
+                    case Key.J: if (Keyboard.IsKeyDown(Key.LeftCtrl)) Selection.GetInstance().Merge(); break;
+                }
             };
             // go to back to Draw newState when rmb is pressed.
             MouseRightButtonDown += (a, b) => 
@@ -130,6 +125,11 @@ namespace drawing_application
             return selectButtons.Last();
         }
 
+        public List<SelectButton> GetActiveSelectButtons()
+        {
+            return selectButtons.Where(x => x.GetSelectionStatus()).ToList();
+        }
+
         public void SwitchState(States newState)
         {
             // set the state to the new state.
@@ -141,31 +141,8 @@ namespace drawing_application
         public CustomShape CreateShape(int index)
         {
             // create a new shape based on the selected shape.
-            var shape = (CustomShape)System.Activator.CreateInstance(styles[index]);
-            {
-                shape.Width     = 0;
-                shape.Height    = 0;
-                shape.Fill      = Brushes.Transparent;
-                shape.Stroke    = new SolidColorBrush(Color.FromRgb(255, 110, 199));
-                shape.StrokeThickness = 2.5;
-            }
-            return shape;
+            return (CustomShape)System.Activator.CreateInstance(styles[index]);
         }
-
-        public CustomShape CreateShape<T>() where  T : CustomShape
-        {
-            // create a new shape based on the selected shape.
-            var shape = (CustomShape)System.Activator.CreateInstance(typeof(T));
-            {
-                shape.Width = 0;
-                shape.Height = 0;
-                shape.Fill = Brushes.Transparent;
-                shape.Stroke = new SolidColorBrush(Color.FromRgb(255, 110, 199));
-                shape.StrokeThickness = 2.5;
-            }
-            return shape;
-        }
-
 
         private void InitializeStyleButtons()
         {

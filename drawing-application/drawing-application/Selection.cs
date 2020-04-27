@@ -77,6 +77,8 @@ namespace drawing_application
             MainWindow.ins.drawCanvas.Children.Add(merged);
 
             MainWindow.ins.selectionDisplay.Children.Add(MainWindow.ins.CreateSelectButton(merged));
+
+            MainWindow.ins.GetActiveSelectButtons().ForEach(MainWindow.ins.selectionDisplay.Children.Remove);
         }
 
         public void Select(List<CustomShape> shapes)

@@ -18,11 +18,9 @@ namespace drawing_application.Commands
             shapes  = new List<CustomShape>();
             // initialize the buttons list.
             buttons = new List<SelectButton>();
-
             // loop through the buttons and shapes.
             for (var i = 0; i < m.drawCanvas.Children.Count; i++)
             {
-                // 
                 shapes.Add((CustomShape)m.drawCanvas.Children[i]);
 
                 buttons.Add((SelectButton)m.selectionDisplay.Children[i]);
