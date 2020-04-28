@@ -41,7 +41,7 @@
             </Grid.ColumnDefinitions>
 
 
-            <Canvas Name="drawCanvas"  MouseMove="CanvasMouseDown" MouseLeftButtonUp="CanvasLeftButtonUp" MouseLeftButtonDown="CanvasLeftButtonDown"  Background="Black"/>
+            <Canvas Name="drawCanvas"  MouseMove="CanvasMouseDown" MouseLeftButtonUp="CanvasLeftButtonUp" MouseLeftButtonDown="CanvasLeftButtonDown"  Background="DarkSlateGray"/>
             <TextBlock x:Name="debugText" Foreground="White" IsHitTestVisible="False"/>
 
 

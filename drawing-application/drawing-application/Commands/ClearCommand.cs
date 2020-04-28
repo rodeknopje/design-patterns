@@ -23,7 +23,7 @@ namespace drawing_application.Commands
             {
                 shapes.Add((CustomShape)m.drawCanvas.Children[i]);
             }
-            // add but
+            // add the c
             m.GetSelectionButtons().ForEach(buttons.Add);
         }
         public override void Execute()
@@ -42,11 +42,9 @@ namespace drawing_application.Commands
 
         public override void Undo()
         {
-            for (var i = 0; i < shapes.Count; i++)
-            {
-                m.drawCanvas.Children.Add(shapes[i]);
-                m.selectionDisplay.Children.Add(buttons[i]);
-            }
+            shapes.ForEach(x => m.drawCanvas.Children.Add(x));
+
+            buttons.ForEach(x => m.selectionDisplay.Children.Add(x));
         }
     }
 }
