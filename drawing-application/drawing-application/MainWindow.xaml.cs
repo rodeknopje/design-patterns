@@ -16,7 +16,6 @@ namespace drawing_application
     {
         // singleton of this class.
         public static MainWindow ins;
-
         // the point where the mouse started when dragging.
         public Point mouseOrigin;
         // the shape that is currently being drawn.
@@ -33,6 +32,7 @@ namespace drawing_application
         public int styleIndex;
         // collection of all the select buttons.
         private readonly List<SelectButton> selectButtons = new List<SelectButton>();
+
 
         public MainWindow()
         {
@@ -125,10 +125,7 @@ namespace drawing_application
             return selectButtons.Last();
         }
 
-        public List<SelectButton> GetActiveSelectButtons()
-        {
-            return selectButtons.Where(x => x.GetSelectionStatus()).ToList();
-        }
+
 
         public void SwitchState(States newState)
         {
@@ -181,6 +178,9 @@ namespace drawing_application
                 stylesDisplay.Children.Add(button);
             }
         }
+
+        public List<SelectButton> GetSelectionButtons() => selectButtons;
+        public List<SelectButton> GetActiveSelectButtons() => selectButtons.Where(x => x.GetSelectionStatus()).ToList();
     }
 
     public enum States

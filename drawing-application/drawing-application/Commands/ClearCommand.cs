@@ -22,9 +22,9 @@ namespace drawing_application.Commands
             for (var i = 0; i < m.drawCanvas.Children.Count; i++)
             {
                 shapes.Add((CustomShape)m.drawCanvas.Children[i]);
-
-                buttons.Add((SelectButton)m.selectionDisplay.Children[i]);
             }
+            // add but
+            m.GetSelectionButtons().ForEach(buttons.Add);
         }
         public override void Execute()
         {   
