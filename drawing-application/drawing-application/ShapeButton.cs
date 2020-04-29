@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace drawing_application
 {
-    public class ShapeButton : TextBlock
+    public class ShapeButton : Grid
     {
         // boolean that indicates if the shape is selected.
         private bool selected;
@@ -18,12 +18,17 @@ namespace drawing_application
         // the color of this item when the shape is not selected.
         private const string SelectColor = "#FF87CEFA";
 
+        protected TextBlock textBlock;
+
         public ShapeButton(CustomShape shape)
         {
+            textBlock = new TextBlock();
+
+            Children.Add(textBlock);
             // assign the shape.
             this.shape = shape;
             // assign the correct text
-            Text = $"{shape.GetType().Name}";
+            textBlock.Text = $"{shape.GetType().Name}";
             // set the margin.
             Margin = new Thickness(0,0,0,1);
             // make the alignment stretch.
@@ -31,13 +36,13 @@ namespace drawing_application
             // set the height of this item.
             Height = 30;
             // set the font size.
-            FontSize = 20;
+            textBlock.FontSize = 20;
             // set the background color.
-            Background = new BrushConverter().ConvertFromString(DefaultColor) as SolidColorBrush;
+            textBlock.Background = new BrushConverter().ConvertFromString(DefaultColor) as SolidColorBrush;
             // set the foreground color
-            Foreground = Brushes.Black;
+            textBlock.Foreground = Brushes.Black;
             // invoke the onclick when this item is clicked.
-            MouseLeftButtonDown += (a, b) => Onclick();
+            textBlock.MouseLeftButtonDown += (a, b) => Onclick();
         }
 
         public void Onclick()
@@ -73,7 +78,7 @@ namespace drawing_application
             // invert the selected boolean.
             selected = !selected;
             // set the background according to the selected boolean.
-            Background = new BrushConverter().ConvertFromString(selected ? SelectColor : DefaultColor) as SolidColorBrush;
+            textBlock.Background = new BrushConverter().ConvertFromString(selected ? SelectColor : DefaultColor) as SolidColorBrush;
         }
 
         public void Deselect()
@@ -84,7 +89,7 @@ namespace drawing_application
                 return;
             }
             // set the background to its default color.
-            Background = new BrushConverter().ConvertFromString(DefaultColor) as SolidColorBrush;
+            textBlock.Background = new BrushConverter().ConvertFromString(DefaultColor) as SolidColorBrush;
             // reset the selected status.
             selected = false;
         }

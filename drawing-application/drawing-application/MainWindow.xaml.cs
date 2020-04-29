@@ -48,7 +48,7 @@ namespace drawing_application
 
             Hierarchy.GetInstance().SetStackPanel(selectionDisplay);
             // load the saved shapes.
-            saveLoad.LoadProgramState();
+            //saveLoad.LoadProgramState();
             // call the save programs newState when the application stops.
             Closed += (a, b) => saveLoad.SaveProgramState();
             // Initialize the buttons
