@@ -8,6 +8,8 @@ namespace drawing_application
         {
             // invoke the right click method when rmb is clicked.
             MouseRightButtonDown += (a, b) => OnRightClick();
+
+            Text += $" ({((Group)shape).GetChildren().Count})";
         }
 
         private void OnRightClick()

@@ -40,6 +40,11 @@ namespace drawing_application
             Refresh();
         }
 
+        public void SwitchToTopLevel()
+        {
+            SwitchGroup(topGroup);
+        }
+
         public void AddToHierarchy(CustomShape shape, bool addToCanvas)
         {
             currentGroup.AddChild(shape);

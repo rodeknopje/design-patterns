@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
 using System.Collections.Generic;
 using drawing_application.Commands;
 using System.Linq;
@@ -65,7 +63,17 @@ namespace drawing_application
                 {
                     case Key.Z: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Undo(); break;
                     case Key.R: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Redo(); break;
-                    case Key.J: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.InvokeCommand(new MergeCommand()); break;
+
+                    case Key.M: Hierarchy.GetInstance().SwitchToTopLevel();  break;
+                    
+                    case Key.J:
+
+                        if (Keyboard.IsKeyDown(Key.LeftCtrl) && Selection.GetInstance().GetChildren().Count > 0)
+                        {
+                            commandManager.InvokeCommand(new MergeCommand());
+                        }
+                        break;
+
                 }
             };
             // go to back to Draw newState when rmb is pressed.

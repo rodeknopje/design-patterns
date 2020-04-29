@@ -67,20 +67,6 @@ namespace drawing_application
             outline.Move(offset);
         }
 
-
-        public void Merge()
-        {
-            var merged = new Group();
-
-            GetChildren().ForEach(merged.AddChild);
-
-            MainWindow.ins.drawCanvas.Children.Add(merged);
-
-            MainWindow.ins.selectionDisplay.Children.Add(MainWindow.ins.CreateSelectButton(merged));
-
-            MainWindow.ins.GetActiveSelectButtons().ForEach(MainWindow.ins.selectionDisplay.Children.Remove);
-        }
-
         public void Select(List<CustomShape> shapes)
         {
             // add the given shapes to the group.
