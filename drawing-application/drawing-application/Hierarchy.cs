@@ -99,6 +99,11 @@ namespace drawing_application
             // create 
             currentGroup.GetChildren().ForEach(x => stackPanel.Children.Add(x.GetType() == typeof(Group) ? new GroupButton(x) : new ShapeButton(x)));
         }
+
+        public Group GetCurrentGroup()
+        {
+            return currentGroup;
+        }
     }
 }
 

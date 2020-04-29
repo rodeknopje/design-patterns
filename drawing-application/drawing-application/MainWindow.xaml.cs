@@ -28,8 +28,6 @@ namespace drawing_application
         public System.Type[] styles;
         // the current index of the styles array.
         public int styleIndex;
-        // collection of all the select buttons.
-        private readonly List<ShapeButton> selectButtons = new List<ShapeButton>();
 
 
         public MainWindow()
@@ -83,7 +81,9 @@ namespace drawing_application
                 {
                     new ChangeShapeStyleCommand(styleIndex).Execute(); 
 
-                    DeselectAllShapes();
+                    Selection.GetInstance().Clear();
+
+                    Hierarchy.GetInstance().DeselectAllButtons();
                 }
             };
             // click the first shape button
@@ -122,13 +122,7 @@ namespace drawing_application
             }
         }
 
-        public void DeselectAllShapes()
-        {
-            // clear the children of the selection.
-            Selection.GetInstance().Clear();
-            // call the deselect on each button.
-            selectButtons.ForEach(x=>x.Deselect());
-        }
+
 
 
         public void SwitchState(States newState)
@@ -182,9 +176,6 @@ namespace drawing_application
                 stylesDisplay.Children.Add(button);
             }
         }
-
-        public List<ShapeButton> GetSelectionButtons() => selectButtons;
-        public List<ShapeButton> GetActiveSelectButtons() => selectButtons.Where(x => x.GetSelectionStatus()).ToList();
     }
 
     public enum States

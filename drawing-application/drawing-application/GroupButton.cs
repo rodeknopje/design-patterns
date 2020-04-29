@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using drawing_application.Commands;
 using drawing_application.CustomShapes;
 
 namespace drawing_application
@@ -9,8 +10,6 @@ namespace drawing_application
     {
         public GroupButton(CustomShape shape) : base(shape)
         {
-            // invoke the right click method when rmb is clicked.
-            MouseRightButtonDown += (a, b) => SwitchGroup();
             // add the amount of children this group has to the text.
             textBlock.Text += $" ({((Group)shape).GetChildren().Count})";
 
@@ -32,17 +31,11 @@ namespace drawing_application
                 // set the font size equal to the font size of the text block.
                 FontSize = textBlock.FontSize
             };
-            arrowText.MouseLeftButtonDown += (a, b) => SwitchGroup();
+            arrowText.MouseLeftButtonDown += (a, b) => MainWindow.ins.commandManager.InvokeCommand(new SwitchGroupCommand(shape as Group));
             // set the text block to the third column
             SetColumn(arrowText, 2);       
             // add the text block to the grid.
             Children.Add(arrowText);
-        }
-
-        private void SwitchGroup()
-        {
-            // switch the hierarchy layout to this group.
-            Hierarchy.GetInstance().SwitchGroup(shape as Group);
         }
     }
 }
