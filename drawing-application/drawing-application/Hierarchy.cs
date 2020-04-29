@@ -36,7 +36,6 @@ namespace drawing_application
         {
             // assign the new current level.
             currentGroup = group;
-
         }
 
         public void AddToHierarchy(CustomShape shape)
@@ -63,6 +62,16 @@ namespace drawing_application
             this.stackPanel ??= stackPanel;
 
             SwitchGroup(topGroup);
+        }
+
+        public void DeselectAllButtons()
+        {
+            // loop through all the buttons.
+            foreach (SelectButton btn in stackPanel.Children)
+            {
+                // deselect them.
+                btn.Deselect();
+            }
         }
 
         private void Refresh()

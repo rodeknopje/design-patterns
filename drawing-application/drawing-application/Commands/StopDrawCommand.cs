@@ -11,7 +11,7 @@ namespace drawing_application.Commands
         // the shape that which is drawn
         private readonly CustomShape shape;
         // the button corresponding to the shape.
-        private readonly SelectButton button;
+        //private readonly SelectButton button;
 
         public StopDrawCommand() 
         {
@@ -20,7 +20,7 @@ namespace drawing_application.Commands
             // remove the drawn_shape from the canvas.
             m.drawCanvas.Children.Remove(shape);
             // create a button based on this shape.
-            button = m.CreateSelectButton(shape);
+            //button = m.CreateSelectButton(shape);
 
             // if any dimension is lower than the min size the it to the min size.
             shape.Width  = shape.Width  < MinSize ? MinSize : shape.Width;
@@ -41,7 +41,7 @@ namespace drawing_application.Commands
             shape.Width  = posData[2];
             shape.Height = posData[3];
             // create a button based on this shape.
-            button = m.CreateSelectButton(shape);
+            //button = m.CreateSelectButton(shape);
         }
 
         public override void Execute()
@@ -49,7 +49,7 @@ namespace drawing_application.Commands
             // add the shape to the canvas.
             m.drawCanvas.Children.Add(shape);
             // add the button to the selection row.
-            m.selectionDisplay.Children.Add(button);
+            Hierarchy.GetInstance().AddToHierarchy(shape);
             // switch to the None state.
             m.SwitchState(States.None);
 
@@ -61,10 +61,8 @@ namespace drawing_application.Commands
             Selection.GetInstance().ToggleOutline(false);
             // remove the shape from the canvas.
             m.drawCanvas.Children.Remove(shape);
-            // de select the button.
-            button.Deselect();
-            // remove the button from the selection row.
-            m.selectionDisplay.Children.Remove(button);
+
+            Hierarchy.GetInstance().RemoveFromHierarchy(shape);
             // switch to the None state.
             m.SwitchState(States.None);
 

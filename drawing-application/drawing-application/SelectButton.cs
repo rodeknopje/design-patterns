@@ -9,8 +9,6 @@ namespace drawing_application
 {
     public class SelectButton : TextBlock
     {
-        // _id of this button.
-        private static int _id;
         // boolean that indicates if the shape is selected.
         private bool selected;
         // the shape which to Select when this button is selected.
@@ -25,7 +23,7 @@ namespace drawing_application
             // assign the shape.
             this.shape = shape;
             // assign the correct text
-            Text = $"{shape.GetType().Name} ({_id++})";
+            Text = $"{shape.GetType().Name}";
             // set the margin.
             Margin = new Thickness(0,0,0,1);
             // make the alignment stretch.
@@ -62,8 +60,8 @@ namespace drawing_application
             // when control is not pressed
             else
             {
-                // deselect all other shapes.
-                MainWindow.ins.DeselectAllShapes();
+                Selection.GetInstance().Clear();
+                Hierarchy.GetInstance().DeselectAllButtons();
                 // if the shape is not selected
                 if (selected == false)
                 {
