@@ -42,12 +42,16 @@ namespace drawing_application
         {
             currentGroup.AddChild(shape);
 
+            MainWindow.ins.drawCanvas.Children.Add(shape);
+
             Refresh();
         }
 
         public void RemoveFromHierarchy(CustomShape shape)
         {
             currentGroup.RemoveChild(shape);
+
+            MainWindow.ins.drawCanvas.Children.Remove(shape);
 
             Refresh();
         }
@@ -67,7 +71,7 @@ namespace drawing_application
         public void DeselectAllButtons()
         {
             // loop through all the buttons.
-            foreach (SelectButton btn in stackPanel.Children)
+            foreach (ShapeButton btn in stackPanel.Children)
             {
                 // deselect them.
                 btn.Deselect();
@@ -79,7 +83,7 @@ namespace drawing_application
             // clear the stack panel.
             ClearStackPanel();
             // create 
-            currentGroup.GetChildren().ForEach(x => stackPanel.Children.Add(new SelectButton(x)));
+            currentGroup.GetChildren().ForEach(x => stackPanel.Children.Add(new ShapeButton(x)));
         }
     }
 }

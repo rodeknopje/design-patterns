@@ -7,8 +7,6 @@ namespace drawing_application.Commands
     {
         // the buttons that are currently in the scene.
         private readonly List<CustomShape>  shapes;
-        // the shapes that are currently in the scene.
-        private readonly List<SelectButton> buttons;
 
         public ClearCommand()
         {
@@ -16,24 +14,16 @@ namespace drawing_application.Commands
             Selection.GetInstance().ToggleOutline(false);
             // initialize the shapes list.
             shapes  = new List<CustomShape>();
-            // initialize the buttons list.
-            buttons = new List<SelectButton>();
             // loop through the buttons and shapes.
             for (var i = 0; i < m.drawCanvas.Children.Count; i++)
             {
                 shapes.Add((CustomShape)m.drawCanvas.Children[i]);
             }
-            // add the c
-            m.GetSelectionButtons().ForEach(buttons.Add);
         }
         public override void Execute()
-        {   
-            // de select all shapes.
-            m.DeselectAllShapes();
+        {
             // remove all shapes.
-            m.drawCanvas.Children.Clear();
-            // remove all buttons in the selection row.
-            m.selectionDisplay.Children.Clear();
+            shapes.ForEach(Hierarchy.GetInstance().RemoveFromHierarchy);
             // program state is None.
             m.SwitchState(States.None);
             // clear the save file.
@@ -42,9 +32,7 @@ namespace drawing_application.Commands
 
         public override void Undo()
         {
-            shapes.ForEach(x => m.drawCanvas.Children.Add(x));
-
-            buttons.ForEach(x => m.selectionDisplay.Children.Add(x));
+            shapes.ForEach(Hierarchy.GetInstance().AddToHierarchy);
         }
     }
 }

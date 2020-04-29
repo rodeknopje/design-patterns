@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace drawing_application
 {
-    public class SelectButton : TextBlock
+    public class ShapeButton : TextBlock
     {
         // boolean that indicates if the shape is selected.
         private bool selected;
@@ -18,7 +18,7 @@ namespace drawing_application
         // the color of this item when the shape is not selected.
         private const string SelectColor = "#FF87CEFA";
 
-        public SelectButton(CustomShape shape)
+        public ShapeButton(CustomShape shape)
         {
             // assign the shape.
             this.shape = shape;

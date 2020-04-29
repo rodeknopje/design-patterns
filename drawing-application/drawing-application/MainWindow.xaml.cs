@@ -31,7 +31,7 @@ namespace drawing_application
         // the current index of the styles array.
         public int styleIndex;
         // collection of all the select buttons.
-        private readonly List<SelectButton> selectButtons = new List<SelectButton>();
+        private readonly List<ShapeButton> selectButtons = new List<ShapeButton>();
 
 
         public MainWindow()
@@ -122,9 +122,9 @@ namespace drawing_application
             selectButtons.ForEach(x=>x.Deselect());
         }
 
-        public SelectButton CreateSelectButton(CustomShape shape)
+        public ShapeButton CreateSelectButton(CustomShape shape)
         {
-            selectButtons.Add(new SelectButton(shape));
+            selectButtons.Add(new ShapeButton(shape));
 
             return selectButtons.Last();
         }
@@ -183,8 +183,8 @@ namespace drawing_application
             }
         }
 
-        public List<SelectButton> GetSelectionButtons() => selectButtons;
-        public List<SelectButton> GetActiveSelectButtons() => selectButtons.Where(x => x.GetSelectionStatus()).ToList();
+        public List<ShapeButton> GetSelectionButtons() => selectButtons;
+        public List<ShapeButton> GetActiveSelectButtons() => selectButtons.Where(x => x.GetSelectionStatus()).ToList();
     }
 
     public enum States

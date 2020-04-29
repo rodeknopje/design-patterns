@@ -8,34 +8,30 @@ namespace drawing_application.Commands
     {
         private readonly List<CustomShape> shapes = new List<CustomShape>();
 
-        private readonly List<SelectButton> buttons = new List<SelectButton>();
-
         private readonly Group merged = new Group();
-
-        private readonly SelectButton groupButton;
 
         public MergeCommand()
         {
             // copy the currently selected shapes to the shapes list.
             Selection.GetInstance().GetChildren().ForEach(shapes.Add);
-            // copy the currently active buttons to the buttons list.
-            m.GetActiveSelectButtons().ForEach(buttons.Add);
-
+            // add the shapes to the group.
             shapes.ForEach(merged.AddChild);
-
-            groupButton = m.CreateSelectButton(merged);
         }
 
         public override void Execute()
         {
-            shapes.ForEach(m.drawCanvas.Children.Remove);
+            shapes.ForEach(Hierarchy.GetInstance().RemoveFromHierarchy);
 
-            buttons.ForEach(m.selectionDisplay.Children.Remove);
+            m.drawCanvas.Children.Add(merged);
+
+            Hierarchy.GetInstance().AddToHierarchy(merged);
         }
 
         public override void Undo()
         {
-            
+            shapes.ForEach(Hierarchy.GetInstance().AddToHierarchy);
+
+           // m.drawCanvas.Children.
         }
     }
 }
