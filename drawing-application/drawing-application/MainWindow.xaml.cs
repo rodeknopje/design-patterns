@@ -47,6 +47,8 @@ namespace drawing_application
             buttonClear.Click += (a, b) => commandManager.InvokeCommand(new ClearCommand());
             // set the current newState to None.
             SwitchState(States.None);
+
+            Hierarchy.GetInstance().SetStackPanel(selectionDisplay);
             // load the saved shapes.
             saveLoad.LoadProgramState();
             // call the save programs newState when the application stops.
@@ -71,7 +73,9 @@ namespace drawing_application
             {
                 if (state == States.Select)
                 {
-                    new ChangeShapeStyleCommand(styleIndex).Execute(); DeselectAllShapes();
+                    new ChangeShapeStyleCommand(styleIndex).Execute(); 
+
+                    DeselectAllShapes();
                 }
             };
             // click the first shape button
@@ -132,7 +136,7 @@ namespace drawing_application
             // set the state to the new state.
             state = newState;
             // update the debug text
-            debugText.Text = $"newState:{this.state.ToString()}";
+            debugText.Text = $"state:{state.ToString()}";
         }
 
         public CustomShape CreateShape(int index)

@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Controls;
 using drawing_application.CustomShapes;
 
 namespace drawing_application
@@ -8,9 +11,9 @@ namespace drawing_application
         // the singleton of this class.
         private static Hierarchy instance;
         // the highest group in the hierarchy.
-        private readonly Group topLevel;
+        private readonly Group topGroup;
         // the current selected group in the hierarchy.
-        private Group currentLevel;
+        private Group currentGroup;
         // the stack panel on which shapes are displayed.
         private StackPanel stackPanel;
 
@@ -19,24 +22,35 @@ namespace drawing_application
             // assign the singleton.
             instance = this;
             // create a new group and assign it to the top level.
-            topLevel = new Group();
+            topGroup = new Group();
             // the the current level equal to the top level.
-            currentLevel = topLevel;
+            currentGroup = topGroup;
         }
 
-        public Hierarchy GetInstance()
+        public static Hierarchy GetInstance()
         {
             return instance ?? new Hierarchy();
         }
 
-        public void SwitchLevel(Group group)
+        public void SwitchGroup(Group group)
         {
             // assign the new current level.
-            currentLevel = group;
-            // clear the stack panel.
-            ClearStackPanel();
-            // create a select button for the 
-            group.GetChildren().ForEach(x=>stackPanel.Children.Add(new SelectButton(x)));
+            currentGroup = group;
+
+        }
+
+        public void AddToHierarchy(CustomShape shape)
+        {
+            currentGroup.AddChild(shape);
+
+            Refresh();
+        }
+
+        public void RemoveFromHierarchy(CustomShape shape)
+        {
+            currentGroup.RemoveChild(shape);
+
+            Refresh();
         }
 
         public void ClearStackPanel()
@@ -47,6 +61,16 @@ namespace drawing_application
         public void SetStackPanel(StackPanel stackPanel)
         {
             this.stackPanel ??= stackPanel;
+
+            SwitchGroup(topGroup);
+        }
+
+        private void Refresh()
+        {
+            // clear the stack panel.
+            ClearStackPanel();
+            // create 
+            currentGroup.GetChildren().ForEach(x => stackPanel.Children.Add(new SelectButton(x)));
         }
     }
 }
