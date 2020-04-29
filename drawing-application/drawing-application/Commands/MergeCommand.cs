@@ -6,8 +6,9 @@ namespace drawing_application.Commands
 {
     public class MergeCommand : Command
     {
+        // the shapes which will be merged.
         private readonly List<CustomShape> shapes = new List<CustomShape>();
-
+        // the result of the merged shapes.
         private readonly Group merged = new Group();
 
         public MergeCommand()
@@ -20,18 +21,18 @@ namespace drawing_application.Commands
 
         public override void Execute()
         {
-            shapes.ForEach(Hierarchy.GetInstance().RemoveFromHierarchy);
-
-            m.drawCanvas.Children.Add(merged);
-
-            Hierarchy.GetInstance().AddToHierarchy(merged);
+            // remove the shapes form the hierarchy but not from the canvas.
+            shapes.ForEach(x => Hierarchy.GetInstance().RemoveFromHierarchy(x, false));
+            // add the group to the hierarchy.
+            Hierarchy.GetInstance().AddToHierarchy(merged, true);
         }
 
         public override void Undo()
         {
-            shapes.ForEach(Hierarchy.GetInstance().AddToHierarchy);
-
-           // m.drawCanvas.Children.
+            // add the shapes to the hierarchy but not the the canvas since they were never removed from the canvas.
+            shapes.ForEach(x => Hierarchy.GetInstance().AddToHierarchy(x, false));
+            // remove the group from the hierarchy.
+            Hierarchy.GetInstance().RemoveFromHierarchy(merged, true);
         }
     }
 }

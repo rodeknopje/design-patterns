@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using drawing_application.CustomShapes;
+﻿using drawing_application.CustomShapes;
 
 namespace drawing_application
 {
@@ -9,12 +6,14 @@ namespace drawing_application
     {
         public GroupButton(CustomShape shape) : base(shape)
         {
+            // invoke the right click method when rmb is clicked.
             MouseRightButtonDown += (a, b) => OnRightClick();
         }
 
         private void OnRightClick()
         {
-            
+            // switch the hierarchy layout to this group.
+            Hierarchy.GetInstance().SwitchGroup(shape as Group);
         }
     }
 }

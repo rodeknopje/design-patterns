@@ -12,7 +12,7 @@ namespace drawing_application
         // boolean that indicates if the shape is selected.
         private bool selected;
         // the shape which to Select when this button is selected.
-        private readonly CustomShape shape;
+        protected readonly CustomShape shape;
         // the color of this item when the shape is not selected.
         private const string DefaultColor = "#FFD3D3D3";
         // the color of this item when the shape is not selected.

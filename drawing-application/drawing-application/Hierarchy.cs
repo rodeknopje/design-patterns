@@ -36,22 +36,31 @@ namespace drawing_application
         {
             // assign the new current level.
             currentGroup = group;
-        }
-
-        public void AddToHierarchy(CustomShape shape)
-        {
-            currentGroup.AddChild(shape);
-
-            MainWindow.ins.drawCanvas.Children.Add(shape);
 
             Refresh();
         }
 
-        public void RemoveFromHierarchy(CustomShape shape)
+        public void AddToHierarchy(CustomShape shape, bool addToCanvas)
+        {
+            currentGroup.AddChild(shape);
+
+            if (addToCanvas)
+            {
+                MainWindow.ins.drawCanvas.Children.Add(shape);
+            }
+
+            Refresh();
+        }
+
+
+        public void RemoveFromHierarchy(CustomShape shape, bool removeFromCanvas)
         {
             currentGroup.RemoveChild(shape);
 
-            MainWindow.ins.drawCanvas.Children.Remove(shape);
+            if (removeFromCanvas)
+            {
+                MainWindow.ins.drawCanvas.Children.Remove(shape);
+            }
 
             Refresh();
         }
@@ -83,7 +92,7 @@ namespace drawing_application
             // clear the stack panel.
             ClearStackPanel();
             // create 
-            currentGroup.GetChildren().ForEach(x => stackPanel.Children.Add(new ShapeButton(x)));
+            currentGroup.GetChildren().ForEach(x => stackPanel.Children.Add(x.GetType() == typeof(Group) ? new GroupButton(x) : new ShapeButton(x)));
         }
     }
 }

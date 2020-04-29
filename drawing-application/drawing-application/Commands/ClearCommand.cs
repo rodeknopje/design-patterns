@@ -17,22 +17,24 @@ namespace drawing_application.Commands
             // loop through the buttons and shapes.
             for (var i = 0; i < m.drawCanvas.Children.Count; i++)
             {
+                // copy all the shapes to this array.
                 shapes.Add((CustomShape)m.drawCanvas.Children[i]);
             }
         }
         public override void Execute()
         {
             // remove all shapes.
-            shapes.ForEach(Hierarchy.GetInstance().RemoveFromHierarchy);
+            shapes.ForEach(x=>Hierarchy.GetInstance().RemoveFromHierarchy(x,true));
             // program state is None.
             m.SwitchState(States.None);
-            // clear the save file.
-            m.saveLoad.ClearFile();
         }
 
         public override void Undo()
         {
-            shapes.ForEach(Hierarchy.GetInstance().AddToHierarchy);
+            // add the removed shapes back.
+            shapes.ForEach(x => Hierarchy.GetInstance().AddToHierarchy(x, true));
+            // program state is None.
+            m.SwitchState(States.None);
         }
     }
 }

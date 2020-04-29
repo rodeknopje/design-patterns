@@ -65,7 +65,7 @@ namespace drawing_application
                 {
                     case Key.Z: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Undo(); break;
                     case Key.R: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Redo(); break;
-                    case Key.J: if (Keyboard.IsKeyDown(Key.LeftCtrl)) Selection.GetInstance().Merge(); break;
+                    case Key.J: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.InvokeCommand(new MergeCommand()); break;
                 }
             };
             // go to back to Draw newState when rmb is pressed.
@@ -121,14 +121,6 @@ namespace drawing_application
             // call the deselect on each button.
             selectButtons.ForEach(x=>x.Deselect());
         }
-
-        public ShapeButton CreateSelectButton(CustomShape shape)
-        {
-            selectButtons.Add(new ShapeButton(shape));
-
-            return selectButtons.Last();
-        }
-
 
 
         public void SwitchState(States newState)

@@ -41,7 +41,7 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             // add the button to the selection row.
-            Hierarchy.GetInstance().AddToHierarchy(shape);
+            Hierarchy.GetInstance().AddToHierarchy(shape,true);
             // switch to the None state.
             m.SwitchState(States.None);
         }
@@ -51,7 +51,7 @@ namespace drawing_application.Commands
             // disable the selection outline.
             Selection.GetInstance().ToggleOutline(false);
             // remove the shapes from the hierarchy.
-            Hierarchy.GetInstance().RemoveFromHierarchy(shape);
+            Hierarchy.GetInstance().RemoveFromHierarchy(shape,true);
             // switch to the None state.
             m.SwitchState(States.None);
         }
