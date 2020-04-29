@@ -28,25 +28,26 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="buttonStyle" Grid.Column="0" Content="Ellipse"/>
-            <Button Name="buttonUndo"  Grid.Column="1" Content="Undo"/>
-            <Button Name="buttonRedo"  Grid.Column="2" Content="Redo"/>
-            <Button Name="buttonClear" Grid.Column="3" Content="clear"/>
+            <Button Name="buttonStyle" Grid.Column="0" Background="#ecf0f1" Content="Ellipse"/>
+            <Button Name="buttonUndo"  Grid.Column="1" Background="#ecf0f1" Content="Undo"/>
+            <Button Name="buttonRedo"  Grid.Column="2" Background="#ecf0f1" Content="Redo"/>
+            <Button Name="buttonClear" Grid.Column="3" Background="#ecf0f1" Content="clear"/>
         </Grid>
 
         <Grid Name="grid" Grid.Row="1" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2.5"/>
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
 
 
-            <Canvas Name="drawCanvas"  MouseMove="CanvasMouseDown" MouseLeftButtonUp="CanvasLeftButtonUp" MouseLeftButtonDown="CanvasLeftButtonDown"  Background="DarkSlateGray"/>
-            <TextBlock x:Name="debugText" Foreground="White" IsHitTestVisible="False"/>
+            <Canvas Name="drawCanvas"  MouseMove="CanvasMouseDown" MouseLeftButtonUp="CanvasLeftButtonUp" MouseLeftButtonDown="CanvasLeftButtonDown"  Background="#34495e"/>
+            <TextBlock x:Name="debugText" Foreground="White" IsHitTestVisible="False" Margin="0,0,0,0"/>
 
 
-            <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Hidden" Panel.ZIndex="1">
-                <StackPanel Name="selectionDisplay"  Background="White"/>
+            <ScrollViewer Grid.Row="1" Grid.Column="2" VerticalScrollBarVisibility="Hidden" Panel.ZIndex="1">
+                <StackPanel Name="selectionDisplay"  Background="#7f8c8d"/>
             </ScrollViewer>
         </Grid>
        

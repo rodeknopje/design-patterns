@@ -17,8 +17,10 @@ namespace drawing_application
         private const string DefaultColor = "#FFD3D3D3";
         // the color of this item when the shape is not selected.
         private const string SelectColor = "#FF87CEFA";
-
+          
         protected TextBlock textBlock;
+
+        protected const int marginThickness = 2;
 
         public ShapeButton(CustomShape shape)
         {
@@ -30,7 +32,7 @@ namespace drawing_application
             // assign the correct text
             textBlock.Text = $"{shape.GetType().Name}";
             // set the margin.
-            Margin = new Thickness(0,0,0,1);
+            Margin = new Thickness(marginThickness, marginThickness, marginThickness, 0);
             // make the alignment stretch.
             HorizontalAlignment = HorizontalAlignment.Stretch;
             // set the height of this item.
@@ -43,6 +45,8 @@ namespace drawing_application
             textBlock.Foreground = Brushes.Black;
             // invoke the onclick when this item is clicked.
             textBlock.MouseLeftButtonDown += (a, b) => Onclick();
+
+            
         }
 
         public void Onclick()

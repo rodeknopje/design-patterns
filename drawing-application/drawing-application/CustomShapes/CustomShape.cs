@@ -24,9 +24,11 @@ namespace drawing_application.CustomShapes
             // make the shape transparent.
             Fill = Brushes.Transparent;
             // set the color.
-            Stroke = new SolidColorBrush(Color.FromRgb(255, 110, 199));
+            Stroke = new SolidColorBrush(Color.FromRgb(236, 240, 241));
             // set the stroke thickness.
             StrokeThickness = 2.5;
+
+            
         }
 
         public virtual void UpdateOriginTransform()
