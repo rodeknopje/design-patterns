@@ -62,7 +62,7 @@ namespace drawing_application
                     case Key.Z: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Undo(); break;
                     case Key.R: if (Keyboard.IsKeyDown(Key.LeftCtrl)) commandManager.Redo(); break;
 
-                    case Key.M: Hierarchy.GetInstance().SwitchToTopLevel();  break;
+                    case Key.M: commandManager.InvokeCommand(new SwitchGroupCommand(Hierarchy.GetInstance().GetTopGroup()));  break;
                     
                     case Key.J:
 
@@ -71,7 +71,6 @@ namespace drawing_application
                             commandManager.InvokeCommand(new MergeCommand());
                         }
                         break;
-
                 }
             };
             // go to back to Draw newState when rmb is pressed.

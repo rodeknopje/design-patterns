@@ -111,6 +111,11 @@ namespace drawing_application
             return currentGroup;
         }
 
+        public Group GetTopGroup()
+        {
+            return topGroup;
+        }
+
         public List<CustomShape> GetChildrenInTopGroup()
         {
             return topGroup.GetChildren();
