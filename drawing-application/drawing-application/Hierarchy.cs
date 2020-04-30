@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using drawing_application.CustomShapes;
 
 namespace drawing_application
@@ -100,9 +102,24 @@ namespace drawing_application
             currentGroup.GetChildren().ForEach(x => stackPanel.Children.Add(x.GetType() == typeof(Group) ? new GroupButton(x) : new ShapeButton(x)));
         }
 
+        public void Clear()
+        {
+            // remove all the shapes from the canvas.
+            MainWindow.ins.drawCanvas.Children.Clear();
+            // clear the top group.
+            topGroup.Clear();
+            // refresh the hierarchy.
+            Refresh();
+        }
+
         public Group GetCurrentGroup()
         {
             return currentGroup;
+        }
+
+        public List<CustomShape> GetChildrenInTopGroup()
+        {
+            return topGroup.GetChildren();
         }
     }
 }
