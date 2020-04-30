@@ -14,7 +14,7 @@ namespace drawing_application
         // the shape which to Select when this button is selected.
         protected readonly CustomShape shape;
         // the color of this item when the shape is not selected.
-        private const string DefaultColor = "#FFD3D3D3";
+        private const string DefaultColor = "#ecf0f1";
         // the color of this item when the shape is not selected.
         private const string SelectColor = "#FF87CEFA";
           
@@ -30,7 +30,7 @@ namespace drawing_application
             // assign the shape.
             this.shape = shape;
             // assign the correct text
-            textBlock.Text = $"{shape.GetType().Name}";
+            textBlock.Text = $" {shape.GetType().Name}";
             // set the margin.
             Margin = new Thickness(marginThickness, marginThickness, marginThickness, 0);
             // make the alignment stretch.

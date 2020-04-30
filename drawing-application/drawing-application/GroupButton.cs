@@ -15,7 +15,7 @@ namespace drawing_application
 
             // create 3 columns for this grid make the second one have the same width as the height of the grid
             ColumnDefinitions.Add(new ColumnDefinition());
-            ColumnDefinitions.Add(new ColumnDefinition{Width = new GridLength(marginThickness) });
+            ColumnDefinitions.Add(new ColumnDefinition{Width = new GridLength(marginThickness)});
             ColumnDefinitions.Add(new ColumnDefinition{Width = new GridLength(Height)});
             // initialize the text block.
             var arrowText = new TextBlock
@@ -23,7 +23,7 @@ namespace drawing_application
                 // make the text an arrow.
                 Text = ">",
                 // assign the text colors.
-                Background = Brushes.LightGreen,
+                Background = new BrushConverter().ConvertFromString("#2ecc71") as SolidColorBrush,
                 Foreground = Brushes.Black,
                 // assign the alignment.
                 HorizontalAlignment = HorizontalAlignment.Stretch,
