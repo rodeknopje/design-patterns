@@ -27,9 +27,8 @@ namespace drawing_application.CustomShapes
             Stroke = new SolidColorBrush(Color.FromRgb(236, 240, 241));
             // set the stroke thickness.
             StrokeThickness = 2.5;
-
-            
         }
+
 
         public virtual void UpdateOriginTransform()
         {
@@ -42,6 +41,19 @@ namespace drawing_application.CustomShapes
             // Move the shape based on their origin transform plus an offset.
             Canvas.SetLeft(this, offset.X + OriginTransform.x);
             Canvas.SetTop (this, offset.Y + OriginTransform.y);     
+        }
+
+        public virtual void SetActive(bool state)
+        {
+            if (state)
+            {
+            
+                MainWindow.ins.drawCanvas.Children.Add(this);
+            }
+            else
+            {
+                MainWindow.ins.drawCanvas.Children.Remove(this);
+            }
         }
 
 

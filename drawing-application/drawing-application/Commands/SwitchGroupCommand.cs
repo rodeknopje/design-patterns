@@ -17,11 +17,15 @@ namespace drawing_application.Commands
         public override void Execute()
         {
             Hierarchy.GetInstance().SwitchGroup(next);
+
+            Selection.GetInstance().Clear();
         }
 
         public override void Undo()
         {
             Hierarchy.GetInstance().SwitchGroup(current);
+
+            Selection.GetInstance().Clear();
         }
     }
 }

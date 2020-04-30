@@ -47,27 +47,21 @@ namespace drawing_application
             SwitchGroup(topGroup);
         }
 
-        public void AddToHierarchy(CustomShape shape, bool addToCanvas)
+        public void AddToHierarchy(CustomShape shape)
         {
             currentGroup.AddChild(shape);
 
-            if (addToCanvas)
-            {
-                MainWindow.ins.drawCanvas.Children.Add(shape);
-            }
-
+            shape.SetActive(true);
+            
             Refresh();
         }
 
 
-        public void RemoveFromHierarchy(CustomShape shape, bool removeFromCanvas)
+        public void RemoveFromHierarchy(CustomShape shape)
         {
             currentGroup.RemoveChild(shape);
 
-            if (removeFromCanvas)
-            {
-                MainWindow.ins.drawCanvas.Children.Remove(shape);
-            }
+            shape.SetActive(false);
 
             Refresh();
         }

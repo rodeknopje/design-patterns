@@ -34,7 +34,7 @@ namespace drawing_application.Commands
         public override void Undo()
         {
             // recreate the top level from the shapes we saved.
-            shapes.ForEach(x=>Hierarchy.GetInstance().AddToHierarchy(x,true));
+            shapes.ForEach(x=>Hierarchy.GetInstance().AddToHierarchy(x));
             // switch to the group we were located in before this command was invoked.
             Hierarchy.GetInstance().SwitchGroup(currentGroup);
             // program state is None.

@@ -44,12 +44,12 @@ namespace drawing_application
             // set the foreground color
             textBlock.Foreground = Brushes.Black;
             // invoke the onclick when this item is clicked.
-            textBlock.MouseLeftButtonDown += (a, b) => Onclick();
+            textBlock.MouseLeftButtonDown += (a, b) => Click();
 
             
         }
 
-        public void Onclick()
+        public void Click()
         {
             // if this control buttons is pressed.
             if (Keyboard.IsKeyDown(Key.LeftCtrl))

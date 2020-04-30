@@ -69,6 +69,13 @@ namespace drawing_application.CustomShapes
             children.ForEach(x=>x.UpdateOriginTransform());
         }
 
+        public override void SetActive(bool state)
+        {
+            base.SetActive(state);
+
+            children.ForEach(x=>x.SetActive(state));
+        }
+
         public List<CustomShape> GetChildren() => children;
     }
 }
