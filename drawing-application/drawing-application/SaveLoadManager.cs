@@ -44,10 +44,10 @@ namespace drawing_application
             Selection.GetInstance().ToggleOutline(false);
 
             // loop through all the custom shapes
-            foreach (CustomShape shape in MainWindow.ins.drawCanvas.Children)
+            foreach (var shape in Hierarchy.GetInstance().GetTopGroup().GetChildren())
             {
                 // get their type and transform and write it to the file.
-                File.AppendAllText(textFile, $"{shape.GetType().Name} {(int)Canvas.GetLeft(shape)} {(int)Canvas.GetTop(shape)} {(int)shape.Width} {(int)shape.Height}\n");
+                File.AppendAllText(textFile,$"{shape.ToString(0)}\n");
             }
         }
 

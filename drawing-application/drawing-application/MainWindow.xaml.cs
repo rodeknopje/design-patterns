@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Collections.Generic;
 using drawing_application.Commands;
 using System.Linq;
 using System.Reflection;
@@ -46,7 +45,7 @@ namespace drawing_application
 
             Hierarchy.GetInstance().SetStackPanel(selectionDisplay);
             // load the saved shapes.
-            //saveLoad.LoadProgramState();
+            // saveLoad.LoadProgramState();
             // call the save programs newState when the application stops.
             Closed += (a, b) => saveLoad.SaveProgramState();
             // Initialize the buttons

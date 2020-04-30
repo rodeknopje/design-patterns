@@ -89,5 +89,11 @@ namespace drawing_application.CustomShapes
 
         // calculate the geometry when asked for it.
         protected override Geometry DefiningGeometry => DefineGeometry();
+
+        public virtual string ToString(int level)
+        {
+            return $"{new string(' ', level*2)}{GetType().Name} {(int)Canvas.GetLeft(this)} {(int)Canvas.GetTop(this)} {(int)Width} {(int)Height}";
+        }
     }
+
 }

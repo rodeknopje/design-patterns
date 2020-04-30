@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
 using System.Windows.Controls;
@@ -77,5 +78,19 @@ namespace drawing_application.CustomShapes
         }
 
         public List<CustomShape> GetChildren() => children;
+
+        public override string ToString(int level)
+        {
+            var indent = new string(' ', level*2);
+
+            var lines = new List<string>
+            {
+                $"{indent}{GetType().Name} {GetChildren().Count}"
+            };
+
+            GetChildren().ForEach(x=>lines.Add(x.ToString(level+1)));
+
+            return string.Join('\n', lines);
+        }
     }
 }
