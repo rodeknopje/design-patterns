@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using drawing_application.CustomShapes;
 
 namespace drawing_application
@@ -18,15 +14,24 @@ namespace drawing_application
         private Group currentGroup;
         // the stack panel on which shapes are displayed.
         private StackPanel stackPanel;
+        // the save load manager which can save and load the program state.
+        private readonly SaveLoadManager saveLoadManager;
 
         private Hierarchy()
         {
             // assign the singleton.
             instance = this;
-            // create a new group and assign it to the top level.
-            topGroup = new Group();
+            // initialize the save load manager.
+            saveLoadManager = new SaveLoadManager();
+            // load the previous state of the program.
+            topGroup =  saveLoadManager.LoadProgramState();
             // the the current level equal to the top level.
             currentGroup = topGroup;
+
+            topGroup.GetChildren().ForEach(x=>MainWindow.ins.drawCanvas.Children.Add(x));
+
+            MainWindow.ins.Closed += (a, b) => saveLoadManager.SaveProgramState();
+
         }
 
         public static Hierarchy GetInstance()

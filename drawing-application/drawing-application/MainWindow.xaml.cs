@@ -18,13 +18,11 @@ namespace drawing_application
         // the shape that is currently being drawn.
         public CustomShape shapeDrawn;
         // the current state of the program.
-        public States state;
-        // the save load manager which can save and load the program state.
-        public SaveLoadManager saveLoad = new SaveLoadManager();
+        private States state;
         // command manager which can undo and redo commands.
-        public CommandManager commandManager = new CommandManager();
+        public readonly CommandManager commandManager = new CommandManager();
         // all types that derive from custom shape.
-        public System.Type[] styles;
+        public readonly System.Type[] styles;
         // the current index of the styles array.
         public int styleIndex;
 
@@ -42,12 +40,8 @@ namespace drawing_application
             buttonClear.Click += (a, b) => commandManager.InvokeCommand(new ClearCommand());
             // set the current newState to None.
             SwitchState(States.None);
-
+            // assign the stack panel from the hierarchy.
             Hierarchy.GetInstance().SetStackPanel(selectionDisplay);
-            // load the saved shapes.
-            // saveLoad.LoadProgramState();
-            // call the save programs newState when the application stops.
-            Closed += (a, b) => saveLoad.SaveProgramState();
             // Initialize the buttons
             InitializeStyleButtons();
             // bind the undo and redo actions to their corresponding  buttons

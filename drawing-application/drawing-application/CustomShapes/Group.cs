@@ -16,11 +16,11 @@ namespace drawing_application.CustomShapes
 
         public Group()
         {
-            Canvas.SetLeft(this, 1);
-            Canvas.SetTop (this, 1);
+            Canvas.SetLeft(this, 0);
+            Canvas.SetTop (this, 0);
 
-            Width  = 1;
-            Height = 1;
+            Width  = 0;
+            Height = 0;
         }
 
         public void AddChild(CustomShape shape)
@@ -81,14 +81,12 @@ namespace drawing_application.CustomShapes
 
         public override string ToString(int level)
         {
-            var indent = new string(' ', level*2);
-
             var lines = new List<string>
             {
-                $"{indent}{GetType().Name} {GetChildren().Count}"
+                $"{new string(' ', 2*level++)}{GetType().Name} {GetChildren().Count}"
             };
 
-            GetChildren().ForEach(x=>lines.Add(x.ToString(level+1)));
+            GetChildren().ForEach(x=>lines.Add(x.ToString(level)));
 
             return string.Join('\n', lines);
         }

@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
-using drawing_application.Commands;
 using drawing_application.CustomShapes;
 
 namespace drawing_application
@@ -12,43 +12,68 @@ namespace drawing_application
         // path to the text file.
         private readonly string textFile;
 
+        private  List<List<string>> lines;
+
+        private int index = 0;
+
         public SaveLoadManager()
         {         
             // get the save file on the desktop.
             textFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "data.txt");
         }
 
-        public void LoadProgramState()
+        public Group LoadProgramState()
         {
             // if the text file already exist, return.
             if (File.Exists(textFile) == false)
             {
-                return;
+                return new Group();
             }
 
-            // loop through all the lines in the textFile.
-            foreach (var line in File.ReadAllLines(textFile))
-            {
-                // split the string with each space
-                var data = line.Split(" ");
-                // check if the first word is a rectangle or a ellipse, then convert the rest of the data to integers.
-                new StopDrawCommand(GetStyleIndex(data[0]), data.Skip(1).Select(x=>Convert.ToInt32(x)).ToArray()).Execute();
-            }
+            lines = File.ReadAllLines(textFile).Select(x => x.Trim().Split(" ").ToList()).ToList();
+
+            return LoadGroup();
         }
+
+        private Group LoadGroup()
+        {
+            index++;
+
+            var count = index + Convert.ToInt32(lines[index].Last());
+
+
+            return new Group();
+        }
+
+
+        private CustomShape CreateShape(IReadOnlyList<string> line)
+        {
+            // initialize a shape based on their type.
+            var shape = (CustomShape)Activator.CreateInstance(MainWindow.ins.styles[GetStyleIndex(line.First())]);
+            // convert the text data to integers to assign the transform of the shape.
+            var transformData = line.Skip(1).Select(x=>Convert.ToInt32(x)).ToList();
+            // set the position of the shape.
+            Canvas.SetLeft(shape, transformData[0]);
+            Canvas.SetTop (shape, transformData[1]);
+            // set the transform of the shape.
+            shape.Width  = transformData[2];
+            shape.Height = transformData[3];
+            // return the shape.
+            return shape;
+        }
+
 
         public void SaveProgramState()
         {
+            if(!Hierarchy.GetInstance().GetTopGroup().GetChildren().Any())
+                return;
             // clear the file.
             File.WriteAllText(textFile, "");
             // disable the outline.
             Selection.GetInstance().ToggleOutline(false);
-
-            // loop through all the custom shapes
-            foreach (var shape in Hierarchy.GetInstance().GetTopGroup().GetChildren())
-            {
-                // get their type and transform and write it to the file.
-                File.AppendAllText(textFile,$"{shape.ToString(0)}\n");
-            }
+            // get their type and transform and write it to the file.
+            File.AppendAllText(textFile,$"{Hierarchy.GetInstance().GetTopGroup().ToString(0)}\n");
+            
         }
 
         public void ClearFile()
