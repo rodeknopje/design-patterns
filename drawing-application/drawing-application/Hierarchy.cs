@@ -28,7 +28,7 @@ namespace drawing_application
             // the the current level equal to the top level.
             currentGroup = topGroup;
 
-            topGroup.GetChildren().ForEach(x=>MainWindow.ins.drawCanvas.Children.Add(x));
+            topGroup.SetActive(true);
 
             MainWindow.ins.Closed += (a, b) => saveLoadManager.SaveProgramState();
 
@@ -99,6 +99,8 @@ namespace drawing_application
             ClearStackPanel();
             // create 
             currentGroup.GetChildren().ForEach(x => stackPanel.Children.Add(x.GetType() == typeof(Group) ? new GroupButton(x) : new ShapeButton(x)));
+
+            //saveLoadManager.SaveProgramState();
         }
 
         public void Clear()

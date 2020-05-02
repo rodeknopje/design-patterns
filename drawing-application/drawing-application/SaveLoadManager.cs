@@ -22,6 +22,21 @@ namespace drawing_application
             textFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "data.txt");
         }
 
+
+
+        public void SaveProgramState()
+        {
+            if (!Hierarchy.GetInstance().GetTopGroup().GetChildren().Any())
+                return;
+            // clear the file.
+            File.WriteAllText(textFile, "");
+            // disable the outline.
+            Selection.GetInstance().ToggleOutline(false);
+            // get their type and transform and write it to the file.
+            File.AppendAllText(textFile, $"{Hierarchy.GetInstance().GetTopGroup().ToString(0)}\n");
+
+        }
+
         public Group LoadProgramState()
         {
             // if the text file already exist, return.
@@ -37,13 +52,37 @@ namespace drawing_application
 
         private Group LoadGroup()
         {
+            // initialize a new group
+            var group = new Group();
+            // look in the file how many children it has.
+            var count = Convert.ToInt32(lines[index].Last());
+            // jump to the next line in the file.
             index++;
+            // loop through the amount of children it has.
+            for (var i = 0; i < count; i++, index++)
+            {
+                // retrieve the line.
+                var currentLine = lines[index];
 
-            var count = index + Convert.ToInt32(lines[index].Last());
-
-
-            return new Group();
+                // check if this line is a group.
+                if (currentLine.Count == 2)
+                {
+                    // recursively add the group to this group.
+                    group.AddChild(LoadGroup());
+                    // lower the line jump by one otherwise we would do an extra line jump, from the recursive call.
+                    index--;
+                }
+                else
+                {
+                    // if its not a group create a shape and add it to this group.
+                    group.AddChild(CreateShape(currentLine));
+                }
+            }
+            // return the group.
+            return group;
         }
+
+
 
 
         private CustomShape CreateShape(IReadOnlyList<string> line)
@@ -63,18 +102,7 @@ namespace drawing_application
         }
 
 
-        public void SaveProgramState()
-        {
-            if(!Hierarchy.GetInstance().GetTopGroup().GetChildren().Any())
-                return;
-            // clear the file.
-            File.WriteAllText(textFile, "");
-            // disable the outline.
-            Selection.GetInstance().ToggleOutline(false);
-            // get their type and transform and write it to the file.
-            File.AppendAllText(textFile,$"{Hierarchy.GetInstance().GetTopGroup().ToString(0)}\n");
-            
-        }
+
 
         public void ClearFile()
         {
