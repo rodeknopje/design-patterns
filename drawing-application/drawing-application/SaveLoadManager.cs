@@ -19,16 +19,21 @@ namespace drawing_application
         public SaveLoadManager()
         {         
             // get the save file on the desktop.
-            textFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "data.txt");
+            textFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.txt");
         }
 
 
 
         public void SaveProgramState()
         {
+
             if (!Hierarchy.GetInstance().GetTopGroup().GetChildren().Any())
+            {
+                File.Delete(textFile);
                 return;
-            // clear the file.
+            }
+
+                
             File.WriteAllText(textFile, "");
             // disable the outline.
             Selection.GetInstance().ToggleOutline(false);
@@ -100,9 +105,6 @@ namespace drawing_application
             // return the shape.
             return shape;
         }
-
-
-
 
         public void ClearFile()
         {

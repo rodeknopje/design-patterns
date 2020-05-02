@@ -57,7 +57,7 @@ namespace drawing_application.CustomShapes
         }
 
 
-        protected Geometry DefineGeometry()
+        private Geometry DefineGeometry()
         {
             // calculate the new coords.
             DrawShape(out coords);
