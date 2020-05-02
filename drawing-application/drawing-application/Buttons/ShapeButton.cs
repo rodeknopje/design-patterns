@@ -5,7 +5,7 @@ using System.Windows.Media;
 using drawing_application.Commands;
 using System.Windows.Input;
 
-namespace drawing_application
+namespace drawing_application.Buttons
 {
     public class ShapeButton : Grid
     {

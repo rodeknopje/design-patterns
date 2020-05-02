@@ -4,7 +4,7 @@ using System.Windows.Media;
 using drawing_application.Commands;
 using drawing_application.CustomShapes;
 
-namespace drawing_application
+namespace drawing_application.Buttons
 {
     public class GroupButton : ShapeButton
     {
