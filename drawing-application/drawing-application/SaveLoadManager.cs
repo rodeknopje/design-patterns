@@ -12,7 +12,7 @@ namespace drawing_application
         // path to the text file.
         private readonly string textFile;
 
-        private  List<List<string>> lines;
+        private List<List<string>> lines;
 
         private int index = 0;
 
@@ -38,7 +38,7 @@ namespace drawing_application
             // disable the outline.
             Selection.GetInstance().ToggleOutline(false);
             // get their type and transform and write it to the file.
-            File.AppendAllText(textFile, $"{Hierarchy.GetInstance().GetTopGroup().ToString(0)}\n");
+            File.AppendAllText(textFile, $"{Hierarchy.GetInstance().GetTopGroup().ToString(0)}");
 
         }
 
@@ -64,8 +64,9 @@ namespace drawing_application
             // jump to the next line in the file.
             index++;
             // loop through the amount of children it has.
-            for (var i = 0; i < count; i++, index++)
+            for (var i = 0; i < count; i++)
             {
+                
                 // retrieve the line.
                 var currentLine = lines[index];
 
@@ -74,14 +75,14 @@ namespace drawing_application
                 {
                     // recursively add the group to this group.
                     group.AddChild(LoadGroup());
-                    // lower the line jump by one otherwise we would do an extra line jump, from the recursive call.
-                    index--;
                 }
                 else
                 {
                     // if its not a group create a shape and add it to this group.
                     group.AddChild(CreateShape(currentLine));
                 }
+                // add one to the current line index
+                index++;
             }
             // return the group.
             return group;

@@ -15,9 +15,9 @@ namespace drawing_application
         // singleton of this class.
         private static Selection _instance;
         // the outline to display when shapes are selected.
-        public readonly Rectangle outline;
+        private readonly Rectangle outline;
         // the handle to display when shapes are selected.
-        public readonly Ellipse handle;
+        private readonly Ellipse handle;
 
         // get the singleton
         public static Selection GetInstance() => _instance ?? new Selection();
@@ -147,7 +147,7 @@ namespace drawing_application
                     transform.x = x;
                 }
                 // check if this is the lowest y so far.
-                if (y < transform.y)
+                if (y < transform.y) 
                 {
                     // is so assign it.
                     transform.y = y;
