@@ -1,9 +1,7 @@
 ﻿
 using drawing_application.CustomShapes;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace drawing_application.Commands
 {

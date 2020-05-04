@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using drawing_application.CustomShapes;
 
 namespace drawing_application.CustomShapes
 {
