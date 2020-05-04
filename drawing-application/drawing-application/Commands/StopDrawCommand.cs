@@ -1,6 +1,4 @@
 ﻿using drawing_application.CustomShapes;
-using System.Windows.Controls;
-using System.Collections.Generic;
 
 namespace drawing_application.Commands
 {
@@ -10,8 +8,6 @@ namespace drawing_application.Commands
         private const float MinSize = 1;
         // the shape that which is drawn
         private readonly CustomShape shape;
-        // the button corresponding to the shape.
-        //private readonly ShapeButton button;
 
         public StopDrawCommand() 
         {
@@ -23,19 +19,6 @@ namespace drawing_application.Commands
             shape.Width  = shape.Width  < MinSize ? MinSize : shape.Width;
             shape.Height = shape.Height < MinSize ? MinSize : shape.Height;
 
-        }
-
-        // alternate constructor for loading shapes from the save file.
-        public StopDrawCommand(int index, IReadOnlyList<int> posData)
-        {
-            // create a new shape based on the index.
-            shape = m.CreateShape(index);
-            // set the position of the shape based on the given data.
-            Canvas.SetLeft(shape, posData[0]);
-            Canvas.SetTop (shape, posData[1]);
-            // set the dimensions of the shape based on the given data.
-            shape.Width  = posData[2];
-            shape.Height = posData[3];
         }
 
         public override void Execute()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
+using drawing_application.Buttons;
 using drawing_application.CustomShapes;
 
 namespace drawing_application
@@ -75,6 +76,8 @@ namespace drawing_application
                 {
                     // recursively add the group to this group.
                     group.AddChild(LoadGroup());
+                    // lower the index by one otherwise the recursive call would add one to many.
+                    index--;
                 }
                 else
                 {
@@ -88,13 +91,10 @@ namespace drawing_application
             return group;
         }
 
-
-
-
         private CustomShape CreateShape(IReadOnlyList<string> line)
         {
             // initialize a shape based on their type.
-            var shape = (CustomShape)Activator.CreateInstance(MainWindow.ins.styles[GetStyleIndex(line.First())]);
+            var shape = Utility.GetInstance().CreateShape(line.First());
             // convert the text data to integers to assign the transform of the shape.
             var transformData = line.Skip(1).Select(x=>Convert.ToInt32(x)).ToList();
             // set the position of the shape.
@@ -106,25 +106,5 @@ namespace drawing_application
             // return the shape.
             return shape;
         }
-
-        public void ClearFile()
-        {
-            // delete the safe file.
-            File.Delete(textFile);
-        }
-
-        private static int GetStyleIndex(string style)
-        {
-            for(var i=0;i<MainWindow.ins.styles.Length;i++)
-            {
-                if (MainWindow.ins.styles[i].Name == style)
-                {
-                    return i;             
-                }        
-            }
-            return 0;
-        }
-
-
     }
 }

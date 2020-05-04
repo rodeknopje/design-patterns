@@ -1,9 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using drawing_application.Commands;
-using System.Linq;
-using System.Reflection;
+using drawing_application.Buttons;
 using drawing_application.CustomShapes;
 
 
@@ -22,18 +22,23 @@ namespace drawing_application
         // command manager which can undo and redo commands.
         public readonly CommandManager commandManager = new CommandManager();
         // all types that derive from custom shape.
-        public readonly System.Type[] styles;
         // the current index of the styles array.
         public int styleIndex;
 
 
         public MainWindow()
         {
+            //Action onClose = ()=> { };
+
+            //Closed += (a,b) => onClose.Invoke();
+
+            //new Controller(selectionDisplay, stylesDisplay, drawCanvas,buttonClear,buttonStyle,buttonUndo, buttonRedo,onClose);
+
+
             InitializeComponent();
             // initialize the singleton.
             ins ??= this;
             // get all types that derive from custom shape.
-            styles = Assembly.GetAssembly(typeof(CustomShape)).GetTypes().Where(T=>T.IsSubclassOf(typeof(CustomShape))).ToArray();
             // make te style button a toggle for the shape buttons.
             buttonStyle.Click += (a, b) => stylesDisplay.Visibility = stylesDisplay.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;                     
             // initialize the clear button.
@@ -114,9 +119,6 @@ namespace drawing_application
             }
         }
 
-
-
-
         public void SwitchState(States newState)
         {
             // set the state to the new state.
@@ -125,14 +127,12 @@ namespace drawing_application
             debugText.Text = $"state:{state.ToString()}";
         }
 
-        public CustomShape CreateShape(int index)
-        {
-            // create a new shape based on the selected shape.
-            return (CustomShape)System.Activator.CreateInstance(styles[index]);
-        }
+
 
         private void InitializeStyleButtons()
         {
+            // get all the the custom shape types.
+            var styles = Utility.GetInstance().GetShapeTypes();
             // for all different styles.
             for (var i = 0; i < styles.Length; i++)
             {
@@ -170,12 +170,5 @@ namespace drawing_application
         }
     }
 
-    public enum States
-    {
-        None,
-        Draw,
-        Select,
-        Move,
-        Resize,
-    }
+
 }

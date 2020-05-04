@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using drawing_application.Buttons;
 
 namespace drawing_application.Commands
 {
@@ -23,7 +24,7 @@ namespace drawing_application.Commands
             // set the mouse origin in the main.
             m.mouseOrigin = mousePos;
             // create a new shape based on the selected shape.
-            m.shapeDrawn = m.CreateShape(m.styleIndex);
+            m.shapeDrawn = Utility.GetInstance().CreateShape(m.styleIndex);
 
             // set x position of the shape equal to the mouse x
             Canvas.SetLeft(m.shapeDrawn, mousePos.X);
