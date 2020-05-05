@@ -42,7 +42,7 @@
             </Grid.ColumnDefinitions>
 
 
-            <Canvas Name="drawCanvas"  MouseMove="CanvasMouseDown" MouseLeftButtonUp="CanvasLeftButtonUp" MouseLeftButtonDown="CanvasLeftButtonDown"  Background="#34495e"/>
+            <Canvas Name="drawCanvas"  MouseMove="MouseMove" MouseLeftButtonUp="MouseLeftButtonUp" MouseLeftButtonDown="MouseLeftButtonDown"  Background="#34495e"/>
             <TextBlock x:Name="debugText" Foreground="White" IsHitTestVisible="False" Margin="0,0,0,0"/>
 
 

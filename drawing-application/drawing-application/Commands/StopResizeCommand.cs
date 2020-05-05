@@ -19,7 +19,7 @@ namespace drawing_application.Commands
         public StopResizeCommand()
         {
             // loop through all shapes in the selection.
-            Selection.GetInstance().GetChildren().ForEach(shape =>
+            Selection.GetInstance().GetAllShapes().ForEach(shape =>
             {
                 // add them to this shape list.
                 shapes.Add(shape);

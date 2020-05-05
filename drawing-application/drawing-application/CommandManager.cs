@@ -5,14 +5,24 @@ namespace drawing_application
 {
     public class CommandManager
     {
+        private static CommandManager _instance;
         // list of all commands.
         private readonly List<Command> commands;
         // counter of the current command.
         private int counter = -1;
 
-        public CommandManager()
+
+
+        private CommandManager()
         {
+            _instance = this;
+
             commands = new List<Command>();
+        }
+
+        public  static CommandManager GetInstance()
+        {
+            return _instance ?? new CommandManager();
         }
 
         public void InvokeCommand(Command cmd)

@@ -31,7 +31,7 @@ namespace drawing_application.Buttons
                 // set the font size equal to the font size of the text block.
                 FontSize = textBlock.FontSize
             };
-            arrowText.MouseLeftButtonDown += (a, b) => MainWindow.ins.commandManager.InvokeCommand(new SwitchGroupCommand(shape as Group));
+            arrowText.MouseLeftButtonDown += (a, b) => CommandManager.GetInstance().InvokeCommand(new SwitchGroupCommand(shape as Group));
             // set the text block to the third column
             SetColumn(arrowText, 2);       
             // add the text block to the grid.

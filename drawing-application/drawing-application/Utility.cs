@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using drawing_application.CustomShapes;
 
-namespace drawing_application.Buttons
+namespace drawing_application
 {
     public class Utility
     {
