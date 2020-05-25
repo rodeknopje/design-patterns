@@ -14,13 +14,6 @@ namespace drawing_application
     {
         // singleton of this class.
         public static MainWindow ins;
-
-        private readonly SaveLoadManager saveLoadManager;
-
-        private readonly Hierarchy hierarchy;
-
-
-
         // the current state of the program.
         private States state;
         // the current index of the styles array.
@@ -29,8 +22,7 @@ namespace drawing_application
         public Point mouseOrigin;
         // the shape that is currently being drawn.
         public CustomShape shapeDrawn;
-
-
+        
 
 
         public MainWindow()
@@ -123,7 +115,7 @@ namespace drawing_application
             // set the state to the new state.
             state = newState;
             // update the debug text
-            debugText.Text = $"state:{state.ToString()}";
+            debugText.Text = $"state: {state.ToString()}";
         }
 
         private void InitializeStyleButtons()

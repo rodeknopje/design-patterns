@@ -23,24 +23,20 @@ namespace drawing_application
             textFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.txt");
         }
 
-
-
         public void SaveProgramState()
         {
 
             if (!Hierarchy.GetInstance().GetTopGroup().GetChildren().Any())
             {
                 File.Delete(textFile);
+
                 return;
             }
-
-                
             File.WriteAllText(textFile, "");
             // disable the outline.
             Selection.GetInstance().ToggleOutline(false);
             // get their type and transform and write it to the file.
             File.AppendAllText(textFile, $"{Hierarchy.GetInstance().GetTopGroup().ToString(0)}");
-
         }
 
         public Group LoadProgramState()

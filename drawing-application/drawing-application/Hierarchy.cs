@@ -72,7 +72,7 @@ namespace drawing_application
             Refresh();
         }
 
-        public void ClearStackPanel()
+        private void ClearStackPanel()
         {
             stackPanel.Children.Clear();
         }
