@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Controls;
 using drawing_application.Buttons;
 using drawing_application.CustomShapes;
+using drawing_application.Visitors;
 
 namespace drawing_application
 {
@@ -36,8 +37,15 @@ namespace drawing_application
             // disable the outline.
             Selection.GetInstance().ToggleOutline(false);
             // get their type and transform and write it to the file.
-            File.AppendAllText(textFile, $"{Hierarchy.GetInstance().GetTopGroup().ToString(0)}");
+
+
+            //File.AppendAllText(textFile, $"{Hierarchy.GetInstance().GetTopGroup().ToString(0)}");
+            File.AppendAllText(textFile, $"{Hierarchy.GetInstance().GetTopGroup().Accept(new WriteVisitor(0))}");
+
         }
+
+
+  
 
         public Group LoadProgramState()
         {

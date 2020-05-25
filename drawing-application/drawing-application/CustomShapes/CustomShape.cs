@@ -3,10 +3,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using drawing_application.Visitors;
 
 namespace drawing_application.CustomShapes
 {
-    public abstract class CustomShape : Shape
+    public abstract class CustomShape : Shape, IVisitable
     {
         // the coordinates of connection points.
         private List<Point> coords;
@@ -93,6 +94,11 @@ namespace drawing_application.CustomShapes
         public virtual string ToString(int level)
         {
             return $"{new string(' ', level*2)}{GetType().Name} {(int)Canvas.GetLeft(this)} {(int)Canvas.GetTop(this)} {(int)Width} {(int)Height}";
+        }
+
+        public virtual string Accept(IVisitor iVisitor)
+        {
+            return iVisitor.Visit(this);
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
 using System.Windows.Controls;
+using drawing_application.Visitors;
 
 namespace drawing_application.CustomShapes
 {
@@ -89,6 +90,11 @@ namespace drawing_application.CustomShapes
             GetChildren().ForEach(x=>lines.Add(x.ToString(level)));
 
             return string.Join('\n', lines);
+        }
+
+        public override string Accept(IVisitor iVisitor)
+        {
+            return iVisitor.Visit(this);
         }
     }
 }
