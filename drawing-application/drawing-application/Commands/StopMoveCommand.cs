@@ -2,6 +2,7 @@
 using drawing_application.CustomShapes;
 using System.Collections.Generic;
 using System.Windows;
+using drawing_application.Visitors;
 
 namespace drawing_application.Commands
 {
@@ -24,16 +25,21 @@ namespace drawing_application.Commands
                 X = mouse_pos.X - m.mouseOrigin.X,
                 Y = mouse_pos.Y - m.mouseOrigin.Y,
             };
+
         }
 
         public override void Execute()
         {
+            var moveVisitor = new MoveVisitor(offset);
+
             foreach (var shape in shapes)
             {
                 // set the shape to his original position.
-                shape.Move(offset);
-                // update their origin position
-                shape.UpdateOriginTransform();
+                //shape.Move(offset);
+                //// update their origin position
+                //shape.UpdateOriginTransform();
+
+                shape.Accept(moveVisitor);
             }
             // Deselect all the shapes, because we can only Select non selected shapes.
             shapes.ForEach(Selection.GetInstance().RemoveChild);
@@ -43,12 +49,16 @@ namespace drawing_application.Commands
 
         public override void Undo()
         {
+            var moveVisitor = new MoveVisitor(new Point(-offset.X, -offset.Y));
+
             foreach (var shape in shapes)
             {
                 // set the shape to his original position.
-                shape.Move(new Point(-offset.X, -offset.Y));
-                // update their origin position
-                shape.UpdateOriginTransform();
+                //shape.Move(new Point(-offset.X, -offset.Y));
+                //// update their origin position
+                //shape.UpdateOriginTransform();
+
+                shape.Accept(moveVisitor);
             }
             // Deselect all the shapes, because we can only Select non selected shapes.
             shapes.ForEach(Selection.GetInstance().RemoveChild);
