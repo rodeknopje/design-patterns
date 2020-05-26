@@ -104,21 +104,21 @@ namespace drawing_application.CustomShapes
 
 
 
-        public void SetLeft(double left)
+        public virtual void SetLeft(double left)
         {
             Canvas.SetLeft(this, left);
         }
-        public void SetTop(double top)
+        public virtual void SetTop(double top)
         {
             Canvas.SetTop(this, top);
         }
 
-        public void SetWidth(double width)
+        public virtual void SetWidth(double width)
         {
             Width = width;
         }
 
-        public void SetHeight(double height)
+        public virtual void SetHeight(double height)
         {
             Height = height;
         }
