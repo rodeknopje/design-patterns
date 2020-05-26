@@ -9,7 +9,7 @@ using drawing_application.Visitors;
 
 namespace drawing_application.Decorators
 {
-    public class ShapeDecorator : CustomShape
+    public abstract class ShapeDecorator : CustomShape
     {
         private readonly CustomShape shape;
 
@@ -17,7 +17,6 @@ namespace drawing_application.Decorators
         {
             this.shape = shape;
         }
-
 
         public override void UpdateOriginTransform()
         {
@@ -63,6 +62,31 @@ namespace drawing_application.Decorators
         public override string ToString()
         {
             return shape.ToString();
+        }
+
+        public override double GetTop()
+        {
+            return shape.GetTop();
+        }
+
+        public override double GetLeft()
+        {
+            return shape.GetLeft();
+        }
+
+        public override double GetWidth()
+        {
+            return shape.GetWidth();
+        }
+
+        public override double GetHeight()
+        {
+            return shape.GetHeight();
+        }
+
+        public override Transform GetOriginTransform()
+        {
+            return shape.GetOriginTransform();
         }
     }
 }

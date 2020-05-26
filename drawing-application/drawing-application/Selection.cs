@@ -97,7 +97,7 @@ namespace drawing_application
             ToggleOutline(GetChildren().Any());
         }
 
-        public Transform GetTransform() => OriginTransform;
+        public Transform GetTransform() => GetOriginTransform();
 
         public void ApplyOutlineOffset(Point offset)
         {
@@ -105,32 +105,32 @@ namespace drawing_application
             handle.Move(offset);
 
             // if the outline is on the right side.
-            if (offset.X + OriginTransform.width > 0 )
+            if (offset.X + GetOriginTransform().width > 0 )
             {
                 // apply the offset to the width.
-                outline.Width = OriginTransform.width + offset.X;
+                outline.Width = GetOriginTransform().width + offset.X;
             }
             // if the outline is on the top side.
-            if(offset.Y + OriginTransform.height > 0)
+            if(offset.Y + GetOriginTransform().height > 0)
             {
                 // apply the offset to the height.
-                outline.Height = OriginTransform.height + offset.Y;
+                outline.Height = GetOriginTransform().height + offset.Y;
             }
             // if the outline is on the left side.
-            if(offset.X + OriginTransform.width <= 0)
+            if(offset.X + GetOriginTransform().width <= 0)
             {
                 // apply the offset to the x position
-                Canvas.SetLeft(outline, offset.X + OriginTransform.x + OriginTransform.width);
+                Canvas.SetLeft(outline, offset.X + GetOriginTransform().x + GetOriginTransform().width);
                 // inverse the offset and subtract the width to make the width face the original x position
-                outline.Width = -(offset.X + OriginTransform.width);
+                outline.Width = -(offset.X + GetOriginTransform().width);
             }
             // if the outline is on the bottom  side.
-            if (offset.Y + OriginTransform.height <= 0)
+            if (offset.Y + GetOriginTransform().height <= 0)
             {
                 // apply the offset to the y position
-                Canvas.SetTop(outline, offset.Y + OriginTransform.y + OriginTransform.height);
+                Canvas.SetTop(outline, offset.Y + GetOriginTransform().y + GetOriginTransform().height);
                 // inverse the offset and subtract the height to make the width face the original y position
-                outline.Height = -(offset.Y + OriginTransform.height);
+                outline.Height = -(offset.Y + GetOriginTransform().height);
             }
         }
 
@@ -143,8 +143,11 @@ namespace drawing_application
             foreach (var shape in GetAllShapes())
             {
                 // get their x and y coords.
-                var x = Canvas.GetLeft(shape);
-                var y = Canvas.GetTop (shape);
+                //var x = Canvas.GetLeft(shape);
+                //var y = Canvas.GetTop (shape);
+                var x = shape.GetLeft();
+                var y = shape.GetTop();
+    
 
                 // check if this is the lowest x so far.
                 if (x < transform.x)
@@ -160,9 +163,9 @@ namespace drawing_application
                 }
 
                 // calculate the width and assign it.
-                var width = shape.Width + x;
+                var width = shape.GetWidth() + x;
                 // calculate the height and assign it.
-                var height = shape.Height + y;
+                var height = shape.GetHeight() + y;
 
                 // check if its to biggest so far.
                 if (width > transform.width)

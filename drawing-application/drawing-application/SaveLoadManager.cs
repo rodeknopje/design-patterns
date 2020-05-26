@@ -102,11 +102,11 @@ namespace drawing_application
             // convert the text data to integers to assign the transform of the shape.
             var transformData = line.Skip(1).Select(x=>Convert.ToInt32(x)).ToList();
             // set the position of the shape.
-            Canvas.SetLeft(shape, transformData[0]);
-            Canvas.SetTop (shape, transformData[1]);
+            shape.SetLeft(transformData[0]);
+            shape.SetTop (transformData[1]);
             // set the transform of the shape.
-            shape.Width  = transformData[2];
-            shape.Height = transformData[3];
+            shape.SetWidth (transformData[2]);
+            shape.SetHeight(transformData[3]);
             // return the shape.
             return shape;
         }

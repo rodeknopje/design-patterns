@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 using drawing_application.CustomShapes;
+using drawing_application.Decorators;
 using drawing_application.Strategies;
 
 namespace drawing_application
@@ -31,14 +32,14 @@ namespace drawing_application
         public CustomShape CreateShape(int index)
         {
             // create a new shape based on the selected shape.
-            return new CustomShape((IStrategyShape)Activator.CreateInstance(styles[index]));
+            return new OrnamentDecorator(new CustomShape((IStrategyShape) Activator.CreateInstance(styles[index])),"","","","");
         }
 
         public CustomShape CreateShape(string name)
         {
             // create a new shape based on their class name.
             //return (CustomShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)]);
-            return new CustomShape((IStrategyShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)]));
+            return new OrnamentDecorator( new CustomShape((IStrategyShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)])),"","","","");
         }
 
         private int GetStyleIndexByClassName(string name)

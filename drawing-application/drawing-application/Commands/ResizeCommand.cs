@@ -36,31 +36,31 @@ namespace drawing_application.Commands
                 if (xPercent > 0)
                 {
                     // calculate how much the x position is relative of the width.
-                    var xRelativeToWidth = (shape.OriginTransform.x - sTransform.x) / sTransform.width;
+                    var xRelativeToWidth = (shape.GetOriginTransform().x - sTransform.x) / sTransform.width;
                     // multiply the relative width to the width multiply that with the Move percentage and add it to the x position.
                     var newX = sTransform.x + (sTransform.width * xRelativeToWidth) * xPercent;
                     // assign it to the transform.
                     transform.x = newX;
 
                     // multiply the shape width with the offset percentage.
-                    transform.width = shape.OriginTransform.width * xPercent;
+                    transform.width = shape.GetOriginTransform().width * xPercent;
                 }
                 if (yPercent > 0)
                 {
                     // calculate how much the x position is relative of the height.
-                    var yRelativeToHeight = (shape.OriginTransform.y - sTransform.y) / sTransform.height;
+                    var yRelativeToHeight = (shape.GetOriginTransform().y - sTransform.y) / sTransform.height;
                     // multiply the relative width to the width multiply that with the Move percentage and add it to the x position.
                     var newY = sTransform.y + (sTransform.height * yRelativeToHeight) * yPercent;
                     // assign it to the transform.
                     transform.y = newY;
 
                     // multiply the shape height with the offset percentage.
-                    transform.height = shape.OriginTransform.height * yPercent;
+                    transform.height = shape.GetOriginTransform().height * yPercent;
                 }
                 if(xPercent <= 0)
                 {
                     // calculate how much the x position is relative of the width.
-                    var xRelativeToWidth = (shape.OriginTransform.x - sTransform.x) / sTransform.width;
+                    var xRelativeToWidth = (shape.GetOriginTransform().x - sTransform.x) / sTransform.width;
                     // multiply the relative width to the width, multiply that with the Move inverse Move percentage and add it to the x position.
                     var newX = sTransform.x + (sTransform.width * xRelativeToWidth) * -xPercent;
 
@@ -68,19 +68,19 @@ namespace drawing_application.Commands
                     transform.x = xOffset + sTransform.width + newX;
 
                     // multiply the original width of the shape with the x percent
-                    transform.width = shape.OriginTransform.width * -xPercent;
+                    transform.width = shape.GetOriginTransform().width * -xPercent;
                 }
                 if(yPercent <= 0)
                 {
                     // calculate how much the y position is relative of the height.
-                    var yRelativeToWidth = (shape.OriginTransform.y - sTransform.y) / sTransform.height;
+                    var yRelativeToWidth = (shape.GetOriginTransform().y - sTransform.y) / sTransform.height;
                     // multiply the relative width to the width, multiply that with the Move inverse Move percentage and add it to the x position.
                     var newY = sTransform.y + (sTransform.height * yRelativeToWidth) * -yPercent;
                     // assign it to the transform.
                     transform.y = yOffset + sTransform.height + newY;
 
                     // multiply the original height of the shape with the x percent
-                    transform.height = shape.OriginTransform.height * -yPercent;
+                    transform.height = shape.GetOriginTransform().height * -yPercent;
                 }
 
                 // assign the position plus the original relative position so i cannot reach zero

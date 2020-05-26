@@ -14,7 +14,8 @@ namespace drawing_application.Commands
             // assign the shape of this command with the drawn shape.
             shape = m.shapeDrawn;
             // remove the drawn_shape from the canvas.
-            m.drawCanvas.Children.Remove(shape);
+            //m.drawCanvas.Children.Remove(shape);
+            shape.SetActive(false);
             // if any dimension is lower than the min size the it to the min size.
             shape.Width  = shape.Width  < MinSize ? MinSize : shape.Width;
             shape.Height = shape.Height < MinSize ? MinSize : shape.Height;

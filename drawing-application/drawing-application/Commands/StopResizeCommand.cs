@@ -24,13 +24,13 @@ namespace drawing_application.Commands
                 // add them to this shape list.
                 shapes.Add(shape);
                 // add their original scale the the list.
-                originScales.Add(new Point(shape.OriginTransform.width, shape.OriginTransform.height));
+                originScales.Add(new Point(shape.GetOriginTransform().width, shape.GetOriginTransform().height));
                 // add their current scale to the list
-                newScales.Add(new Point(shape.Width,shape.Height));
+                newScales.Add(new Point(shape.GetWidth(),shape.GetHeight()));
                 // add their original pos to the list
-                originPositions.Add(new Point(shape.OriginTransform.x, shape.OriginTransform.y));
+                originPositions.Add(new Point(shape.GetOriginTransform().x, shape.GetOriginTransform().y));
                 // add their new pos to the list.
-                newPositions.Add(new Point(Canvas.GetLeft(shape), Canvas.GetTop(shape)));
+                newPositions.Add(new Point(shape.GetLeft(), shape.GetTop()));
             });
         }
 

@@ -12,7 +12,7 @@ namespace drawing_application.CustomShapes
     {
 
         // the transform before any operation is performed on this shape.
-        public Transform OriginTransform { get; protected set; }
+        protected Transform OriginTransform;
 
         // abstract method which needs to calculate the coords.
         private readonly IStrategyShape iStrategyShape;
@@ -102,7 +102,25 @@ namespace drawing_application.CustomShapes
         }
 
 
+        public virtual double GetLeft()
+        {
+            return Canvas.GetLeft(this);
+        }
 
+        public virtual double GetTop()
+        {
+            return Canvas.GetTop(this);
+        }
+
+        public virtual double GetWidth()
+        {
+            return Width;
+        }
+
+        public virtual double GetHeight()
+        {
+            return Height;
+        }
 
         public virtual void SetLeft(double left)
         {
@@ -121,6 +139,11 @@ namespace drawing_application.CustomShapes
         public virtual void SetHeight(double height)
         {
             Height = height;
+        }
+
+        public virtual Transform GetOriginTransform()
+        {
+            return OriginTransform;
         }
     }
 
