@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using drawing_application.CustomShapes;
 using System.Linq;
+using drawing_application.Visitors;
+
 namespace drawing_application.Decorators
 {
     public class OrnamentDecorator : ShapeDecorator
@@ -20,10 +22,10 @@ namespace drawing_application.Decorators
         {
             ornaments = new TextBox[4];
 
-            ornaments[0] = new TextBox { Foreground = Brushes.White, FontSize = 20, BorderThickness = new Thickness(0), Background = Brushes.Transparent, Text = left };
-            ornaments[1] = new TextBox { Foreground = Brushes.White, FontSize = 20, BorderThickness = new Thickness(0), Background = Brushes.Transparent, Text = right };
-            ornaments[2] = new TextBox { Foreground = Brushes.White, FontSize = 20, BorderThickness = new Thickness(0), Background = Brushes.Transparent, Text = top };
-            ornaments[3] = new TextBox { Foreground = Brushes.White, FontSize = 20, BorderThickness = new Thickness(0), Background = Brushes.Transparent, Text = bottom };
+            ornaments[0] = new TextBox { Foreground = Brushes.Black, FontSize = 20, BorderThickness = new Thickness(0), Background = Brushes.LightGray, Text = left };
+            ornaments[1] = new TextBox { Foreground = Brushes.Black, FontSize = 20, BorderThickness = new Thickness(0), Background = Brushes.LightGray, Text = right };
+            ornaments[2] = new TextBox { Foreground = Brushes.Black, FontSize = 20, BorderThickness = new Thickness(0), Background = Brushes.LightGray, Text = top };
+            ornaments[3] = new TextBox { Foreground = Brushes.Black, FontSize = 20, BorderThickness = new Thickness(0), Background = Brushes.LightGray, Text = bottom };
         }
 
         public override void Move(Point offset)
@@ -48,26 +50,36 @@ namespace drawing_application.Decorators
 
         }
 
+        public string[] GetOrnaments()
+        {
+            return ornaments.Select(x => x.Text).ToArray();
+        }
+
+        public override string Accept(IVisitor iVisitor)
+        {
+            return iVisitor.Visit(this);
+        }
+
         public void DisplayOrnaments(bool status)
         {
-            Canvas.SetLeft(ornaments[0], shape.GetLeft());
+            Canvas.SetLeft(ornaments[0], shape.GetLeft()-25);
             Canvas.SetTop (ornaments[0], shape.GetTop() + GetHeight() / 2);
 
             Canvas.SetLeft(ornaments[1], shape.GetLeft() + GetWidth());
             Canvas.SetTop (ornaments[1], shape.GetTop() + GetHeight() / 2);
 
             Canvas.SetLeft(ornaments[2], shape.GetLeft() + GetWidth() / 2);
-            Canvas.SetTop (ornaments[2], shape.GetTop());
+            Canvas.SetTop (ornaments[2], shape.GetTop()-25);
 
             Canvas.SetLeft(ornaments[3], shape.GetLeft() + GetWidth() / 2);
             Canvas.SetTop (ornaments[3], shape.GetTop() + GetHeight());
 
 
-            if (status)
+            if (status && MainWindow.ins.shapeDrawn != this)
             {
                 foreach (var text in ornaments)
                 {
-                    if (MainWindow.ins.drawCanvas.Children.Contains(text) == false)
+                    if (MainWindow.ins.drawCanvas.Children.Contains(text) == false )
                     {
                         MainWindow.ins.drawCanvas.Children.Add(text);
                     }

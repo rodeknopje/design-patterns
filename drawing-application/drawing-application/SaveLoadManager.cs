@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
@@ -41,7 +42,6 @@ namespace drawing_application
 
             //File.AppendAllText(textFile, $"{Hierarchy.GetInstance().GetTopGroup().ToString(0)}");
             File.AppendAllText(textFile, $"{Hierarchy.GetInstance().GetTopGroup().Accept(new WriteVisitor(0))}");
-
         }
 
 
@@ -62,6 +62,7 @@ namespace drawing_application
 
         private Group LoadGroup()
         {
+            var currentOrnaments = new string[4];
             // initialize a new group
             var group = new Group();
             // look in the file how many children it has.
@@ -75,30 +76,48 @@ namespace drawing_application
                 // retrieve the line.
                 var currentLine = lines[index];
 
+                if (currentLine[1].Contains('\"'))
+                {
+                    i--;
+
+                    var ornament = currentLine[1].Replace('\"', ' ').Trim();
+
+                    switch (currentLine[0])
+                    {
+                        case "left":   currentOrnaments[0] = ornament; break;
+                        case "right":  currentOrnaments[1] = ornament; break;
+                        case "top":    currentOrnaments[2] = ornament; break;
+                        case "bottom": currentOrnaments[3] = ornament; break;
+                    }
+
+                }
                 // check if this line is a group.
-                if (currentLine.Count == 2)
+                else if (currentLine.Count == 2)
                 {
                     // recursively add the group to this group.
                     group.AddChild(LoadGroup());
                     // lower the index by one otherwise the recursive call would add one to many.
                     index--;
                 }
-                else
+                else if (currentLine.Count ==5)
                 {
                     // if its not a group create a shape and add it to this group.
-                    group.AddChild(CreateShape(currentLine));
+                    group.AddChild(CreateShape(currentLine,currentOrnaments));
+
+                    currentOrnaments = new string[4];
                 }
-                // add one to the current line index
+
                 index++;
+                // add one to the current line index
             }
             // return the group.
             return group;
         }
 
-        private CustomShape CreateShape(IReadOnlyList<string> line)
+        private CustomShape CreateShape(IReadOnlyList<string> line, IReadOnlyList<string> ornaments)
         {
             // initialize a shape based on their type.
-            var shape = Utility.GetInstance().CreateShape(line.First());
+            var shape = Utility.GetInstance().CreateShape(line.First(),ornaments);
             // convert the text data to integers to assign the transform of the shape.
             var transformData = line.Skip(1).Select(x=>Convert.ToInt32(x)).ToList();
             // set the position of the shape.

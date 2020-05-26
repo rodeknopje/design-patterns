@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
@@ -32,14 +33,14 @@ namespace drawing_application
         public CustomShape CreateShape(int index)
         {
             // create a new shape based on the selected shape.
-            return new OrnamentDecorator(new CustomShape((IStrategyShape)Activator.CreateInstance(styles[index])),"links","rechts","boven","onder");
+            return new OrnamentDecorator(new CustomShape((IStrategyShape)Activator.CreateInstance(styles[index])),"","","","");
         }
 
-        public CustomShape CreateShape(string name)
+        public CustomShape CreateShape(string name, IReadOnlyList<string> ornaments)
         {
             // create a new shape based on their class name.
             //return (CustomShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)]);
-            return new OrnamentDecorator( new CustomShape((IStrategyShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)])), "links", "rechts", "boven", "onder");
+            return new OrnamentDecorator( new CustomShape((IStrategyShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)])), ornaments[0], ornaments[1], ornaments[2], ornaments[3]);
         }
 
         private int GetStyleIndexByClassName(string name)

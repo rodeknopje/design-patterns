@@ -20,6 +20,8 @@ namespace drawing_application.Commands
             shape.Width  = shape.Width  < MinSize ? MinSize : shape.Width;
             shape.Height = shape.Height < MinSize ? MinSize : shape.Height;
 
+            m.shapeDrawn = null;
+
         }
 
         public override void Execute()
