@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using drawing_application.Strategies;
 
 namespace drawing_application.CustomShapes
 {
     public class Ellipse : CustomShape
     {
+        public Ellipse() : base(new EllipseStrategy())
+        {
+                
+        }
+
         protected override void DrawShape(out List<Point> coords)
         {
             // initialize the coordinates.

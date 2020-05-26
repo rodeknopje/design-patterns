@@ -18,7 +18,7 @@ namespace drawing_application.Visitors
 
         public string Visit(CustomShape shape)
         {
-            return $"{new string(' ', index * 2)}{shape.GetType().Name} {(int)Canvas.GetLeft(shape)} {(int)Canvas.GetTop(shape)} {(int)shape.Width} {(int)shape.Height}";
+            return $"{new string(' ', index * 2)}{shape} {(int)Canvas.GetLeft(shape)} {(int)Canvas.GetTop(shape)} {(int)shape.Width} {(int)shape.Height}";
         }
 
         public string Visit(Group shape)

@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using drawing_application.Strategies;
 
 namespace drawing_application.CustomShapes
 {
     public class Hexagon : CustomShape
     {
+
+        public Hexagon() : base(new HexagonStrategy())
+        {
+                
+        }
         protected override void DrawShape(out List<Point> coords)
         {
             coords = new List<Point>

@@ -8,7 +8,7 @@ using drawing_application.Visitors;
 
 namespace drawing_application.CustomShapes
 {
-    public abstract class CustomShape : Shape, IVisitable
+    public  class CustomShape : Shape, IVisitable
     {
         // the coordinates of connection points.
         private List<Point> coords;
@@ -17,13 +17,22 @@ namespace drawing_application.CustomShapes
         public Transform OriginTransform { get; protected set; }
 
         // abstract method which needs to calculate the coords.
-        protected abstract void DrawShape(out List<Point> coords);
+        protected virtual void DrawShape(out List<Point> coords)
+        {
+            coords = null;
+
+        }
+
+        public override string ToString()
+        {
+            return iStrategyShape.GetType().Name;
+        }
 
         private readonly IStrategyShape iStrategyShape;
 
-        protected CustomShape()
+        public CustomShape(IStrategyShape iStrategyShape)
         {
-            iStrategyShape = new HexagonStrategy();
+            this.iStrategyShape = iStrategyShape;
             // set the width and the height
             Width = 0; Height = 0;
             // make the shape transparent.
@@ -33,6 +42,7 @@ namespace drawing_application.CustomShapes
             // set the stroke thickness.
             StrokeThickness = 2.5;
         }
+        
 
 
         public virtual void UpdateOriginTransform()
@@ -65,8 +75,8 @@ namespace drawing_application.CustomShapes
         private Geometry DefineGeometry()
         {
             // calculate the new coords.
-            //DrawShape(out coords);
-            coords = iStrategyShape.Draw(this);
+            DrawShape(out coords);
+            coords = iStrategyShape?.Draw(this) ?? coords;
             // create a new stream geometry to connect the coords.
             var geom = new StreamGeometry();
 

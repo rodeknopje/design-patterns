@@ -15,7 +15,9 @@ namespace drawing_application.CustomShapes
         // return null when asked for coords, since this object doesn't have visuals from itself..
         protected override void DrawShape(out List<Point> coords) => coords = null;
 
-        public Group()
+
+
+        public Group() : base(null)
         {
             Canvas.SetLeft(this, 0);
             Canvas.SetTop (this, 0);

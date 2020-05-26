@@ -30,7 +30,7 @@ namespace drawing_application.Buttons
             // assign the shape.
             this.shape = shape;
             // assign the correct text
-            textBlock.Text = $" {shape.GetType().Name}";
+            textBlock.Text = $" {shape}";
             // set the margin.
             Margin = new Thickness(marginThickness, marginThickness, marginThickness, 0);
             // make the alignment stretch.

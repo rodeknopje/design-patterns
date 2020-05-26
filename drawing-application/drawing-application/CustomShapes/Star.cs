@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using drawing_application.Strategies;
 
 namespace drawing_application.CustomShapes
 {
     public class Star : CustomShape
     {
+        public Star() : base(new StarStrategy())
+        {
+                
+        }
         protected override void DrawShape(out List<Point> coords)
         { 
             coords =  new List<Point>

@@ -75,7 +75,7 @@ namespace drawing_application
                 }
             };
             // click the first shape button
-            ((Button)stylesDisplay.Children[0]).RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
+            //((Button)stylesDisplay.Children[0]).RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent));
         }
 
         private new void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
