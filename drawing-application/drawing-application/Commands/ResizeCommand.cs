@@ -84,12 +84,12 @@ namespace drawing_application.Commands
                 }
 
                 // assign the position plus the original relative position so i cannot reach zero
-                Canvas.SetLeft(shape, transform.x);
-                Canvas.SetTop (shape, transform.y);
-                // assign the scale plus the original relative position so i cannot reach zero
-                shape.Width  = transform.width;
-                shape.Height = transform.height;
+                shape.SetLeft(transform.x);
+                shape.SetTop(transform.y);
 
+                // assign the scale plus the original relative position so i cannot reach zero
+                shape.SetWidth(transform.width);
+                shape.SetHeight(transform.height);
             });
 
 

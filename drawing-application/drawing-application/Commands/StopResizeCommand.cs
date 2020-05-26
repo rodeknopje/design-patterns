@@ -40,11 +40,12 @@ namespace drawing_application.Commands
             for(var i = 0; i < shapes.Count; i++)
             {
                 // set the new width and height.
-                shapes[i].Width  = newScales[i].X;
-                shapes[i].Height = newScales[i].Y;
+                shapes[i].SetWidth ( newScales[i].X );
+                shapes[i].SetHeight( newScales[i].Y );
+
                 // set the new x and y
-                Canvas.SetLeft(shapes[i], newPositions[i].X);
-                Canvas.SetTop (shapes[i], newPositions[i].Y);
+                shapes[i].SetLeft(newPositions[i].X);
+                shapes[i].SetTop (newPositions[i].Y);
 
                 shapes[i].UpdateOriginTransform();
             }
@@ -60,11 +61,12 @@ namespace drawing_application.Commands
             for (var i = 0; i < shapes.Count; i++)
             {
                 // set the new width and height.
-                shapes[i].Width  = originScales[i].X;
-                shapes[i].Height = originScales[i].Y;
+                shapes[i].SetWidth (originScales[i].X);
+                shapes[i].SetHeight(originScales[i].Y);
+
                 // set the new x and y
-                Canvas.SetLeft(shapes[i], originPositions[i].X);
-                Canvas.SetTop(shapes[i],  originPositions[i].Y);
+                shapes[i].SetLeft(originPositions[i].X);
+                shapes[i].SetTop (originPositions[i].Y);
 
             }
             // Deselect all the shapes, because we can only Select non selected shapes.
