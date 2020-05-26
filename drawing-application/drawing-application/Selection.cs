@@ -79,7 +79,7 @@ namespace drawing_application
             // toggle the outline on.
             ToggleOutline(true);
 
-            shapes.ForEach(x=>((OrnamentDecorator)x).DisplayOrnaments(true));
+
 
         }
 
@@ -211,8 +211,12 @@ namespace drawing_application
             MainWindow.ins.drawCanvas.Children.Remove(outline);
             MainWindow.ins.drawCanvas.Children.Remove(handle);
 
+            Hierarchy.GetInstance().GetTopGroup().GetAllShapes().ForEach(x => ((OrnamentDecorator)x).DisplayOrnaments(false));
+
             if (state)
             {
+
+                GetAllShapes().ForEach(x=>((OrnamentDecorator)x).DisplayOrnaments(true));
                 // calculate the transform of the outline.
                 CalculateTransform();
                 // Draw it for the first time.
@@ -229,6 +233,7 @@ namespace drawing_application
             }
             else
             {
+                //GetAllShapes().ForEach(x => ((OrnamentDecorator)x).DisplayOrnaments(false));
                 // remove it.
                 MainWindow.ins.drawCanvas.Children.Remove(outline);
                 MainWindow.ins.drawCanvas.Children.Remove(handle);

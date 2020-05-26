@@ -9,7 +9,7 @@ using drawing_application.Visitors;
 
 namespace drawing_application.Decorators
 {
-    public abstract class ShapeDecorator : CustomShape
+    public abstract class ShapeDecorator : CustomShape 
     {
         protected readonly CustomShape shape;
 
@@ -87,6 +87,11 @@ namespace drawing_application.Decorators
         public override Transform GetOriginTransform()
         {
             return shape.GetOriginTransform();
+        }
+
+        public T GetBaseShape<T>() where T : CustomShape
+        {
+            return shape as T;
         }
     }
 }

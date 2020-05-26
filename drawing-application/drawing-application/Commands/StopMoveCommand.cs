@@ -52,6 +52,7 @@ namespace drawing_application.Commands
             }
             // Deselect all the shapes, because we can only Select non selected shapes.
             shapes.ForEach(Selection.GetInstance().RemoveChild);
+            
             // Select all these shapes.
             new SelectShapeCommand(shapes).Execute();
         }

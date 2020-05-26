@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using drawing_application.Decorators;
 using drawing_application.Strategies;
 using drawing_application.Visitors;
 
@@ -58,6 +59,8 @@ namespace drawing_application.CustomShapes
             {
             
                 MainWindow.ins.drawCanvas.Children.Add(this);
+
+                
             }
             else
             {
