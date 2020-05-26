@@ -8,7 +8,7 @@ using drawing_application.CustomShapes;
 
 namespace drawing_application.Strategies
 {
-    public class RectangleStrategy : IStrategyShape
+    public class Rectangle : IStrategyShape
     {
         public List<Point> Draw(CustomShape shape)
         {

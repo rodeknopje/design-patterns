@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace drawing_application.Strategies
 {
-    public class HexagonStrategy : IStrategyShape
+    public class Hexagon : IStrategyShape
     {
         public List<Point> Draw(CustomShape shape)
         {

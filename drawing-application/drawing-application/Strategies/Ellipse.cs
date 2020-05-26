@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace drawing_application.Strategies
 {
-    public class EllipseStrategy : IStrategyShape
+    public class Ellipse : IStrategyShape
     {
         public List<Point> Draw(CustomShape shape)
         {

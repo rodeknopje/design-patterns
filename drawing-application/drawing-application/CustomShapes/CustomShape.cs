@@ -75,7 +75,7 @@ namespace drawing_application.CustomShapes
         private Geometry DefineGeometry()
         {
             // calculate the new coords.
-            DrawShape(out coords);
+            //DrawShape(out coords);
             coords = iStrategyShape?.Draw(this) ?? coords;
             // create a new stream geometry to connect the coords.
             var geom = new StreamGeometry();

@@ -32,7 +32,7 @@ namespace drawing_application
             _instance = this;
 
             // assign the selection outline.
-            outline = new CustomShape(new RectangleStrategy())
+            outline = new CustomShape(new Strategies.Rectangle())
             {
                 Fill   = Brushes.Transparent,
                 Stroke = Brushes.White,
@@ -40,7 +40,7 @@ namespace drawing_application
                 StrokeDashArray = { 5, 5 }
             };
             // create the handle.
-            handle = new CustomShape(new EllipseStrategy())
+            handle = new CustomShape(new Strategies.Ellipse())
             {
                 Width  = 20,
                 Height = 20,      

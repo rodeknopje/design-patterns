@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace drawing_application.Strategies
 {
-    public class StarStrategy : IStrategyShape
+    public class Star : IStrategyShape
     {
         public List<Point> Draw(CustomShape shape)
         {
