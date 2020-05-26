@@ -26,6 +26,11 @@ namespace drawing_application.CustomShapes
             Height = 0;
         }
 
+        public override string ToString()
+        {
+            return GetType().Name;
+        }
+
         public void AddChild(CustomShape shape)
         {
             // add a custom shape to the group.

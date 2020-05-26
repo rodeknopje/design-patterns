@@ -2,10 +2,14 @@
 using drawing_application.CustomShapes;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
+using drawing_application.Strategies;
+using Group = drawing_application.CustomShapes.Group;
 
 namespace drawing_application
 {
@@ -15,20 +19,20 @@ namespace drawing_application
         // singleton of this class.
         private static Selection _instance;
         // the outline to display when shapes are selected.
-        private readonly Rectangle outline;
+        private readonly CustomShape outline;
         // the handle to display when shapes are selected.
-        private readonly Ellipse handle;
+        private readonly CustomShape handle;
 
         // get the singleton
         public static Selection GetInstance() => _instance ?? new Selection();
 
-        private Selection()
+        private Selection() 
         {
             // initialize the singleton
             _instance = this;
 
             // assign the selection outline.
-            outline = new Rectangle
+            outline = new CustomShape(new RectangleStrategy())
             {
                 Fill   = Brushes.Transparent,
                 Stroke = Brushes.White,
@@ -36,7 +40,7 @@ namespace drawing_application
                 StrokeDashArray = { 5, 5 }
             };
             // create the handle.
-            handle = new Ellipse
+            handle = new CustomShape(new EllipseStrategy())
             {
                 Width  = 20,
                 Height = 20,      
