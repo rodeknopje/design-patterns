@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using drawing_application.Strategies;
 using drawing_application.Visitors;
 
 namespace drawing_application.CustomShapes
@@ -18,8 +19,11 @@ namespace drawing_application.CustomShapes
         // abstract method which needs to calculate the coords.
         protected abstract void DrawShape(out List<Point> coords);
 
+        private readonly IStrategyShape iStrategyShape;
+
         protected CustomShape()
         {
+            iStrategyShape = new HexagonStrategy();
             // set the width and the height
             Width = 0; Height = 0;
             // make the shape transparent.
@@ -61,8 +65,8 @@ namespace drawing_application.CustomShapes
         private Geometry DefineGeometry()
         {
             // calculate the new coords.
-            DrawShape(out coords);
-            
+            //DrawShape(out coords);
+            coords = iStrategyShape.Draw(this);
             // create a new stream geometry to connect the coords.
             var geom = new StreamGeometry();
 
