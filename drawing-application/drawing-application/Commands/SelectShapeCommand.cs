@@ -1,6 +1,7 @@
 ﻿using drawing_application.CustomShapes;
 using System;
 using System.Collections.Generic;
+using drawing_application.Decorators;
 
 namespace drawing_application.Commands
 {
@@ -13,6 +14,8 @@ namespace drawing_application.Commands
         {
             // assign the shapes.
             this.shapes = shapes;
+
+            
         }
 
         // call the first constructor with a list with the given shape in it.

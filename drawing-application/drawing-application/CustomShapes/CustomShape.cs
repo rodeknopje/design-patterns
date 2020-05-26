@@ -67,6 +67,8 @@ namespace drawing_application.CustomShapes
 
         private Geometry DefineGeometry()
         {
+
+            OnDraw();
             // calculate the new coords.
             //DrawShape(out coords);
             var coords = iStrategyShape?.Draw(this);
@@ -93,14 +95,22 @@ namespace drawing_application.CustomShapes
             return geom;
         }
 
+
+
+
+
         // calculate the geometry when asked for it.
-        protected override Geometry DefiningGeometry => DefineGeometry();
+        protected override Geometry DefiningGeometry =>  DefineGeometry();
 
         public virtual string Accept(IVisitor iVisitor)
         {
             return iVisitor.Visit(this);
         }
 
+        protected virtual void OnDraw()
+        {
+            
+        }
 
         public virtual double GetLeft()
         {

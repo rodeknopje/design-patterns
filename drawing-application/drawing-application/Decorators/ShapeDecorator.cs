@@ -11,9 +11,9 @@ namespace drawing_application.Decorators
 {
     public abstract class ShapeDecorator : CustomShape
     {
-        private readonly CustomShape shape;
+        protected readonly CustomShape shape;
 
-        public ShapeDecorator(CustomShape shape) : base(null)
+        protected ShapeDecorator(CustomShape shape) : base(null)
         {
             this.shape = shape;
         }

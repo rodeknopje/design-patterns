@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using drawing_application.Decorators;
 using drawing_application.Strategies;
 using Group = drawing_application.CustomShapes.Group;
 
@@ -78,6 +79,7 @@ namespace drawing_application
             // toggle the outline on.
             ToggleOutline(true);
 
+            shapes.ForEach(x=>((OrnamentDecorator)x).DisplayOrnaments(true));
 
         }
 

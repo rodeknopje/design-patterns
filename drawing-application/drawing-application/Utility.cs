@@ -32,14 +32,14 @@ namespace drawing_application
         public CustomShape CreateShape(int index)
         {
             // create a new shape based on the selected shape.
-            return new OrnamentDecorator(new CustomShape((IStrategyShape) Activator.CreateInstance(styles[index])),"","","","");
+            return new OrnamentDecorator(new CustomShape((IStrategyShape) Activator.CreateInstance(styles[index])),"sdf","fadsf","adsf","dsaf");
         }
 
         public CustomShape CreateShape(string name)
         {
             // create a new shape based on their class name.
             //return (CustomShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)]);
-            return new OrnamentDecorator( new CustomShape((IStrategyShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)])),"","","","");
+            return new OrnamentDecorator( new CustomShape((IStrategyShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)])),"adsf","afds","dasf","fad");
         }
 
         private int GetStyleIndexByClassName(string name)
