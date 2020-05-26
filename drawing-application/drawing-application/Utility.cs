@@ -38,7 +38,7 @@ namespace drawing_application
         {
             // create a new shape based on their class name.
             //return (CustomShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)]);
-            return new CustomShape ((IStrategyShape) Activator.CreateInstance(styles[GetStyleIndexByClassName(name)]));
+            return new CustomShape((IStrategyShape)Activator.CreateInstance(styles[GetStyleIndexByClassName(name)]));
         }
 
         private int GetStyleIndexByClassName(string name)

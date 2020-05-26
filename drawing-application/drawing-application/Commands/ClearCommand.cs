@@ -28,6 +28,8 @@ namespace drawing_application.Commands
             // clear the hierarchy.
             Hierarchy.GetInstance().Clear();
             // program state is None.
+            Selection.GetInstance().Clear();
+
             m.SwitchState(States.None);
         }
 

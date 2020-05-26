@@ -27,11 +27,14 @@ namespace drawing_application.Commands
             m.shapeDrawn = Utility.GetInstance().CreateShape(m.styleIndex);
 
             // set x position of the shape equal to the mouse x
-            Canvas.SetLeft(m.shapeDrawn, mousePos.X);
+            // Canvas.SetLeft(m.shapeDrawn, mousePos.X);
+            m.shapeDrawn.SetLeft(mousePos.X);
             // set y position of the shape equal to the mouse y
-            Canvas.SetTop(m.shapeDrawn, mousePos.Y);
+            //Canvas.SetTop(m.shapeDrawn, mousePos.Y);
+            m.shapeDrawn.SetTop(mousePos.Y);
             // add it to the canvas.
-            m.drawCanvas.Children.Add(m.shapeDrawn);
+            //m.drawCanvas.Children.Add(m.shapeDrawn);
+            m.shapeDrawn.SetActive(true);
             // add the new shape to the shape list.
             //m.shapes.Add(m.shapeDrawn);
         }

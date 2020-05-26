@@ -10,25 +10,19 @@ namespace drawing_application.CustomShapes
 {
     public  class CustomShape : Shape, IVisitable
     {
-        // the coordinates of connection points.
-        private List<Point> coords;
 
         // the transform before any operation is performed on this shape.
         public Transform OriginTransform { get; protected set; }
 
         // abstract method which needs to calculate the coords.
-        protected virtual void DrawShape(out List<Point> coords)
-        {
-            coords = null;
+        private readonly IStrategyShape iStrategyShape;
 
-        }
 
         public override string ToString()
         {
             return iStrategyShape.GetType().Name;
         }
 
-        private readonly IStrategyShape iStrategyShape;
 
         public CustomShape(IStrategyShape iStrategyShape)
         {
@@ -71,21 +65,18 @@ namespace drawing_application.CustomShapes
             }
         }
 
-
         private Geometry DefineGeometry()
         {
             // calculate the new coords.
             //DrawShape(out coords);
-            coords = iStrategyShape?.Draw(this) ?? coords;
+            var coords = iStrategyShape?.Draw(this);
             // create a new stream geometry to connect the coords.
             var geom = new StreamGeometry();
-
             // if the coords are null return, happens with groups.
             if (coords == null)
             {
                 return geom;
             }
-
             // open de stream geometry.
             using (var gc = geom.Open())
             {
@@ -105,14 +96,31 @@ namespace drawing_application.CustomShapes
         // calculate the geometry when asked for it.
         protected override Geometry DefiningGeometry => DefineGeometry();
 
-        public virtual string ToString(int level)
-        {
-            return $"{new string(' ', level*2)}{GetType().Name} {(int)Canvas.GetLeft(this)} {(int)Canvas.GetTop(this)} {(int)Width} {(int)Height}";
-        }
-
         public virtual string Accept(IVisitor iVisitor)
         {
             return iVisitor.Visit(this);
+        }
+
+
+
+
+        public void SetLeft(double left)
+        {
+            Canvas.SetLeft(this, left);
+        }
+        public void SetTop(double top)
+        {
+            Canvas.SetTop(this, top);
+        }
+
+        public void SetWidth(double width)
+        {
+            Width = width;
+        }
+
+        public void SetHeight(double height)
+        {
+            Height = height;
         }
     }
 

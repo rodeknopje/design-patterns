@@ -12,10 +12,6 @@ namespace drawing_application.CustomShapes
         // all the custom shapes shapes which are children from this group
         private readonly List<CustomShape> children = new List<CustomShape>();
 
-        // return null when asked for coords, since this object doesn't have visuals from itself..
-        protected override void DrawShape(out List<Point> coords) => coords = null;
-
-
 
         public Group() : base(null)
         {
@@ -87,17 +83,7 @@ namespace drawing_application.CustomShapes
 
         public List<CustomShape> GetChildren() => children;
 
-        public override string ToString(int level)
-        {
-            var lines = new List<string>
-            {
-                $"{new string(' ', 2*level++)}{GetType().Name} {GetChildren().Count}"
-            };
 
-            GetChildren().ForEach(x=>lines.Add(x.ToString(level)));
-
-            return string.Join('\n', lines);
-        }
 
         public override string Accept(IVisitor iVisitor)
         {

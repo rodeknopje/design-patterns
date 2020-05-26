@@ -77,6 +77,8 @@ namespace drawing_application
             shapes.ForEach(AddChild);
             // toggle the outline on.
             ToggleOutline(true);
+
+
         }
 
         public override void Clear()

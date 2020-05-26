@@ -24,26 +24,33 @@ namespace drawing_application.Commands
             if (xOffset > 0)
             {
                 // set the width to the offset.
-                m.shapeDrawn.Width = xOffset;
+                //m.shapeDrawn.Width = xOffset;
+                m.shapeDrawn.SetWidth(xOffset);
             }
             else
             {
                 // otherwise set the left 
-                Canvas.SetLeft(m.shapeDrawn, xOffset + m.mouseOrigin.X);
+                //Canvas.SetLeft(m.shapeDrawn, xOffset + m.mouseOrigin.X);
+                m.shapeDrawn.SetLeft(xOffset + m.mouseOrigin.X);
                 // inverse the offset to make it positive.
-                m.shapeDrawn.Width = -xOffset;
+                // m.shapeDrawn.Width = -xOffset;
+                m.shapeDrawn.SetWidth(-xOffset);
             }
             if (yOffset > 0)
             {
                 // set the width to the offset.
-                m.shapeDrawn.Height = yOffset;
+                //m.shapeDrawn.Height = yOffset;
+                m.shapeDrawn.SetHeight(yOffset);
             }
             else
             {
                 // otherwise set the left 
-                Canvas.SetTop(m.shapeDrawn, yOffset + m.mouseOrigin.Y);
+                // Canvas.SetTop(m.shapeDrawn, yOffset + m.mouseOrigin.Y);
+                m.shapeDrawn.SetTop(yOffset + m.mouseOrigin.Y);
                 // inverse the offset to make it positive.
-                m.shapeDrawn.Height = -yOffset;
+                // m.shapeDrawn.Height = -yOffset;
+                m.shapeDrawn.SetHeight(-yOffset);
+                
             }
         }
 
