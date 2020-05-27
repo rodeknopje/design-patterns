@@ -19,11 +19,6 @@ namespace drawing_application.CustomShapes
         private readonly IStrategyShape iStrategyShape;
 
 
-        public override string ToString()
-        {
-            return iStrategyShape.GetType().Name;
-        }
-
 
         public CustomShape(IStrategyShape iStrategyShape)
         {
@@ -37,8 +32,12 @@ namespace drawing_application.CustomShapes
             // set the stroke thickness.
             StrokeThickness = 2.5;
         }
-        
 
+
+        public override string ToString()
+        {
+            return iStrategyShape.GetType().Name;
+        }
 
         public virtual void UpdateOriginTransform()
         {
